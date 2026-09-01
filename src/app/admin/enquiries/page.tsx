@@ -24,7 +24,8 @@ import {
   ChevronRight,
   Trash2,
   AlertTriangle,
-  Loader2
+  Loader2,
+  AlertCircle
 } from "lucide-react";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 
@@ -54,6 +55,14 @@ interface ContactEnquiry {
   created_at: string;
 }
 
+interface DeleteTarget {
+  id: string;
+  type: "admissions" | "contacts";
+  title: string;
+  subtitle: string;
+  referenceId?: string;
+}
+
 export default function AdminEnquiriesDashboard() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<"admissions" | "contacts">("admissions");
@@ -67,8 +76,9 @@ export default function AdminEnquiriesDashboard() {
   const [statusFilter, setStatusFilter] = useState("all");
   const [selectedAdmission, setSelectedAdmission] = useState<AdmissionEnquiry | null>(null);
   const [selectedContact, setSelectedContact] = useState<ContactEnquiry | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<DeleteTarget | null>(null);
   const [updatingId, setUpdatingId] = useState<string | null>(null);
-  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
   const [notification, setNotification] = useState<{ message: string; type: "success" | "error" } | null>(null);
 
   // Auto-dismiss toast notification
@@ -193,21 +203,21 @@ export default function AdminEnquiriesDashboard() {
     }
   };
 
-  // Direct Delete Handlers
-  const handleDeleteAdmission = async (id: string, studentName: string) => {
-    if (!window.confirm(`Are you sure you want to permanently delete admission enquiry for "${studentName}"?`)) {
-      return;
-    }
+  // Execute Confirmed Deletion
+  const confirmDelete = async () => {
+    if (!deleteTarget) return;
 
-    setDeletingId(id);
+    setIsDeleting(true);
+    const { id, type, title } = deleteTarget;
+
     try {
       // 1. Try Supabase Client Direct Delete
       const supabase = getSupabaseBrowserClient();
       let deleteSuccess = false;
 
       if (supabase) {
-        const { error: directErr } = await supabase
-          .from("admission_enquiries")
+        const table = type === "admissions" ? "admission_enquiries" : "contact_enquiries";
+        const { error: directErr } = await (supabase.from(table) as any)
           .delete()
           .eq("id", id);
 
@@ -216,12 +226,12 @@ export default function AdminEnquiriesDashboard() {
         }
       }
 
-      // 2. Fallback to Admin API route with Service Role if direct RLS blocks
+      // 2. Fallback to API route with Service Role if direct RLS blocks
       if (!deleteSuccess) {
         const res = await fetch("/api/admin/enquiries/delete", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ id, type: "admissions" }),
+          body: JSON.stringify({ id, type }),
         });
         const resData = await res.json();
         if (resData.success) {
@@ -232,67 +242,21 @@ export default function AdminEnquiriesDashboard() {
       }
 
       if (deleteSuccess) {
-        setAdmissions((prev) => prev.filter((item) => item.id !== id));
-        if (selectedAdmission?.id === id) {
-          setSelectedAdmission(null);
-        }
-        setNotification({ message: `Enquiry for ${studentName} deleted successfully.`, type: "success" });
-      }
-    } catch (err: any) {
-      console.error("Delete admission error:", err);
-      setNotification({ message: err.message || "Failed to delete record.", type: "error" });
-    } finally {
-      setDeletingId(null);
-    }
-  };
-
-  const handleDeleteContact = async (id: string, senderName: string) => {
-    if (!window.confirm(`Are you sure you want to permanently delete contact inquiry from "${senderName}"?`)) {
-      return;
-    }
-
-    setDeletingId(id);
-    try {
-      const supabase = getSupabaseBrowserClient();
-      let deleteSuccess = false;
-
-      if (supabase) {
-        const { error: directErr } = await supabase
-          .from("contact_enquiries")
-          .delete()
-          .eq("id", id);
-
-        if (!directErr) {
-          deleteSuccess = true;
-        }
-      }
-
-      if (!deleteSuccess) {
-        const res = await fetch("/api/admin/enquiries/delete", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ id, type: "contacts" }),
-        });
-        const resData = await res.json();
-        if (resData.success) {
-          deleteSuccess = true;
+        if (type === "admissions") {
+          setAdmissions((prev) => prev.filter((item) => item.id !== id));
+          if (selectedAdmission?.id === id) setSelectedAdmission(null);
         } else {
-          throw new Error(resData.error || "Delete failed");
+          setContacts((prev) => prev.filter((item) => item.id !== id));
+          if (selectedContact?.id === id) setSelectedContact(null);
         }
-      }
-
-      if (deleteSuccess) {
-        setContacts((prev) => prev.filter((item) => item.id !== id));
-        if (selectedContact?.id === id) {
-          setSelectedContact(null);
-        }
-        setNotification({ message: `Contact message from ${senderName} deleted successfully.`, type: "success" });
+        setNotification({ message: `"${title}" was permanently deleted.`, type: "success" });
+        setDeleteTarget(null);
       }
     } catch (err: any) {
-      console.error("Delete contact error:", err);
+      console.error("Delete record error:", err);
       setNotification({ message: err.message || "Failed to delete record.", type: "error" });
     } finally {
-      setDeletingId(null);
+      setIsDeleting(false);
     }
   };
 
@@ -369,11 +333,11 @@ export default function AdminEnquiriesDashboard() {
     <div className="min-h-screen bg-[#060F1E] text-white flex flex-col relative">
       {/* Toast Notification */}
       {notification && (
-        <div className="fixed bottom-6 right-6 z-50 animate-bounce">
-          <div className={`px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 border text-xs font-mono ${
+        <div className="fixed bottom-6 right-6 z-50 animate-in fade-in slide-in-from-bottom-5 duration-300">
+          <div className={`px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-3 border text-xs font-mono backdrop-blur-xl ${
             notification.type === "success"
-              ? "bg-emerald-950 border-emerald-500/50 text-emerald-200"
-              : "bg-rose-950 border-rose-500/50 text-rose-200"
+              ? "bg-emerald-950/90 border-emerald-500/50 text-emerald-200"
+              : "bg-rose-950/90 border-rose-500/50 text-rose-200"
           }`}>
             {notification.type === "success" ? (
               <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
@@ -381,7 +345,7 @@ export default function AdminEnquiriesDashboard() {
               <AlertTriangle className="w-4 h-4 text-rose-400 shrink-0" />
             )}
             <span>{notification.message}</span>
-            <button onClick={() => setNotification(null)} className="ml-2 hover:opacity-70">
+            <button onClick={() => setNotification(null)} className="ml-2 hover:opacity-70 p-1">
               <X className="w-3.5 h-3.5" />
             </button>
           </div>
@@ -391,7 +355,7 @@ export default function AdminEnquiriesDashboard() {
       {/* Top Admin Navigation Bar */}
       <header className="border-b border-white/10 bg-[#0B1A30]/90 backdrop-blur-xl sticky top-0 z-30 px-4 sm:px-6 lg:px-8 py-4 flex flex-wrap items-center justify-between gap-4 shadow-xl">
         <div className="flex items-center gap-3.5">
-          <Link href="/" className="flex items-center justify-center w-10 h-10 rounded-full bg-gold-500/20 border border-gold-400/40 text-gold-300 font-serif font-bold text-base shadow-sm">
+          <Link href="/" className="flex items-center justify-center w-10 h-10 rounded-full bg-gold-500/20 border border-gold-400/40 text-gold-300 font-serif font-bold text-base shadow-sm hover:scale-105 transition-transform">
             DAV
           </Link>
           <div>
@@ -408,14 +372,14 @@ export default function AdminEnquiriesDashboard() {
           <button
             onClick={fetchData}
             title="Refresh Data"
-            className="p-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-cream-200 hover:text-white transition-colors"
+            className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-cream-200 hover:text-white transition-colors"
           >
             <RefreshCw className="w-4 h-4" />
           </button>
 
           <button
             onClick={exportToCSV}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gold-500/20 hover:bg-gold-500/30 border border-gold-500/40 text-gold-300 text-xs font-mono font-bold uppercase tracking-wider transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gold-500/20 hover:bg-gold-500/30 border border-gold-500/40 text-gold-300 text-xs font-mono font-bold uppercase tracking-wider transition-colors shadow-sm"
           >
             <Download className="w-3.5 h-3.5" />
             <span>Export CSV</span>
@@ -423,7 +387,7 @@ export default function AdminEnquiriesDashboard() {
 
           <button
             onClick={handleLogout}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 border border-rose-500/40 text-rose-300 text-xs font-mono font-bold uppercase tracking-wider transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 border border-rose-500/40 text-rose-300 text-xs font-mono font-bold uppercase tracking-wider transition-colors shadow-sm"
           >
             <LogOut className="w-3.5 h-3.5" />
             <span>Sign Out</span>
@@ -486,9 +450,9 @@ export default function AdminEnquiriesDashboard() {
                   setActiveTab("admissions");
                   setStatusFilter("all");
                 }}
-                className={`px-5 py-2 rounded-lg text-xs font-mono font-bold uppercase tracking-wider transition-all ${
+                className={`px-5 py-2.5 rounded-lg text-xs font-mono font-bold uppercase tracking-wider transition-all ${
                   activeTab === "admissions"
-                    ? "bg-gold-500 text-navy-950 shadow-sm"
+                    ? "bg-gold-500 text-navy-950 shadow-md font-extrabold"
                     : "text-cream-300 hover:text-white"
                 }`}
               >
@@ -499,9 +463,9 @@ export default function AdminEnquiriesDashboard() {
                   setActiveTab("contacts");
                   setStatusFilter("all");
                 }}
-                className={`px-5 py-2 rounded-lg text-xs font-mono font-bold uppercase tracking-wider transition-all ${
+                className={`px-5 py-2.5 rounded-lg text-xs font-mono font-bold uppercase tracking-wider transition-all ${
                   activeTab === "contacts"
-                    ? "bg-gold-500 text-navy-950 shadow-sm"
+                    ? "bg-gold-500 text-navy-950 shadow-md font-extrabold"
                     : "text-cream-300 hover:text-white"
                 }`}
               >
@@ -518,14 +482,14 @@ export default function AdminEnquiriesDashboard() {
                   placeholder="Search by name, phone, ref..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 bg-navy-950 border border-white/15 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-gold-500 placeholder:text-cream-400/40"
+                  className="w-full pl-10 pr-4 py-2.5 bg-navy-950 border border-white/15 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-gold-500 placeholder:text-cream-400/40"
                 />
               </div>
 
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="px-3.5 py-2 bg-navy-950 border border-white/15 rounded-xl text-xs font-mono font-semibold text-white focus:outline-none focus:ring-2 focus:ring-gold-500"
+                className="px-3.5 py-2.5 bg-navy-950 border border-white/15 rounded-xl text-xs font-mono font-semibold text-white focus:outline-none focus:ring-2 focus:ring-gold-500"
               >
                 <option value="all">All Statuses</option>
                 <option value="pending">Pending</option>
@@ -611,25 +575,26 @@ export default function AdminEnquiriesDashboard() {
                           </select>
                         </td>
                         <td className="px-6 py-4 text-right">
-                          <div className="flex items-center justify-end gap-1.5">
+                          <div className="flex items-center justify-end gap-2">
                             <button
                               onClick={() => setSelectedAdmission(item)}
-                              className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-cream-300 hover:text-white transition-colors"
+                              className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-cream-300 hover:text-white transition-colors"
                               title="View Details"
                             >
                               <Eye className="w-4 h-4" />
                             </button>
                             <button
-                              disabled={deletingId === item.id}
-                              onClick={() => handleDeleteAdmission(item.id, item.student_name)}
-                              className="p-2 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 hover:text-rose-300 transition-colors disabled:opacity-50"
-                              title="Delete Permanently"
+                              onClick={() => setDeleteTarget({
+                                id: item.id,
+                                type: "admissions",
+                                title: item.student_name,
+                                subtitle: `Grade: ${item.grade_applying} • Parent: ${item.parent_name}`,
+                                referenceId: item.reference_id
+                              })}
+                              className="p-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 hover:text-rose-300 transition-colors border border-rose-500/20"
+                              title="Delete Enquiry"
                             >
-                              {deletingId === item.id ? (
-                                <Loader2 className="w-4 h-4 animate-spin text-rose-400" />
-                              ) : (
-                                <Trash2 className="w-4 h-4" />
-                              )}
+                              <Trash2 className="w-4 h-4" />
                             </button>
                           </div>
                         </td>
@@ -699,25 +664,26 @@ export default function AdminEnquiriesDashboard() {
                           </select>
                         </td>
                         <td className="px-6 py-4 text-right">
-                          <div className="flex items-center justify-end gap-1.5">
+                          <div className="flex items-center justify-end gap-2">
                             <button
                               onClick={() => setSelectedContact(item)}
-                              className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-cream-300 hover:text-white transition-colors"
+                              className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-cream-300 hover:text-white transition-colors"
                               title="View Full Message"
                             >
                               <Eye className="w-4 h-4" />
                             </button>
                             <button
-                              disabled={deletingId === item.id}
-                              onClick={() => handleDeleteContact(item.id, item.full_name)}
-                              className="p-2 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 hover:text-rose-300 transition-colors disabled:opacity-50"
-                              title="Delete Permanently"
+                              onClick={() => setDeleteTarget({
+                                id: item.id,
+                                type: "contacts",
+                                title: item.full_name,
+                                subtitle: `Email: ${item.email} • Phone: ${item.phone}`,
+                                referenceId: `MSG-${item.id.slice(0, 6)}`
+                              })}
+                              className="p-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 hover:text-rose-300 transition-colors border border-rose-500/20"
+                              title="Delete Message"
                             >
-                              {deletingId === item.id ? (
-                                <Loader2 className="w-4 h-4 animate-spin text-rose-400" />
-                              ) : (
-                                <Trash2 className="w-4 h-4" />
-                              )}
+                              <Trash2 className="w-4 h-4" />
                             </button>
                           </div>
                         </td>
@@ -731,10 +697,78 @@ export default function AdminEnquiriesDashboard() {
         </div>
       </main>
 
+      {/* Professional Delete Confirmation Modal */}
+      {deleteTarget && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy-950/85 backdrop-blur-md animate-in fade-in duration-200">
+          <div className="bg-[#0B1A30] w-full max-w-md rounded-3xl border border-rose-500/30 p-6 sm:p-8 space-y-6 shadow-[0_0_60px_rgba(244,63,94,0.18)]">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-2xl bg-rose-500/15 border border-rose-500/30 flex items-center justify-center text-rose-400 shrink-0">
+                <Trash2 className="w-6 h-6" />
+              </div>
+              <div>
+                <h3 className="font-serif text-xl font-bold text-white">
+                  Delete {deleteTarget.type === "admissions" ? "Admission Enquiry" : "Contact Message"}
+                </h3>
+                <p className="text-xs text-cream-400 font-mono">
+                  Permanent Database Removal
+                </p>
+              </div>
+            </div>
+
+            {/* Target Item Dossier Card */}
+            <div className="bg-navy-950 p-4 rounded-2xl border border-white/10 space-y-2">
+              <div className="flex items-center justify-between text-[11px] font-mono">
+                <span className="text-cream-400">Record:</span>
+                <span className="text-gold-400 font-bold">{deleteTarget.referenceId || "ID Ref"}</span>
+              </div>
+              <p className="font-bold text-white text-sm">{deleteTarget.title}</p>
+              <p className="text-xs text-cream-300 font-mono">{deleteTarget.subtitle}</p>
+            </div>
+
+            <div className="flex items-start gap-2.5 text-xs text-rose-300/90 bg-rose-500/10 p-3.5 rounded-xl border border-rose-500/20 font-mono">
+              <AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-rose-400" />
+              <span>
+                Warning: This record will be permanently deleted from the database. This action cannot be undone.
+              </span>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex items-center justify-end gap-3 pt-2">
+              <button
+                type="button"
+                disabled={isDeleting}
+                onClick={() => setDeleteTarget(null)}
+                className="px-5 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-cream-200 hover:text-white font-mono text-xs font-bold uppercase tracking-wider transition-colors disabled:opacity-50"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                disabled={isDeleting}
+                onClick={confirmDelete}
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-mono text-xs font-bold uppercase tracking-wider transition-all shadow-lg shadow-rose-900/40 disabled:opacity-50"
+              >
+                {isDeleting ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <span>Deleting...</span>
+                  </>
+                ) : (
+                  <>
+                    <Trash2 className="w-4 h-4" />
+                    <span>Delete Record</span>
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Admission Enquiry Detail Modal */}
       {selectedAdmission && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy-950/80 backdrop-blur-md">
-          <div className="bg-[#0B1A30] w-full max-w-xl rounded-2xl border border-white/15 p-6 sm:p-8 space-y-6 shadow-2xl">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy-950/80 backdrop-blur-md animate-in fade-in duration-200">
+          <div className="bg-[#0B1A30] w-full max-w-xl rounded-3xl border border-white/15 p-6 sm:p-8 space-y-6 shadow-2xl">
             <div className="flex items-center justify-between border-b border-white/10 pb-4">
               <div>
                 <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-gold-400 block">
@@ -753,30 +787,30 @@ export default function AdminEnquiriesDashboard() {
             </div>
 
             <div className="grid grid-cols-2 gap-4 text-xs font-mono">
-              <div className="bg-navy-950 p-3 rounded-xl border border-white/10 space-y-1">
+              <div className="bg-navy-950 p-3.5 rounded-2xl border border-white/10 space-y-1">
                 <span className="text-cream-400 text-[10px] uppercase">Reference ID</span>
                 <p className="font-bold text-gold-400">{selectedAdmission.reference_id}</p>
               </div>
-              <div className="bg-navy-950 p-3 rounded-xl border border-white/10 space-y-1">
+              <div className="bg-navy-950 p-3.5 rounded-2xl border border-white/10 space-y-1">
                 <span className="text-cream-400 text-[10px] uppercase">Grade Applying</span>
                 <p className="font-bold text-white">{selectedAdmission.grade_applying}</p>
               </div>
-              <div className="bg-navy-950 p-3 rounded-xl border border-white/10 space-y-1">
+              <div className="bg-navy-950 p-3.5 rounded-2xl border border-white/10 space-y-1">
                 <span className="text-cream-400 text-[10px] uppercase">Parent / Guardian</span>
                 <p className="font-bold text-white">{selectedAdmission.parent_name}</p>
               </div>
-              <div className="bg-navy-950 p-3 rounded-xl border border-white/10 space-y-1">
+              <div className="bg-navy-950 p-3.5 rounded-2xl border border-white/10 space-y-1">
                 <span className="text-cream-400 text-[10px] uppercase">Contact Phone</span>
                 <p className="font-bold text-white">
                   <a href={`tel:${selectedAdmission.phone}`} className="hover:underline">{selectedAdmission.phone}</a>
                 </p>
               </div>
-              <div className="bg-navy-950 p-3 rounded-xl border border-white/10 space-y-1 col-span-2">
+              <div className="bg-navy-950 p-3.5 rounded-2xl border border-white/10 space-y-1 col-span-2">
                 <span className="text-cream-400 text-[10px] uppercase">Parent Email</span>
-                <p className="font-bold text-white">{selectedAdmission.email}</p>
+                <p className="font-bold text-white">{selectedAdmission.email || "Not provided"}</p>
               </div>
               {selectedAdmission.city_or_area && (
-                <div className="bg-navy-950 p-3 rounded-xl border border-white/10 space-y-1 col-span-2">
+                <div className="bg-navy-950 p-3.5 rounded-2xl border border-white/10 space-y-1 col-span-2">
                   <span className="text-cream-400 text-[10px] uppercase">Location / Area</span>
                   <p className="font-bold text-white">{selectedAdmission.city_or_area}</p>
                 </div>
@@ -788,7 +822,7 @@ export default function AdminEnquiriesDashboard() {
                 <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-cream-400">
                   Notes / Questions from Parent:
                 </span>
-                <p className="p-4 bg-navy-950 rounded-xl border border-white/10 text-xs text-cream-200 leading-relaxed font-light">
+                <p className="p-4 bg-navy-950 rounded-2xl border border-white/10 text-xs text-cream-200 leading-relaxed font-light">
                   {selectedAdmission.message}
                 </p>
               </div>
@@ -796,16 +830,23 @@ export default function AdminEnquiriesDashboard() {
 
             <div className="pt-4 border-t border-white/10 flex items-center justify-between">
               <button
-                disabled={deletingId === selectedAdmission.id}
-                onClick={() => handleDeleteAdmission(selectedAdmission.id, selectedAdmission.student_name)}
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 border border-rose-500/40 text-rose-300 font-bold text-xs uppercase font-mono tracking-wider transition-colors disabled:opacity-50"
+                onClick={() => {
+                  setDeleteTarget({
+                    id: selectedAdmission.id,
+                    type: "admissions",
+                    title: selectedAdmission.student_name,
+                    subtitle: `Grade: ${selectedAdmission.grade_applying} • Parent: ${selectedAdmission.parent_name}`,
+                    referenceId: selectedAdmission.reference_id
+                  });
+                }}
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 border border-rose-500/40 text-rose-300 font-bold text-xs uppercase font-mono tracking-wider transition-colors shadow-sm"
               >
                 <Trash2 className="w-3.5 h-3.5" />
                 <span>Delete</span>
               </button>
               <button
                 onClick={() => setSelectedAdmission(null)}
-                className="px-5 py-2 rounded-xl bg-gold-500 hover:bg-gold-400 text-navy-950 font-bold text-xs uppercase font-mono tracking-wider"
+                className="px-6 py-2.5 rounded-xl bg-gold-500 hover:bg-gold-400 text-navy-950 font-bold text-xs uppercase font-mono tracking-wider transition-colors"
               >
                 Done
               </button>
@@ -816,8 +857,8 @@ export default function AdminEnquiriesDashboard() {
 
       {/* Contact Inquiry Detail Modal */}
       {selectedContact && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy-950/80 backdrop-blur-md">
-          <div className="bg-[#0B1A30] w-full max-w-xl rounded-2xl border border-white/15 p-6 sm:p-8 space-y-6 shadow-2xl">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy-950/80 backdrop-blur-md animate-in fade-in duration-200">
+          <div className="bg-[#0B1A30] w-full max-w-xl rounded-3xl border border-white/15 p-6 sm:p-8 space-y-6 shadow-2xl">
             <div className="flex items-center justify-between border-b border-white/10 pb-4">
               <div>
                 <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-gold-400 block">
@@ -836,18 +877,18 @@ export default function AdminEnquiriesDashboard() {
             </div>
 
             <div className="grid grid-cols-2 gap-4 text-xs font-mono">
-              <div className="bg-navy-950 p-3 rounded-xl border border-white/10 space-y-1">
+              <div className="bg-navy-950 p-3.5 rounded-2xl border border-white/10 space-y-1">
                 <span className="text-cream-400 text-[10px] uppercase">Phone</span>
                 <p className="font-bold text-white">
-                  <a href={`tel:${selectedContact.phone}`} className="hover:underline">{selectedContact.phone}</a>
+                  <a href={`tel:${selectedContact.phone}`} className="hover:underline">{selectedContact.phone || "Not provided"}</a>
                 </p>
               </div>
-              <div className="bg-navy-950 p-3 rounded-xl border border-white/10 space-y-1">
+              <div className="bg-navy-950 p-3.5 rounded-2xl border border-white/10 space-y-1">
                 <span className="text-cream-400 text-[10px] uppercase">Email</span>
-                <p className="font-bold text-white">{selectedContact.email}</p>
+                <p className="font-bold text-white">{selectedContact.email || "Not provided"}</p>
               </div>
               {selectedContact.subject && (
-                <div className="bg-navy-950 p-3 rounded-xl border border-white/10 space-y-1 col-span-2">
+                <div className="bg-navy-950 p-3.5 rounded-2xl border border-white/10 space-y-1 col-span-2">
                   <span className="text-cream-400 text-[10px] uppercase">Subject</span>
                   <p className="font-bold text-gold-300">{selectedContact.subject}</p>
                 </div>
@@ -858,23 +899,30 @@ export default function AdminEnquiriesDashboard() {
               <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-cream-400">
                 Message Content:
               </span>
-              <p className="p-4 bg-navy-950 rounded-xl border border-white/10 text-xs text-cream-200 leading-relaxed font-light whitespace-pre-wrap">
+              <p className="p-4 bg-navy-950 rounded-2xl border border-white/10 text-xs text-cream-200 leading-relaxed font-light whitespace-pre-wrap">
                 {selectedContact.message}
               </p>
             </div>
 
             <div className="pt-4 border-t border-white/10 flex items-center justify-between">
               <button
-                disabled={deletingId === selectedContact.id}
-                onClick={() => handleDeleteContact(selectedContact.id, selectedContact.full_name)}
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 border border-rose-500/40 text-rose-300 font-bold text-xs uppercase font-mono tracking-wider transition-colors disabled:opacity-50"
+                onClick={() => {
+                  setDeleteTarget({
+                    id: selectedContact.id,
+                    type: "contacts",
+                    title: selectedContact.full_name,
+                    subtitle: `Email: ${selectedContact.email} • Phone: ${selectedContact.phone}`,
+                    referenceId: `MSG-${selectedContact.id.slice(0, 6)}`
+                  });
+                }}
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 border border-rose-500/40 text-rose-300 font-bold text-xs uppercase font-mono tracking-wider transition-colors shadow-sm"
               >
                 <Trash2 className="w-3.5 h-3.5" />
                 <span>Delete</span>
               </button>
               <button
                 onClick={() => setSelectedContact(null)}
-                className="px-5 py-2 rounded-xl bg-gold-500 hover:bg-gold-400 text-navy-950 font-bold text-xs uppercase font-mono tracking-wider"
+                className="px-6 py-2.5 rounded-xl bg-gold-500 hover:bg-gold-400 text-navy-950 font-bold text-xs uppercase font-mono tracking-wider transition-colors"
               >
                 Done
               </button>
