@@ -1,0 +1,67 @@
+export const SCHOOL_CONFIG = {
+  name: "DAV Public School",
+  subName: "Qilla Mandi, Batala",
+  educationRange: "Nursery to Class 10",
+  tagline: "Where Curiosity Begins. Growing Minds, Building Futures.",
+  motto: "Work is Worship • तमसो मा ज्योतिर्गमय",
+  affiliation: "Affiliated to Central Board of Secondary Education (CBSE), New Delhi",
+  affiliationNo: "1630182",
+  schoolCode: "20176",
+  managedBy: "DAV College Managing Committee (DAVCMC), New Delhi",
+  establishedYear: 1989,
+  address: {
+    street: "Qilla Mandi Road",
+    area: "Near Historic Qilla Mandi",
+    city: "Batala",
+    district: "Gurdaspur",
+    state: "Punjab",
+    pincode: "143505",
+    country: "India",
+    googleMapsUrl: "https://maps.google.com/?q=DAV+Public+School+Qilla+Mandi+Batala",
+  },
+  contact: {
+    primaryPhone: "+91 1871 240567",
+    admissionsHelpline: "+91 98765 43210",
+    whatsapp: "+91 98765 43210",
+    whatsappLink: "https://wa.me/919876543210?text=Hello%20DAV%20Qilla%20Mandi%2C%20I%20am%20inquiring%20about%20Admissions%20for%20Nursery%20to%20Class%2010",
+    email: "davqm_batala@yahoo.co.in",
+    admissionsEmail: "admissions@davqillamandi.edu.in",
+    officeHours: "Monday – Saturday: 8:00 AM – 3:30 PM",
+  },
+  stats: [
+    { value: "35+", label: "Years of Educational Legacy", description: "Empowering young learners since 1989" },
+    { value: "2,400+", label: "Enrolled Scholars", description: "From Nursery to Class 10" },
+    { value: "100%", label: "CBSE Class 10 Pass Rate", description: "Consistently leading district results" },
+    { value: "100+", label: "Dedicated Master Educators", description: "1:22 Teacher-to-Student Mentorship" },
+    { value: "12+", label: "Acres of Green Campus", description: "Smart classrooms, science labs & sports pavilion" },
+    { value: "50+", label: "State & National Accolades", description: "In Olympiads, Sports & Performing Arts" },
+  ],
+  leadership: {
+    principal: {
+      name: "Mrs. Paramjit Kaur",
+      designation: "Principal & Head of Institution",
+      qualifications: "M.Sc., M.Ed., M.Phil. (Gold Medalist)",
+      messageExcerpt: "At DAV Public School Qilla Mandi, we believe the formative years from Nursery to Class 10 shape the entire trajectory of a child's life. We fuse timeless Vedic values with modern scientific discovery to nurture curious, grounded, and confident young leaders.",
+      fullMessage: [
+        "Welcome to DAV Public School, Qilla Mandi. For more than three decades, our campus has served as a nurturing sanctuary where every child's innate potential is recognized, celebrated, and carefully cultivated.",
+        "Under the aegis of the DAV College Managing Committee, New Delhi, we provide a complete Nursery to Class 10 educational journey. Our curriculum blends foundational literacy, joyful exploration, experiential science labs, robotics, classical arts, sportsmanship, and Vedic ethics.",
+        "The journey from early childhood to Class 10 is transformative. Our dedicated educators provide a safe, intellectually stimulating, and morally uplifting environment so that every student steps out of our gates with academic strength, social empathy, and steadfast self-confidence.",
+        "We invite parents to partner with us in shaping a joyful, purpose-driven foundation for their children."
+      ],
+      image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=800",
+    },
+    manager: {
+      name: "Dr. V. K. Sharma",
+      designation: "School Manager & DAVCMC Regional Director",
+    }
+  },
+  admissionsSession: "2026 – 2027",
+  links: {
+    cbseMandatoryDisclosure: "/mandatory-disclosure",
+    prospectusPdf: "/documents/DAV_QillaMandi_Prospectus_2026.pdf",
+    transferCertificates: "/tc-verification",
+    facebook: "https://facebook.com",
+    instagram: "https://instagram.com",
+    youtube: "https://youtube.com",
+  }
+};

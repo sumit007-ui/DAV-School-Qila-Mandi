@@ -1,0 +1,63 @@
+import Link from "next/link";
+import { SCHOOL_CONFIG } from "@/config/school";
+
+export function BrandLogo({
+  variant = "light",
+  className = "",
+  schoolName,
+}: {
+  variant?: "light" | "dark" | "gold";
+  className?: string;
+  schoolName?: string;
+}) {
+  const isDark = variant === "dark";
+  const name = schoolName || SCHOOL_CONFIG.name;
+
+  return (
+    <Link
+      href="/"
+      className={`group flex items-center gap-3.5 focus:outline-none focus:ring-2 focus:ring-gold-500 rounded-lg transition-transform ${className}`}
+      aria-label="DAV Public School Qilla Mandi Home"
+    >
+      {/* Emblem Graphic */}
+      <div className="relative flex items-center justify-center w-11 h-11 rounded-full bg-gradient-to-br from-gold-400 via-gold-500 to-gold-700 shadow-md p-0.5 transition-transform duration-300 group-hover:scale-105">
+        <div className="w-full h-full rounded-full bg-navy-950 flex items-center justify-center border border-gold-300/40">
+          <span className="font-serif font-bold text-gold-400 text-base tracking-tighter">
+            DAV
+          </span>
+        </div>
+      </div>
+
+      {/* School Typography */}
+      <div className="flex flex-col">
+        <div className="flex items-center gap-2">
+          <span
+            className={`font-serif font-bold text-lg sm:text-xl tracking-tight leading-none transition-colors ${
+              isDark ? "text-white" : "text-navy-950 group-hover:text-gold-600"
+            }`}
+          >
+            {name}
+          </span>
+        </div>
+        <div className="flex items-center gap-1.5 mt-0.5">
+          <span
+            className={`text-[10px] sm:text-xs font-semibold tracking-widest uppercase ${
+              isDark ? "text-gold-400" : "text-gold-600"
+            }`}
+          >
+            {SCHOOL_CONFIG.subName}
+          </span>
+          <span
+            className={`text-[9px] px-1.5 py-0.5 rounded font-mono font-medium ${
+              isDark
+                ? "bg-navy-800 text-cream-200 border border-navy-700"
+                : "bg-cream-100 text-navy-700 border border-cream-300"
+            }`}
+          >
+            Est. 1989
+          </span>
+        </div>
+      </div>
+    </Link>
+  );
+}
