@@ -21,7 +21,10 @@ import {
   GraduationCap,
   MessageSquare,
   ShieldCheck,
-  ChevronRight
+  ChevronRight,
+  Trash2,
+  AlertTriangle,
+  Loader2
 } from "lucide-react";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 
@@ -65,6 +68,16 @@ export default function AdminEnquiriesDashboard() {
   const [selectedAdmission, setSelectedAdmission] = useState<AdmissionEnquiry | null>(null);
   const [selectedContact, setSelectedContact] = useState<ContactEnquiry | null>(null);
   const [updatingId, setUpdatingId] = useState<string | null>(null);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [notification, setNotification] = useState<{ message: string; type: "success" | "error" } | null>(null);
+
+  // Auto-dismiss toast notification
+  useEffect(() => {
+    if (notification) {
+      const timer = setTimeout(() => setNotification(null), 4000);
+      return () => clearTimeout(timer);
+    }
+  }, [notification]);
 
   // Check auth session and load data
   const fetchData = async () => {
@@ -142,9 +155,11 @@ export default function AdminEnquiriesDashboard() {
         if (selectedAdmission?.id === id) {
           setSelectedAdmission((prev) => (prev ? { ...prev, status: newStatus } : null));
         }
+        setNotification({ message: "Status updated successfully", type: "success" });
       }
     } catch (err) {
       console.error("Status update error:", err);
+      setNotification({ message: "Failed to update status", type: "error" });
     } finally {
       setUpdatingId(null);
     }
@@ -168,11 +183,116 @@ export default function AdminEnquiriesDashboard() {
         if (selectedContact?.id === id) {
           setSelectedContact((prev) => (prev ? { ...prev, status: newStatus } : null));
         }
+        setNotification({ message: "Status updated successfully", type: "success" });
       }
     } catch (err) {
       console.error("Status update error:", err);
+      setNotification({ message: "Failed to update status", type: "error" });
     } finally {
       setUpdatingId(null);
+    }
+  };
+
+  // Direct Delete Handlers
+  const handleDeleteAdmission = async (id: string, studentName: string) => {
+    if (!window.confirm(`Are you sure you want to permanently delete admission enquiry for "${studentName}"?`)) {
+      return;
+    }
+
+    setDeletingId(id);
+    try {
+      // 1. Try Supabase Client Direct Delete
+      const supabase = getSupabaseBrowserClient();
+      let deleteSuccess = false;
+
+      if (supabase) {
+        const { error: directErr } = await supabase
+          .from("admission_enquiries")
+          .delete()
+          .eq("id", id);
+
+        if (!directErr) {
+          deleteSuccess = true;
+        }
+      }
+
+      // 2. Fallback to Admin API route with Service Role if direct RLS blocks
+      if (!deleteSuccess) {
+        const res = await fetch("/api/admin/enquiries/delete", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id, type: "admissions" }),
+        });
+        const resData = await res.json();
+        if (resData.success) {
+          deleteSuccess = true;
+        } else {
+          throw new Error(resData.error || "Delete failed");
+        }
+      }
+
+      if (deleteSuccess) {
+        setAdmissions((prev) => prev.filter((item) => item.id !== id));
+        if (selectedAdmission?.id === id) {
+          setSelectedAdmission(null);
+        }
+        setNotification({ message: `Enquiry for ${studentName} deleted successfully.`, type: "success" });
+      }
+    } catch (err: any) {
+      console.error("Delete admission error:", err);
+      setNotification({ message: err.message || "Failed to delete record.", type: "error" });
+    } finally {
+      setDeletingId(null);
+    }
+  };
+
+  const handleDeleteContact = async (id: string, senderName: string) => {
+    if (!window.confirm(`Are you sure you want to permanently delete contact inquiry from "${senderName}"?`)) {
+      return;
+    }
+
+    setDeletingId(id);
+    try {
+      const supabase = getSupabaseBrowserClient();
+      let deleteSuccess = false;
+
+      if (supabase) {
+        const { error: directErr } = await supabase
+          .from("contact_enquiries")
+          .delete()
+          .eq("id", id);
+
+        if (!directErr) {
+          deleteSuccess = true;
+        }
+      }
+
+      if (!deleteSuccess) {
+        const res = await fetch("/api/admin/enquiries/delete", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id, type: "contacts" }),
+        });
+        const resData = await res.json();
+        if (resData.success) {
+          deleteSuccess = true;
+        } else {
+          throw new Error(resData.error || "Delete failed");
+        }
+      }
+
+      if (deleteSuccess) {
+        setContacts((prev) => prev.filter((item) => item.id !== id));
+        if (selectedContact?.id === id) {
+          setSelectedContact(null);
+        }
+        setNotification({ message: `Contact message from ${senderName} deleted successfully.`, type: "success" });
+      }
+    } catch (err: any) {
+      console.error("Delete contact error:", err);
+      setNotification({ message: err.message || "Failed to delete record.", type: "error" });
+    } finally {
+      setDeletingId(null);
     }
   };
 
@@ -246,7 +366,28 @@ export default function AdminEnquiriesDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-[#060F1E] text-white flex flex-col">
+    <div className="min-h-screen bg-[#060F1E] text-white flex flex-col relative">
+      {/* Toast Notification */}
+      {notification && (
+        <div className="fixed bottom-6 right-6 z-50 animate-bounce">
+          <div className={`px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 border text-xs font-mono ${
+            notification.type === "success"
+              ? "bg-emerald-950 border-emerald-500/50 text-emerald-200"
+              : "bg-rose-950 border-rose-500/50 text-rose-200"
+          }`}>
+            {notification.type === "success" ? (
+              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+            ) : (
+              <AlertTriangle className="w-4 h-4 text-rose-400 shrink-0" />
+            )}
+            <span>{notification.message}</span>
+            <button onClick={() => setNotification(null)} className="ml-2 hover:opacity-70">
+              <X className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Top Admin Navigation Bar */}
       <header className="border-b border-white/10 bg-[#0B1A30]/90 backdrop-blur-xl sticky top-0 z-30 px-4 sm:px-6 lg:px-8 py-4 flex flex-wrap items-center justify-between gap-4 shadow-xl">
         <div className="flex items-center gap-3.5">
@@ -470,13 +611,27 @@ export default function AdminEnquiriesDashboard() {
                           </select>
                         </td>
                         <td className="px-6 py-4 text-right">
-                          <button
-                            onClick={() => setSelectedAdmission(item)}
-                            className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-cream-300 hover:text-white transition-colors"
-                            title="View Details"
-                          >
-                            <Eye className="w-4 h-4" />
-                          </button>
+                          <div className="flex items-center justify-end gap-1.5">
+                            <button
+                              onClick={() => setSelectedAdmission(item)}
+                              className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-cream-300 hover:text-white transition-colors"
+                              title="View Details"
+                            >
+                              <Eye className="w-4 h-4" />
+                            </button>
+                            <button
+                              disabled={deletingId === item.id}
+                              onClick={() => handleDeleteAdmission(item.id, item.student_name)}
+                              className="p-2 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 hover:text-rose-300 transition-colors disabled:opacity-50"
+                              title="Delete Permanently"
+                            >
+                              {deletingId === item.id ? (
+                                <Loader2 className="w-4 h-4 animate-spin text-rose-400" />
+                              ) : (
+                                <Trash2 className="w-4 h-4" />
+                              )}
+                            </button>
+                          </div>
                         </td>
                       </tr>
                     ))
@@ -544,13 +699,27 @@ export default function AdminEnquiriesDashboard() {
                           </select>
                         </td>
                         <td className="px-6 py-4 text-right">
-                          <button
-                            onClick={() => setSelectedContact(item)}
-                            className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-cream-300 hover:text-white transition-colors"
-                            title="View Full Message"
-                          >
-                            <Eye className="w-4 h-4" />
-                          </button>
+                          <div className="flex items-center justify-end gap-1.5">
+                            <button
+                              onClick={() => setSelectedContact(item)}
+                              className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-cream-300 hover:text-white transition-colors"
+                              title="View Full Message"
+                            >
+                              <Eye className="w-4 h-4" />
+                            </button>
+                            <button
+                              disabled={deletingId === item.id}
+                              onClick={() => handleDeleteContact(item.id, item.full_name)}
+                              className="p-2 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 hover:text-rose-300 transition-colors disabled:opacity-50"
+                              title="Delete Permanently"
+                            >
+                              {deletingId === item.id ? (
+                                <Loader2 className="w-4 h-4 animate-spin text-rose-400" />
+                              ) : (
+                                <Trash2 className="w-4 h-4" />
+                              )}
+                            </button>
+                          </div>
                         </td>
                       </tr>
                     ))
@@ -626,9 +795,14 @@ export default function AdminEnquiriesDashboard() {
             )}
 
             <div className="pt-4 border-t border-white/10 flex items-center justify-between">
-              <span className="text-xs font-mono text-cream-400">
-                Submitted on: {new Date(selectedAdmission.created_at).toLocaleString()}
-              </span>
+              <button
+                disabled={deletingId === selectedAdmission.id}
+                onClick={() => handleDeleteAdmission(selectedAdmission.id, selectedAdmission.student_name)}
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 border border-rose-500/40 text-rose-300 font-bold text-xs uppercase font-mono tracking-wider transition-colors disabled:opacity-50"
+              >
+                <Trash2 className="w-3.5 h-3.5" />
+                <span>Delete</span>
+              </button>
               <button
                 onClick={() => setSelectedAdmission(null)}
                 className="px-5 py-2 rounded-xl bg-gold-500 hover:bg-gold-400 text-navy-950 font-bold text-xs uppercase font-mono tracking-wider"
@@ -690,9 +864,14 @@ export default function AdminEnquiriesDashboard() {
             </div>
 
             <div className="pt-4 border-t border-white/10 flex items-center justify-between">
-              <span className="text-xs font-mono text-cream-400">
-                Submitted on: {new Date(selectedContact.created_at).toLocaleString()}
-              </span>
+              <button
+                disabled={deletingId === selectedContact.id}
+                onClick={() => handleDeleteContact(selectedContact.id, selectedContact.full_name)}
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 border border-rose-500/40 text-rose-300 font-bold text-xs uppercase font-mono tracking-wider transition-colors disabled:opacity-50"
+              >
+                <Trash2 className="w-3.5 h-3.5" />
+                <span>Delete</span>
+              </button>
               <button
                 onClick={() => setSelectedContact(null)}
                 className="px-5 py-2 rounded-xl bg-gold-500 hover:bg-gold-400 text-navy-950 font-bold text-xs uppercase font-mono tracking-wider"

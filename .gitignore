@@ -10,23 +10,30 @@
 /build
 /dist
 
-# Production and Environment Variables
+# Sanity CLI & Studio Local Runtime Cache
+.sanity/
+sanity.cli.cache/
+
+# Environment Variables & Secrets (Keep .env.example only)
 .env
-.env.local
+.env*.local
 .env.development.local
 .env.test.local
 .env.production.local
-*.env*.local
+*.pem
 
-# Debug and Logs
+# Debug, Logs & Cache
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 .pnpm-debug.log*
+.turbo/
+.eslintcache
 
-# Vercel
+# Vercel Deployment Cache
 .vercel
 
 # TypeScript
@@ -42,9 +49,10 @@ next-env.d.ts
 *.sublime-workspace
 .DS_Store
 Thumbs.db
+ehthumbs.db
 
-# Agent and AI scratch files
-.agents/scratch/
+# Agent & Temporary Scratch Files
+.agents/
 scratch/
 *.tmp
 *.temp
