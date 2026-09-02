@@ -172,7 +172,11 @@ function PhaseCard({ stage, index, onInView }: { stage: typeof JOURNEY_STAGES[0]
   );
 }
 
-export function LearningJourneySection() {
+interface LearningJourneySectionProps {
+  stages?: any[];
+}
+
+export function LearningJourneySection({ stages }: LearningJourneySectionProps = {}) {
   const [activePhaseIndex, setActivePhaseIndex] = useState(0);
 
   const scrollToPhase = (index: number) => {
