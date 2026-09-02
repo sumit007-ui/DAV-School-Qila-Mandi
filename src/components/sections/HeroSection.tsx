@@ -37,35 +37,35 @@ export function HeroSection({ onOpenAdmissionModal, onOpenProspectusModal }: Her
       </div>
 
       {/* Main Hero Content */}
-      <div className="relative z-10 w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 my-auto py-10">
-        <div className="max-w-4xl space-y-6">
+      <div className="relative z-10 w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 my-auto py-12 lg:py-16">
+        <div className="max-w-4xl space-y-7">
           {/* Eyebrow Pill in DM Mono */}
-          <Reveal direction="down" delay={0.1}>
-            <div className="inline-flex items-center gap-2.5 px-3.5 py-1 rounded bg-white/[0.06] border border-white/15 backdrop-blur-md text-[#A8C3BC] text-[11px] font-mono tracking-[0.16em] uppercase">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#A8C3BC] animate-ping" />
-              <span>DAV PUBLIC SCHOOL · BATALA · EST. 1989</span>
+          <Reveal direction="down" delay={0.05}>
+            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-white/[0.08] border border-white/20 backdrop-blur-md text-[#A8C3BC] text-xs font-mono tracking-[0.16em] uppercase shadow-sm">
+              <span className="w-2 h-2 rounded-full bg-[#A8C3BC] animate-pulse" />
+              <span>DAV PUBLIC SCHOOL · QILLA MANDI, BATALA · EST. 1989</span>
             </div>
           </Reveal>
 
-          {/* Grand Cormorant Garamond Display Headline */}
-          <div className="space-y-3">
-            <LineReveal as="h1" className="font-editorial text-6xl sm:text-7xl lg:text-[84px] font-semibold leading-[0.98] tracking-[-0.02em] text-white">
+          {/* Grand Prestigious Headline */}
+          <div className="space-y-4">
+            <LineReveal as="h1" className="font-editorial text-5xl sm:text-6xl md:text-7xl lg:text-[82px] font-bold leading-[1.02] tracking-[-0.015em] text-white drop-shadow-md">
               {"Where Curiosity Begins,\nLeaders Emerge."}
             </LineReveal>
 
-            <Reveal direction="up" delay={0.3}>
-              <p className="text-white/80 text-base sm:text-lg font-normal leading-relaxed max-w-2xl font-sans pt-1">
+            <Reveal direction="up" delay={0.2}>
+              <p className="text-white/90 text-base sm:text-lg md:text-xl font-normal leading-relaxed max-w-2xl font-sans pt-1 text-balance">
                 Empowering young scholars from Nursery to Class 10 with Vedic integrity, scientific inquiry, and holistic leadership in Batala.
               </p>
             </Reveal>
           </div>
 
           {/* Action Buttons */}
-          <Reveal direction="up" delay={0.45}>
-            <div className="flex flex-wrap items-center gap-3 pt-2">
+          <Reveal direction="up" delay={0.35}>
+            <div className="flex flex-wrap items-center gap-4 pt-2">
               <MagneticButton onClick={onOpenAdmissionModal}>
                 <button
-                  className="px-7 py-3.5 rounded bg-white hover:bg-white/90 text-[#0B1F33] font-bold text-xs uppercase tracking-[0.14em] transition-all duration-300 shadow-xl shadow-black/30 hover:scale-[1.02] active:scale-95 flex items-center gap-2.5 cursor-pointer font-sans"
+                  className="px-7 py-3.5 rounded-lg bg-white hover:bg-[#F6F3ED] text-[#0B1F33] font-bold text-xs uppercase tracking-[0.14em] transition-all duration-300 shadow-xl shadow-black/40 hover:scale-[1.02] active:scale-95 flex items-center gap-2.5 cursor-pointer font-sans"
                 >
                   <span>Admissions {SCHOOL_CONFIG.admissionsSession}</span>
                   <ArrowRight className="w-4 h-4 text-[#0B1F33]" />
@@ -74,7 +74,7 @@ export function HeroSection({ onOpenAdmissionModal, onOpenProspectusModal }: Her
 
               <button
                 onClick={scrollToExplore}
-                className="px-6 py-3.5 rounded bg-[#163A5F]/80 hover:bg-[#163A5F] text-white font-semibold text-xs uppercase tracking-[0.14em] backdrop-blur-md border border-white/15 transition-all duration-300 flex items-center gap-2 cursor-pointer font-sans"
+                className="px-6 py-3.5 rounded-lg bg-[#163A5F]/85 hover:bg-[#163A5F] text-white font-semibold text-xs uppercase tracking-[0.14em] backdrop-blur-md border border-white/20 transition-all duration-300 flex items-center gap-2 cursor-pointer font-sans hover:border-white/40"
               >
                 <Compass className="w-4 h-4 text-[#A8C3BC]" />
                 <span>Explore School</span>
@@ -82,7 +82,7 @@ export function HeroSection({ onOpenAdmissionModal, onOpenProspectusModal }: Her
 
               <button
                 onClick={onOpenProspectusModal}
-                className="text-xs uppercase tracking-wider text-white/70 hover:text-white underline underline-offset-6 py-2 px-3 transition-colors font-mono cursor-pointer"
+                className="text-xs uppercase tracking-[0.14em] text-white/80 hover:text-white underline underline-offset-8 py-2 px-3 transition-colors font-mono cursor-pointer font-medium"
               >
                 Download Prospectus
               </button>
