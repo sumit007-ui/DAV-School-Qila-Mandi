@@ -146,11 +146,12 @@ export function EditorialStatement() {
         </div>
 
         {/* Subtle Horizontal Marquee Ribbon */}
-        <div className="pt-4 border-t border-[#163A5F]/10">
+        <div className="pt-6 pb-2 border-t border-[#163A5F]/15">
           <Marquee
             items={marqueeWords}
-            speed={35}
-            itemClassName="text-[11px] font-mono uppercase tracking-[0.2em] text-[#2F5D62]"
+            speed={38}
+            separator="•"
+            itemClassName="text-sm sm:text-base lg:text-lg font-bold font-mono uppercase tracking-[0.16em] text-[#163A5F] hover:text-[#2F5D62] transition-colors"
           />
         </div>
       </div>

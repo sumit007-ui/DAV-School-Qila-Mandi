@@ -47,7 +47,7 @@ export function Marquee({
         {[...items, ...items, ...items, ...items].map((item, idx) => (
           <span key={idx} className={`inline-flex items-center gap-6 ${itemClassName}`}>
             <span>{item}</span>
-            <span className="opacity-40 text-xs">{separator}</span>
+            <span className="opacity-40 text-[0.8em]">{separator}</span>
           </span>
         ))}
       </motion.div>
