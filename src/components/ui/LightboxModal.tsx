@@ -26,11 +26,11 @@ export function LightboxModal({ item, onClose, onPrev, onNext }: LightboxModalPr
   if (!item) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-8 bg-navy-950/95 backdrop-blur-xl animate-fade-in">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-8 bg-[#16324F]/95 backdrop-blur-xl animate-fade-in font-sans">
       {/* Close button */}
       <button
         onClick={onClose}
-        className="absolute top-6 right-6 z-50 p-2.5 rounded-full bg-navy-900/80 text-cream-100 hover:bg-navy-800 hover:text-white border border-navy-700 transition-colors"
+        className="absolute top-6 right-6 z-50 p-2.5 rounded-full bg-[#0E2135]/80 text-white hover:bg-white hover:text-[#16324F] border border-white/10 transition-colors"
         aria-label="Close Lightbox"
       >
         <X className="w-6 h-6" />
@@ -43,7 +43,7 @@ export function LightboxModal({ item, onClose, onPrev, onNext }: LightboxModalPr
             e.stopPropagation();
             onPrev();
           }}
-          className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 z-50 p-3 rounded-full bg-navy-900/80 text-cream-100 hover:bg-gold-500 hover:text-navy-950 border border-navy-700 transition-all shadow-xl"
+          className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 z-50 p-3 rounded-full bg-[#0E2135]/80 text-white hover:bg-white hover:text-[#16324F] border border-white/10 transition-all shadow-xl"
           aria-label="Previous image"
         >
           <ChevronLeft className="w-6 h-6" />
@@ -56,7 +56,7 @@ export function LightboxModal({ item, onClose, onPrev, onNext }: LightboxModalPr
             e.stopPropagation();
             onNext();
           }}
-          className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 z-50 p-3 rounded-full bg-navy-900/80 text-cream-100 hover:bg-gold-500 hover:text-navy-950 border border-navy-700 transition-all shadow-xl"
+          className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 z-50 p-3 rounded-full bg-[#0E2135]/80 text-white hover:bg-white hover:text-[#16324F] border border-white/10 transition-all shadow-xl"
           aria-label="Next image"
         >
           <ChevronRight className="w-6 h-6" />
@@ -65,7 +65,7 @@ export function LightboxModal({ item, onClose, onPrev, onNext }: LightboxModalPr
 
       {/* Main Image and Caption Card */}
       <div
-        className="max-w-5xl w-full max-h-[90vh] flex flex-col bg-navy-900/90 rounded-2xl overflow-hidden border border-navy-800 shadow-2xl"
+        className="max-w-5xl w-full max-h-[90vh] flex flex-col bg-[#0E2135] rounded-2xl overflow-hidden border border-white/10 shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="relative w-full h-[55vh] sm:h-[68vh] bg-black">
@@ -79,22 +79,22 @@ export function LightboxModal({ item, onClose, onPrev, onNext }: LightboxModalPr
           />
         </div>
 
-        <div className="p-5 sm:p-6 bg-navy-900 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-t border-navy-800">
+        <div className="p-5 sm:p-6 bg-[#0E2135] flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-t border-white/10">
           <div>
-            <span className="text-[11px] font-mono font-bold text-gold-400 uppercase tracking-widest block mb-1">
+            <span className="text-[11px] font-sans font-bold text-sage-300 uppercase tracking-widest block mb-1">
               {item.category}
             </span>
             <h3 className="font-serif text-lg sm:text-xl text-white font-medium">
               {item.title}
             </h3>
             {item.caption && (
-              <p className="text-xs sm:text-sm text-cream-300 mt-1 max-w-2xl">
+              <p className="text-xs sm:text-sm text-ivory-300 mt-1 max-w-2xl font-normal">
                 {item.caption}
               </p>
             )}
           </div>
 
-          <div className="text-xs text-cream-400 font-mono hidden sm:block text-right">
+          <div className="text-xs text-ivory-400 font-sans hidden sm:block text-right">
             <span>DAV Public School Qilla Mandi</span>
           </div>
         </div>

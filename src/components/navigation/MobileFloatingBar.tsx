@@ -23,14 +23,14 @@ export function MobileFloatingBar({ onOpenAdmissionModal }: { onOpenAdmissionMod
   if (!isVisible) return null;
 
   return (
-    <aside aria-label="Quick School Actions" className="fixed bottom-0 left-0 right-0 z-40 bg-navy-950/95 backdrop-blur-lg border-t border-navy-800 p-2 sm:hidden shadow-2xl animate-fade-in">
-      <div className="grid grid-cols-4 gap-2 text-center text-[10px] font-medium text-cream-200">
+    <aside aria-label="Quick School Actions" className="fixed bottom-0 left-0 right-0 z-50 bg-[#0B1F33]/95 backdrop-blur-xl border-t border-white/10 p-2 sm:hidden shadow-2xl font-sans pb-[max(8px,env(safe-area-inset-bottom))]">
+      <div className="grid grid-cols-4 gap-2 text-center text-[10px] font-mono font-medium text-white/80">
         {/* Quick Call */}
         <a
           href={`tel:${SCHOOL_CONFIG.contact.primaryPhone}`}
-          className="flex flex-col items-center justify-center gap-1 py-1.5 px-1 rounded-xl bg-navy-900/80 hover:bg-navy-800 text-cream-100 transition-colors min-h-[44px]"
+          className="flex flex-col items-center justify-center gap-1 py-1.5 px-1 rounded-xl bg-white/5 hover:bg-white/15 active:scale-95 text-white transition-all min-h-[46px] border border-white/10"
         >
-          <Phone className="w-4 h-4 text-gold-400" />
+          <Phone className="w-4 h-4 text-[#A8C3BC]" />
           <span>Call</span>
         </a>
 
@@ -39,9 +39,9 @@ export function MobileFloatingBar({ onOpenAdmissionModal }: { onOpenAdmissionMod
           href={SCHOOL_CONFIG.contact.whatsappLink}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex flex-col items-center justify-center gap-1 py-1.5 px-1 rounded-xl bg-emerald-950/90 border border-emerald-700/40 text-emerald-300 transition-colors min-h-[44px]"
+          className="flex flex-col items-center justify-center gap-1 py-1.5 px-1 rounded-xl bg-[#2F5D62]/60 border border-[#2F5D62] text-[#A8C3BC] active:scale-95 transition-all min-h-[46px]"
         >
-          <MessageCircle className="w-4 h-4 text-emerald-400" />
+          <MessageCircle className="w-4 h-4 text-[#A8C3BC]" />
           <span>WhatsApp</span>
         </a>
 
@@ -50,19 +50,19 @@ export function MobileFloatingBar({ onOpenAdmissionModal }: { onOpenAdmissionMod
           href={SCHOOL_CONFIG.address.googleMapsUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex flex-col items-center justify-center gap-1 py-1.5 px-1 rounded-xl bg-navy-900/80 hover:bg-navy-800 text-cream-200 transition-colors min-h-[44px]"
+          className="flex flex-col items-center justify-center gap-1 py-1.5 px-1 rounded-xl bg-white/5 hover:bg-white/15 active:scale-95 text-white transition-all min-h-[46px] border border-white/10"
         >
-          <MapPin className="w-4 h-4 text-gold-400" />
-          <span>Directions</span>
+          <MapPin className="w-4 h-4 text-[#A8C3BC]" />
+          <span>Location</span>
         </a>
 
         {/* Apply Now Primary CTA */}
         <button
           onClick={onOpenAdmissionModal}
-          className="flex flex-col items-center justify-center gap-1 py-1.5 px-1 rounded-xl bg-gradient-to-r from-gold-400 to-gold-500 text-navy-950 font-bold transition-all shadow-md active:scale-95 min-h-[44px]"
+          className="flex flex-col items-center justify-center gap-1 py-1.5 px-1 rounded-xl bg-white text-[#0B1F33] font-bold active:scale-95 transition-all min-h-[46px] shadow-sm cursor-pointer"
         >
-          <Sparkles className="w-4 h-4 text-navy-950" />
-          <span>Admissions</span>
+          <Sparkles className="w-4 h-4 text-[#2F5D62]" />
+          <span>Apply</span>
         </button>
       </div>
     </aside>

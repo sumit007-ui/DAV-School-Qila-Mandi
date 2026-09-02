@@ -8,6 +8,7 @@ import { MobileFloatingBar } from "@/components/navigation/MobileFloatingBar";
 import { SearchModal } from "@/components/ui/SearchModal";
 import { AdmissionModal } from "@/components/forms/AdmissionModal";
 import { ProspectusDownloadModal } from "@/components/forms/ProspectusDownloadModal";
+import { ScrollProgress, CustomCursor } from "@/components/motion";
 
 interface ModalContextType {
   openAdmissionModal: (defaultGrade?: string) => void;
@@ -63,6 +64,9 @@ export function ClientAppWrapper({
       }}
     >
       <div className="flex flex-col min-h-screen">
+        <ScrollProgress />
+        <CustomCursor />
+
         <Navbar
           siteSettings={siteSettings}
           onOpenSearch={openSearchModal}

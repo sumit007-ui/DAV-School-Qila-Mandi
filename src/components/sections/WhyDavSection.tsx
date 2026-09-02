@@ -3,176 +3,233 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Sparkles, ArrowRight, Award, Compass, Trophy, Palette, HeartHandshake, ShieldCheck } from "lucide-react";
+import { ArrowRight, Award, Compass, Trophy, Palette, HeartHandshake, ShieldCheck, Sparkles, CheckCircle2 } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useAppModals } from "@/components/layout/ClientAppWrapper";
-import { EditorialEyebrow } from "@/components/ui/SplitText";
+import { LineReveal, Reveal } from "@/components/motion";
+
+const PILLARS = [
+  {
+    id: "academic-excellence",
+    index: "01",
+    title: "Academic Rigor & Concept Mastery",
+    category: "ACADEMICS",
+    subtitle: "CBSE Curriculum & 100% Board Distinction",
+    description: "Our CBSE-aligned pedagogy emphasizes deep conceptual clarity over rote memorization. Consistent 100% board pass rates and district rank toppers in Class 10 reflect our unwavering academic devotion in Batala.",
+    image: "https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&q=85&w=1200",
+    icon: Award,
+    badge: "100% CBSE Pass Record",
+    metrics: "Rank 1 in Batala · 100% Pass Rate"
+  },
+  {
+    id: "values-character",
+    index: "02",
+    title: "Vedic Values & Moral Fortitude",
+    category: "HERITAGE",
+    subtitle: "DAVCMC Tradition & Daily Ethical Grounding",
+    description: "Under DAVCMC New Delhi, we weave timeless Vedic principles, morning Hawans, and social empathy into daily life, cultivating humble, disciplined, and morally courageous scholars.",
+    image: "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&q=85&w=1200",
+    icon: HeartHandshake,
+    badge: "Vedic Heritage",
+    metrics: "Daily Hawan · Character Pedagogy"
+  },
+  {
+    id: "atal-technology",
+    index: "03",
+    title: "Technology & Atal Robotics Lab",
+    category: "INNOVATION",
+    subtitle: "Atal Tinkering Cell, 3D Printers & IoT",
+    description: "Equipped with an advanced Atal Tinkering Lab, 3D printers, Python IoT robotics kits, and interactive digital smart panels in every classroom from Class 1 upwards.",
+    image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=85&w=1200",
+    icon: Compass,
+    badge: "Atal Tinkering Hub",
+    metrics: "75\" Smart Panels · Robotics Kits"
+  },
+  {
+    id: "sports-conditioning",
+    index: "04",
+    title: "Athletics, Turf Nets & Martial Arts",
+    category: "ATHLETICS",
+    subtitle: "Championship Arenas & Certified NIS Trainers",
+    description: "Dedicated cricket turf nets, FIBA-grade basketball courts, speed skating rink, and NIS-certified coaches training champions for district, state, and national CBSE tournaments.",
+    image: "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&q=85&w=1200",
+    icon: Trophy,
+    badge: "State & National Medals",
+    metrics: "Cricket Turf · Taekwondo Dojo"
+  },
+  {
+    id: "arts-expression",
+    index: "05",
+    title: "Classical Arts & Theatrical Expression",
+    category: "CULTURE",
+    subtitle: "800-Seat Grand Stage & Musical Studios",
+    description: "Vocal and instrumental mastery in Indian classical music, harmonium, tabla, and folk theatre celebrated in our 800-seat acoustic auditorium.",
+    image: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=85&w=1200",
+    icon: Palette,
+    badge: "800-Seat Auditorium",
+    metrics: "Harmonium & Tabla · Drama Guild"
+  },
+  {
+    id: "safety-wellness",
+    index: "06",
+    title: "Safe, Caring & Child-First Campus",
+    category: "SAFETY",
+    subtitle: "100+ CCTV Cameras, GPS Busses & Infirmary",
+    description: "Complete perimeter security with 100+ HD CCTV cameras, GPS-tracked bus fleet covering all of Batala and surrounding towns, verified attendants, and on-campus medical care.",
+    image: "https://images.unsplash.com/photo-1587691592099-24045742c181?auto=format&fit=crop&q=85&w=1200",
+    icon: ShieldCheck,
+    badge: "Child-First Security",
+    metrics: "GPS Fleet · 100+ CCTV Surveillance"
+  }
+];
 
 export function WhyDavSection() {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [hoveredIndex, setHoveredIndex] = useState(0);
   const { openAdmissionModal } = useAppModals();
 
-  const features = [
-    {
-      id: "academic-excellence",
-      title: "Academic Excellence & Concept Mastery",
-      category: "Academics",
-      description: "Our CBSE-aligned pedagogy focuses on conceptual clarity over rote learning. Consistent 100% board distinction rates and district toppers in Class 10 reflect our academic devotion.",
-      image: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&q=85&w=1400",
-      icon: Award,
-      badge: "100% Class 10 Pass Record"
-    },
-    {
-      id: "values-character",
-      title: "Vedic Values & Moral Fortitude",
-      category: "Heritage",
-      description: "Under DAVCMC New Delhi, we weave timeless moral principles, morning Havans, and social empathy into daily life, cultivating humble and grounded human beings.",
-      image: "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&q=85&w=1400",
-      icon: HeartHandshake,
-      badge: "Vedic Principles"
-    },
-    {
-      id: "atal-technology",
-      title: "Technology-Enabled Innovation & Robotics",
-      category: "Innovation",
-      description: "Equipped with an Atal Tinkering Lab, 3D printers, IoT coding kits, and 75-inch smart panels in every classroom from Class 1 upwards.",
-      image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=85&w=1400",
-      icon: Compass,
-      badge: "Atal Tinkering Hub"
-    },
-    {
-      id: "sports-conditioning",
-      title: "Sports, Athletics & Martial Arts",
-      category: "Athletics",
-      description: "Dedicated cricket turf nets, FIBA-grade basketball courts, speed skating track, and certified NIS coaches training champions for national tournaments.",
-      image: "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&q=85&w=1400",
-      icon: Trophy,
-      badge: "Olympic Arenas"
-    },
-    {
-      id: "arts-creativity",
-      title: "Classical Arts, Music & Theatrical Expression",
-      category: "Culture",
-      description: "800-seat Maharshi Dayanand Auditorium, classical tabla and harmonium ateliers, debate societies, and annual 'Pratibha' cultural showcases.",
-      image: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&q=85&w=1400",
-      icon: Palette,
-      badge: "800-Seat Grand Hall"
-    },
-    {
-      id: "safe-supportive",
-      title: "Safe, Caring & Child-First Environment",
-      category: "Safety",
-      description: "120+ CCTV surveillance cameras, biometric access, female attendants on all GPS-enabled school bus routes, and full-time infirmary healthcare staff.",
-      image: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&q=85&w=1400",
-      icon: ShieldCheck,
-      badge: "120+ CCTV Safe"
-    }
-  ];
-
-  const activeFeature = features[activeIndex] || features[0];
-
   return (
-    <section className="py-28 lg:py-36 bg-white text-navy-950 border-b border-cream-300/80 relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+    <section className="py-14 lg:py-20 bg-white text-[#1C2730] border-b border-[#163A5F]/10 relative font-sans overflow-hidden">
+      <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 space-y-10">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div className="space-y-4">
-            <EditorialEyebrow>03 • Institutional Strengths</EditorialEyebrow>
-            <h2 className="font-serif text-4xl sm:text-6xl text-navy-950 font-normal tracking-tight">
-              WHY DAV.
-            </h2>
-            <p className="text-navy-700 text-sm sm:text-base max-w-xl font-light">
-              An ecosystem engineered for character, intellectual depth, and safety. Discover what sets our school apart for families across Batala.
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[#163A5F]/10 pb-6">
+          <div className="space-y-2 max-w-3xl">
+            <Reveal direction="down" delay={0.1}>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-[#2F5D62]/10 text-[#2F5D62] text-[11px] font-mono font-medium tracking-[0.16em] uppercase">
+                <Sparkles className="w-3.5 h-3.5 text-[#2F5D62]" />
+                <span>03 · THE DAV ADVANTAGE</span>
+              </div>
+            </Reveal>
+
+            <LineReveal as="h2" className="font-editorial text-3xl sm:text-5xl lg:text-6xl text-[#0B1F33] font-semibold tracking-tight leading-[1.05]">
+              {"Why Discerning Families Choose Us."}
+            </LineReveal>
+            <p className="text-xs sm:text-sm text-[#1C2730] max-w-2xl font-normal leading-relaxed">
+              Hover over each institutional pillar below to reveal our academic strengths, modern facilities, and cultural traditions.
             </p>
           </div>
 
-          <button
-            onClick={() => openAdmissionModal("Nursery")}
-            className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-navy-950 hover:text-gold-700 transition-colors self-start md:self-auto border-b border-navy-950 pb-1"
+          <Link
+            href="/about"
+            className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-[#0B1F33] hover:text-[#2F5D62] transition-colors border-b border-[#0B1F33] pb-0.5 font-mono self-start md:self-auto"
           >
-            <span>Book a Campus Tour</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </button>
+            <span>Read Institutional Legacy</span>
+            <ArrowRight className="w-3.5 h-3.5 text-[#2F5D62]" />
+          </Link>
         </div>
 
-        {/* Editorial Feature List & Sticky Dynamic Photo Frame */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
-          {/* Left Feature List (Span 6) */}
-          <div className="lg:col-span-6 space-y-2">
-            {features.map((item, idx) => {
-              const isActive = activeIndex === idx;
-              const Icon = item.icon;
-              return (
-                <div
-                  key={item.id}
-                  onClick={() => setActiveIndex(idx)}
-                  onMouseEnter={() => setActiveIndex(idx)}
-                  className={`p-5 rounded-2xl cursor-pointer transition-all duration-300 border ${
-                    isActive
-                      ? "bg-[#FBF9F4] border-gold-500/60 shadow-lg translate-x-2"
-                      : "bg-white border-transparent hover:bg-[#FBF9F4]/60 hover:border-cream-300"
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                      <div
-                        className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors ${
-                          isActive ? "bg-[#060F1E] text-gold-400" : "bg-cream-100 text-navy-700"
-                        }`}
-                      >
-                        <Icon className="w-5 h-5" />
-                      </div>
-                      <div>
-                        <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-gold-700 font-bold block">
-                          0{idx + 1} • {item.category}
-                        </span>
-                        <h3 className="font-serif text-xl sm:text-2xl text-navy-950 font-normal">
-                          {item.title}
-                        </h3>
-                      </div>
-                    </div>
-                    <ArrowRight
-                      className={`w-5 h-5 transition-transform ${
-                        isActive ? "text-gold-700 translate-x-1" : "text-cream-300 opacity-0"
-                      }`}
-                    />
+        {/* Full-Width Interactive Hover Accordion List */}
+        <div className="divide-y divide-[#163A5F]/15 border-y border-[#163A5F]/15">
+          {PILLARS.map((pillar, idx) => {
+            const isHovered = hoveredIndex === idx;
+
+            return (
+              <div
+                key={pillar.id}
+                onMouseEnter={() => setHoveredIndex(idx)}
+                onClick={() => setHoveredIndex(idx)}
+                className={`py-6 lg:py-8 transition-all duration-300 cursor-pointer group px-2 sm:px-4 ${
+                  isHovered ? "bg-[#F6F3ED]/80 rounded-xl" : "hover:bg-[#F6F3ED]/40"
+                }`}
+                data-cursor="REVEAL"
+              >
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-8 items-center">
+                  {/* Left Label & Category (Span 3) */}
+                  <div className="lg:col-span-3 flex items-center gap-4">
+                    <span className="font-mono text-xs sm:text-sm font-bold text-[#2F5D62] tracking-wider">
+                      {pillar.index}
+                    </span>
+                    <span className="px-2.5 py-1 rounded bg-[#2F5D62]/10 text-[#2F5D62] text-[10px] font-mono uppercase tracking-[0.18em] font-semibold">
+                      {pillar.category}
+                    </span>
                   </div>
 
-                  {isActive && (
-                    <p className="text-xs sm:text-sm text-navy-600 mt-4 pt-4 border-t border-cream-300/80 leading-relaxed animate-fade-in pl-14 font-light">
-                      {item.description}
+                  {/* Center Title & Subtitle (Span 6) */}
+                  <div className="lg:col-span-6 space-y-1">
+                    <h3 className={`font-editorial text-2xl sm:text-3xl lg:text-4xl transition-colors duration-200 ${
+                      isHovered ? "text-[#0B1F33] font-medium" : "text-[#0B1F33]/80 group-hover:text-[#0B1F33]"
+                    }`}>
+                      {pillar.title}
+                    </h3>
+                    <p className="text-xs font-mono text-[#68747C]">
+                      {pillar.subtitle}
                     </p>
+                  </div>
+
+                  {/* Right Badge & Arrow (Span 3) */}
+                  <div className="lg:col-span-3 flex items-center justify-between lg:justify-end gap-4">
+                    <span className={`text-[11px] font-mono px-3 py-1 rounded-full border transition-all ${
+                      isHovered 
+                        ? "bg-[#0B1F33] text-[#A8C3BC] border-[#0B1F33]" 
+                        : "bg-white text-[#1C2730] border-[#163A5F]/20"
+                    }`}>
+                      {pillar.badge}
+                    </span>
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${
+                      isHovered ? "bg-[#2F5D62] text-white rotate-0" : "bg-[#163A5F]/10 text-[#163A5F] -rotate-45"
+                    }`}>
+                      <ArrowRight className="w-4 h-4" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Smooth Expandable Narrative on Hover (No click required) */}
+                <AnimatePresence>
+                  {isHovered && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.35, ease: "easeInOut" }}
+                      className="overflow-hidden"
+                    >
+                      <div className="pt-6 mt-6 border-t border-[#163A5F]/10 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                        {/* Expanded Photographic Artwork (Span 5) */}
+                        <div className="lg:col-span-5 relative aspect-[16/9] rounded-xl overflow-hidden shadow-md">
+                          <Image
+                            src={pillar.image}
+                            alt={pillar.title}
+                            fill
+                            className="object-cover"
+                            sizes="(max-width: 768px) 100vw, 500px"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-[#0B1F33]/70 via-transparent to-transparent" />
+                          <div className="absolute bottom-3 left-3 text-white text-xs font-mono">
+                            <span className="bg-[#0B1F33]/80 px-2 py-1 rounded border border-white/10">
+                              {pillar.metrics}
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Expanded Text Narrative (Span 7) */}
+                        <div className="lg:col-span-7 space-y-3">
+                          <p className="text-xs sm:text-sm text-[#1C2730] leading-relaxed font-normal">
+                            {pillar.description}
+                          </p>
+
+                          <div className="flex flex-wrap items-center gap-4 pt-2">
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                openAdmissionModal("General");
+                              }}
+                              className="px-4 py-2 rounded bg-[#163A5F] hover:bg-[#2F5D62] text-white font-bold text-xs uppercase tracking-wider transition-all cursor-pointer font-sans"
+                            >
+                              Admissions Open {pillar.category}
+                            </button>
+
+                            <span className="text-xs text-[#2F5D62] font-mono flex items-center gap-1 font-semibold">
+                              <CheckCircle2 className="w-3.5 h-3.5" />
+                              {pillar.metrics}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
                   )}
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Right Dynamic Photo Canvas (Span 6) */}
-          <div className="lg:col-span-6">
-            <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border border-cream-300 group">
-              <Image
-                src={activeFeature.image}
-                alt={activeFeature.title}
-                fill
-                className="object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
-                sizes="(max-width: 1024px) 100vw, 650px"
-                priority
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#060F1E] via-[#060F1E]/30 to-transparent" />
-
-              <div className="absolute bottom-8 left-8 right-8 text-white space-y-3">
-                <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-gold-500 text-navy-950 text-xs font-mono font-bold tracking-wider">
-                  {activeFeature.badge}
-                </div>
-                <h4 className="font-serif text-2xl sm:text-3xl font-normal text-white">
-                  {activeFeature.title}
-                </h4>
-                <p className="text-xs text-cream-200 line-clamp-2 font-light">
-                  {activeFeature.description}
-                </p>
+                </AnimatePresence>
               </div>
-            </div>
-          </div>
+            );
+          })}
         </div>
       </div>
     </section>

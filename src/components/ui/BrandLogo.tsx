@@ -16,13 +16,13 @@ export function BrandLogo({
   return (
     <Link
       href="/"
-      className={`group flex items-center gap-3.5 focus:outline-none focus:ring-2 focus:ring-gold-500 rounded-lg transition-transform ${className}`}
+      className={`group flex items-center gap-3.5 focus:outline-none focus:ring-2 focus:ring-teal-500 rounded-lg transition-transform ${className}`}
       aria-label="DAV Public School Qilla Mandi Home"
     >
       {/* Emblem Graphic */}
-      <div className="relative flex items-center justify-center w-11 h-11 rounded-full bg-gradient-to-br from-gold-400 via-gold-500 to-gold-700 shadow-md p-0.5 transition-transform duration-300 group-hover:scale-105">
-        <div className="w-full h-full rounded-full bg-navy-950 flex items-center justify-center border border-gold-300/40">
-          <span className="font-serif font-bold text-gold-400 text-base tracking-tighter">
+      <div className="relative flex items-center justify-center w-11 h-11 rounded-full bg-gradient-to-br from-teal-400 via-teal-600 to-navy-800 shadow-md p-0.5 transition-transform duration-300 group-hover:scale-105">
+        <div className="w-full h-full rounded-full bg-[#16324F] flex items-center justify-center border border-sage-300/40">
+          <span className="font-serif font-bold text-sage-200 text-base tracking-tighter">
             DAV
           </span>
         </div>
@@ -33,7 +33,7 @@ export function BrandLogo({
         <div className="flex items-center gap-2">
           <span
             className={`font-serif font-bold text-lg sm:text-xl tracking-tight leading-none transition-colors ${
-              isDark ? "text-white" : "text-navy-950 group-hover:text-gold-600"
+              isDark ? "text-white" : "text-[#16324F] group-hover:text-teal-600"
             }`}
           >
             {name}
@@ -42,7 +42,7 @@ export function BrandLogo({
         <div className="flex items-center gap-1.5 mt-0.5">
           <span
             className={`text-[10px] sm:text-xs font-semibold tracking-widest uppercase ${
-              isDark ? "text-gold-400" : "text-gold-600"
+              isDark ? "text-sage-300" : "text-teal-600"
             }`}
           >
             {SCHOOL_CONFIG.subName}
@@ -51,7 +51,7 @@ export function BrandLogo({
             className={`text-[9px] px-1.5 py-0.5 rounded font-mono font-medium ${
               isDark
                 ? "bg-navy-800 text-cream-200 border border-navy-700"
-                : "bg-cream-100 text-navy-700 border border-cream-300"
+                : "bg-ivory-300 text-navy-800 border border-ivory-400"
             }`}
           >
             Est. 1989

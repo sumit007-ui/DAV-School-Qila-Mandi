@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { X, Sparkles, CheckCircle2, ShieldCheck, Phone, ArrowRight, ArrowLeft, Send } from "lucide-react";
+import { X, Sparkles, CheckCircle2, ShieldCheck, Phone, ArrowRight, ArrowLeft, Send, Lock } from "lucide-react";
 import confetti from "canvas-confetti";
 import { admissionEnquirySchema, AdmissionEnquiryFormData } from "@/lib/validation/admission";
 import { SCHOOL_CONFIG } from "@/config/school";
@@ -111,29 +111,29 @@ export function AdmissionModal({ isOpen, onClose, defaultGrade = "Nursery" }: Ad
   const isSeniorSec = formData.gradeApplying === "Class XI" || formData.gradeApplying === "Class XII";
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-navy-950/85 backdrop-blur-md animate-fade-in overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-[#16324F]/80 backdrop-blur-md animate-fade-in overflow-y-auto font-sans">
       <div
-        className="w-full max-w-xl bg-white rounded-2xl shadow-2xl border border-cream-200 overflow-hidden flex flex-col my-8"
+        className="w-full max-w-xl bg-white rounded-2xl shadow-2xl border border-white/20 overflow-hidden flex flex-col my-8"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Modal Header */}
-        <div className="p-5 sm:p-6 bg-navy-950 text-white relative border-b border-navy-800">
+        <div className="p-5 sm:p-6 bg-[#16324F] text-white relative border-b border-white/10">
           <button
             onClick={onClose}
-            className="absolute top-5 right-5 p-1.5 rounded-lg text-cream-300 hover:text-white hover:bg-navy-800 transition-colors"
+            className="absolute top-5 right-5 p-1.5 rounded-lg text-ivory-300 hover:text-white hover:bg-white/10 transition-colors"
             aria-label="Close modal"
           >
             <X className="w-5 h-5" />
           </button>
 
-          <div className="flex items-center gap-2 text-gold-400 text-xs font-semibold uppercase tracking-widest mb-1.5">
-            <Sparkles className="w-3.5 h-3.5" />
+          <div className="flex items-center gap-2 text-sage-300 text-xs font-semibold uppercase tracking-widest mb-1.5">
+            <Sparkles className="w-3.5 h-3.5 text-teal-300" />
             <span>Admissions Enquiry Session {SCHOOL_CONFIG.admissionsSession}</span>
           </div>
           <h3 className="font-serif text-xl sm:text-2xl font-normal text-white">
             Begin Your Child's Journey at DAV
           </h3>
-          <p className="text-xs text-cream-300 mt-1">
+          <p className="text-xs text-ivory-300 mt-1 font-normal">
             Submit your details below. Our admissions counsel will contact you within 24 hours.
           </p>
         </div>
@@ -142,37 +142,37 @@ export function AdmissionModal({ isOpen, onClose, defaultGrade = "Nursery" }: Ad
         <div className="p-6 overflow-y-auto max-h-[75vh]">
           {isSubmitted ? (
             <div className="py-6 text-center space-y-5 animate-fade-in">
-              <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto shadow-inner">
+              <div className="w-16 h-16 bg-teal-50 text-teal-700 rounded-full flex items-center justify-center mx-auto shadow-inner border border-teal-200">
                 <CheckCircle2 className="w-10 h-10" />
               </div>
 
               <div>
-                <h4 className="font-serif text-2xl text-navy-950 font-bold">
+                <h4 className="font-serif text-2xl text-[#16324F] font-bold">
                   Enquiry Successfully Registered!
                 </h4>
-                <p className="text-sm text-navy-600 mt-1 max-w-md mx-auto">
-                  Thank you, <strong className="text-navy-900">{formData.parentName}</strong>. We have received the admission application for <strong className="text-navy-900">{formData.studentName}</strong> ({formData.gradeApplying}).
+                <p className="text-sm text-[#1C2730] mt-1 max-w-md mx-auto">
+                  Thank you, <strong className="text-[#16324F]">{formData.parentName}</strong>. We have received the admission application for <strong className="text-[#16324F]">{formData.studentName}</strong> ({formData.gradeApplying}).
                 </p>
               </div>
 
               {/* Reference Card */}
-              <div className="bg-cream-50 border border-gold-300/60 rounded-xl p-4 max-w-sm mx-auto text-center space-y-1">
-                <span className="text-[11px] font-mono uppercase tracking-wider text-navy-500 block">
+              <div className="bg-[#F5F3EE] border border-teal-500/30 rounded-xl p-4 max-w-sm mx-auto text-center space-y-1">
+                <span className="text-[11px] font-sans uppercase tracking-wider text-[#6B7478] block font-semibold">
                   Acknowledgement Reference ID
                 </span>
-                <span className="text-xl font-mono font-bold text-gold-700 tracking-wider">
+                <span className="text-xl font-mono font-bold text-[#16324F] tracking-wider">
                   {referenceId}
                 </span>
-                <p className="text-[11px] text-navy-600">
+                <p className="text-[11px] text-[#1C2730]">
                   Confirmation sent to {formData.phone} via {formData.preferredContact}
                 </p>
               </div>
 
-              <div className="bg-navy-50 rounded-xl p-4 text-xs text-navy-700 text-left space-y-2 border border-navy-100">
-                <p className="font-semibold text-navy-900 flex items-center gap-1.5">
-                  <ShieldCheck className="w-4 h-4 text-gold-600" /> Next Steps:
+              <div className="bg-teal-50/60 rounded-xl p-4 text-xs text-[#1C2730] text-left space-y-2 border border-teal-100">
+                <p className="font-semibold text-[#16324F] flex items-center gap-1.5">
+                  <ShieldCheck className="w-4 h-4 text-teal-600" /> Next Steps:
                 </p>
-                <ul className="list-disc list-inside space-y-1 text-navy-600 pl-1">
+                <ul className="list-disc list-inside space-y-1 text-[#1C2730] pl-1">
                   <li>Our Admissions Coordinator will call to schedule a campus tour & interaction.</li>
                   <li>Please keep copy of Birth Certificate and previous report cards ready.</li>
                   <li>Campus Visit Timing: Mon-Sat, 8:30 AM to 2:00 PM.</li>
@@ -184,13 +184,13 @@ export function AdmissionModal({ isOpen, onClose, defaultGrade = "Nursery" }: Ad
                   href={`https://wa.me/919876543210?text=Hello%20DAV%20Qilla%20Mandi%2C%20I%20have%20submitted%20admission%20enquiry%20with%20Reference%20ID%20${referenceId}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs tracking-wide uppercase transition-colors"
+                  className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-teal-800 hover:bg-teal-900 text-white font-semibold text-xs tracking-wide uppercase transition-colors"
                 >
                   Chat with Admissions on WhatsApp
                 </a>
                 <button
                   onClick={handleReset}
-                  className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-navy-900 hover:bg-navy-950 text-cream-100 font-semibold text-xs tracking-wide uppercase transition-colors"
+                  className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-[#16324F] hover:bg-[#0E2135] text-white font-semibold text-xs tracking-wide uppercase transition-colors"
                 >
                   Done
                 </button>
@@ -201,7 +201,7 @@ export function AdmissionModal({ isOpen, onClose, defaultGrade = "Nursery" }: Ad
               {/* Row 1: Parent & Student Name */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-navy-900 mb-1">
+                  <label className="block text-xs font-semibold text-[#16324F] mb-1">
                     Parent / Guardian Name *
                   </label>
                   <input
@@ -211,14 +211,14 @@ export function AdmissionModal({ isOpen, onClose, defaultGrade = "Nursery" }: Ad
                     value={formData.parentName || ""}
                     onChange={(e) => handleChange("parentName", e.target.value)}
                     className={`w-full px-3.5 py-2 rounded-xl text-sm border ${
-                      errors.parentName ? "border-rose-500 bg-rose-50/30" : "border-cream-300 focus:border-gold-500"
-                    } focus:outline-none transition-colors text-navy-950`}
+                      errors.parentName ? "border-rose-500 bg-rose-50/30" : "border-[#16324F]/15 focus:border-teal-500"
+                    } focus:outline-none transition-colors text-[#1C2730]`}
                   />
                   {errors.parentName && <p className="text-[11px] text-rose-600 mt-1">{errors.parentName}</p>}
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-navy-900 mb-1">
+                  <label className="block text-xs font-semibold text-[#16324F] mb-1">
                     Student Full Name *
                   </label>
                   <input
@@ -228,8 +228,8 @@ export function AdmissionModal({ isOpen, onClose, defaultGrade = "Nursery" }: Ad
                     value={formData.studentName || ""}
                     onChange={(e) => handleChange("studentName", e.target.value)}
                     className={`w-full px-3.5 py-2 rounded-xl text-sm border ${
-                      errors.studentName ? "border-rose-500 bg-rose-50/30" : "border-cream-300 focus:border-gold-500"
-                    } focus:outline-none transition-colors text-navy-950`}
+                      errors.studentName ? "border-rose-500 bg-rose-50/30" : "border-[#16324F]/15 focus:border-teal-500"
+                    } focus:outline-none transition-colors text-[#1C2730]`}
                   />
                   {errors.studentName && <p className="text-[11px] text-rose-600 mt-1">{errors.studentName}</p>}
                 </div>
@@ -238,13 +238,13 @@ export function AdmissionModal({ isOpen, onClose, defaultGrade = "Nursery" }: Ad
               {/* Row 2: Class applying for & Area */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-navy-900 mb-1">
+                  <label className="block text-xs font-semibold text-[#16324F] mb-1">
                     Class Seeking Admission For *
                   </label>
                   <select
                     value={formData.gradeApplying || "Nursery"}
                     onChange={(e) => handleChange("gradeApplying", e.target.value)}
-                    className="w-full px-3.5 py-2 rounded-xl text-sm border border-cream-300 focus:border-gold-500 focus:outline-none transition-colors text-navy-950 bg-white"
+                    className="w-full px-3.5 py-2 rounded-xl text-sm border border-[#16324F]/15 focus:border-teal-500 focus:outline-none transition-colors text-[#1C2730] bg-white"
                   >
                     {["Pre-Nursery", "Nursery", "LKG", "UKG", "Class 1", "Class 2", "Class 3", "Class 4", "Class 5", "Class 6", "Class 7", "Class 8", "Class 9", "Class 10"].map((cls) => (
                       <option key={cls} value={cls}>{cls}</option>
@@ -253,7 +253,7 @@ export function AdmissionModal({ isOpen, onClose, defaultGrade = "Nursery" }: Ad
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-navy-900 mb-1">
+                  <label className="block text-xs font-semibold text-[#16324F] mb-1">
                     City / Locality *
                   </label>
                   <input
@@ -261,7 +261,7 @@ export function AdmissionModal({ isOpen, onClose, defaultGrade = "Nursery" }: Ad
                     placeholder="e.g. Qilla Mandi, Batala"
                     value={formData.cityOrArea || ""}
                     onChange={(e) => handleChange("cityOrArea", e.target.value)}
-                    className="w-full px-3.5 py-2 rounded-xl text-sm border border-cream-300 focus:border-gold-500 focus:outline-none transition-colors text-navy-950"
+                    className="w-full px-3.5 py-2 rounded-xl text-sm border border-[#16324F]/15 focus:border-teal-500 focus:outline-none transition-colors text-[#1C2730]"
                   />
                 </div>
               </div>
@@ -269,11 +269,11 @@ export function AdmissionModal({ isOpen, onClose, defaultGrade = "Nursery" }: Ad
               {/* Row 3: Phone & Email */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-navy-900 mb-1">
+                  <label className="block text-xs font-semibold text-[#16324F] mb-1">
                     Contact Mobile Number (10 Digits) *
                   </label>
                   <div className="flex">
-                    <span className="inline-flex items-center px-3 rounded-l-xl border border-r-0 border-cream-300 bg-cream-100 text-xs font-mono text-navy-700">
+                    <span className="inline-flex items-center px-3 rounded-l-xl border border-r-0 border-[#16324F]/15 bg-ivory-200 text-xs font-mono text-[#16324F]">
                       +91
                     </span>
                     <input
@@ -284,15 +284,15 @@ export function AdmissionModal({ isOpen, onClose, defaultGrade = "Nursery" }: Ad
                       value={formData.phone || ""}
                       onChange={(e) => handleChange("phone", e.target.value)}
                       className={`w-full px-3.5 py-2 rounded-r-xl text-sm border ${
-                        errors.phone ? "border-rose-500 bg-rose-50/30" : "border-cream-300 focus:border-gold-500"
-                      } focus:outline-none transition-colors text-navy-950 font-mono`}
+                        errors.phone ? "border-rose-500 bg-rose-50/30" : "border-[#16324F]/15 focus:border-teal-500"
+                      } focus:outline-none transition-colors text-[#1C2730] font-mono`}
                     />
                   </div>
                   {errors.phone && <p className="text-[11px] text-rose-600 mt-1">{errors.phone}</p>}
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-navy-900 mb-1">
+                  <label className="block text-xs font-semibold text-[#16324F] mb-1">
                     Email Address *
                   </label>
                   <input
@@ -302,8 +302,8 @@ export function AdmissionModal({ isOpen, onClose, defaultGrade = "Nursery" }: Ad
                     value={formData.email || ""}
                     onChange={(e) => handleChange("email", e.target.value)}
                     className={`w-full px-3.5 py-2 rounded-xl text-sm border ${
-                      errors.email ? "border-rose-500 bg-rose-50/30" : "border-cream-300 focus:border-gold-500"
-                    } focus:outline-none transition-colors text-navy-950`}
+                      errors.email ? "border-rose-500 bg-rose-50/30" : "border-[#16324F]/15 focus:border-teal-500"
+                    } focus:outline-none transition-colors text-[#1C2730]`}
                   />
                   {errors.email && <p className="text-[11px] text-rose-600 mt-1">{errors.email}</p>}
                 </div>
@@ -311,7 +311,7 @@ export function AdmissionModal({ isOpen, onClose, defaultGrade = "Nursery" }: Ad
 
               {/* Preferred Communication Channel */}
               <div>
-                <label className="block text-xs font-semibold text-navy-900 mb-1.5">
+                <label className="block text-xs font-semibold text-[#16324F] mb-1.5">
                   Preferred Contact Mode
                 </label>
                 <div className="grid grid-cols-3 gap-2">
@@ -322,8 +322,8 @@ export function AdmissionModal({ isOpen, onClose, defaultGrade = "Nursery" }: Ad
                       onClick={() => handleChange("preferredContact", mode)}
                       className={`py-2 px-3 rounded-xl text-xs font-medium border transition-all text-center ${
                         formData.preferredContact === mode
-                          ? "bg-navy-900 text-gold-400 border-navy-900 shadow-sm"
-                          : "bg-cream-50 text-navy-700 border-cream-300 hover:bg-cream-100"
+                          ? "bg-[#16324F] text-white border-[#16324F] shadow-sm font-bold"
+                          : "bg-ivory-100 text-[#1C2730] border-[#16324F]/15 hover:bg-teal-50"
                       }`}
                     >
                       {mode}
@@ -334,7 +334,7 @@ export function AdmissionModal({ isOpen, onClose, defaultGrade = "Nursery" }: Ad
 
               {/* Remarks/Questions */}
               <div>
-                <label className="block text-xs font-semibold text-navy-900 mb-1">
+                <label className="block text-xs font-semibold text-[#16324F] mb-1">
                   Any specific query or requirements (Optional)
                 </label>
                 <textarea
@@ -342,7 +342,7 @@ export function AdmissionModal({ isOpen, onClose, defaultGrade = "Nursery" }: Ad
                   placeholder="e.g. Bus transport availability from nearby village, scholarship criteria..."
                   value={formData.message || ""}
                   onChange={(e) => handleChange("message", e.target.value)}
-                  className="w-full px-3.5 py-2 rounded-xl text-sm border border-cream-300 focus:border-gold-500 focus:outline-none transition-colors text-navy-950 resize-none"
+                  className="w-full px-3.5 py-2 rounded-xl text-sm border border-[#16324F]/15 focus:border-teal-500 focus:outline-none transition-colors text-[#1C2730] resize-none"
                 />
               </div>
 
@@ -351,7 +351,7 @@ export function AdmissionModal({ isOpen, onClose, defaultGrade = "Nursery" }: Ad
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-3.5 rounded-xl bg-navy-900 hover:bg-navy-950 text-gold-400 font-bold text-xs uppercase tracking-wider transition-all duration-200 shadow-lg shadow-navy-950/20 active:scale-[0.99] flex items-center justify-center gap-2 disabled:opacity-70 border border-gold-500/30"
+                  className="w-full py-3.5 rounded-xl bg-[#16324F] hover:bg-[#0E2135] text-white font-bold text-xs uppercase tracking-wider transition-all duration-200 shadow-lg shadow-navy-950/20 active:scale-[0.99] flex items-center justify-center gap-2 disabled:opacity-70"
                 >
                   {isSubmitting ? (
                     <span>Registering Application...</span>
@@ -362,9 +362,10 @@ export function AdmissionModal({ isOpen, onClose, defaultGrade = "Nursery" }: Ad
                     </>
                   )}
                 </button>
-                <p className="text-[11px] text-center text-navy-500 mt-2">
-                  🔒 Your contact information is kept strictly confidential and used solely for admission communication.
-                </p>
+                  <div className="flex items-center gap-1.5 text-xs text-[#68747C] font-mono mt-2">
+                    <Lock className="w-3.5 h-3.5 text-[#2F5D62] shrink-0" />
+                    <span>Your contact information is kept strictly confidential and used solely for admission communication.</span>
+                  </div>
               </div>
             </form>
           )}

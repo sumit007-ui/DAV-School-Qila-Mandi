@@ -8,6 +8,8 @@ import { GALLERY_ITEMS } from "@/lib/data/gallery";
 import { GalleryItem } from "@/types";
 import { LightboxModal } from "@/components/ui/LightboxModal";
 
+import { LineReveal, Reveal } from "@/components/motion";
+
 interface EditorialGallerySectionProps {
   gallery?: GalleryItem[];
 }
@@ -26,72 +28,77 @@ export function EditorialGallerySection({ gallery = GALLERY_ITEMS }: EditorialGa
 
   return (
     <>
-      <section className="py-20 lg:py-28 bg-white text-navy-950 border-b border-cream-200 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-14 lg:py-20 bg-white text-[#1C2730] border-b border-[#163A5F]/10 relative overflow-hidden font-sans">
+        <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 space-y-8">
           {/* Section Header */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div className="space-y-3">
-              <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-gold-700">
-                <ImageIcon className="w-3.5 h-3.5" />
-                <span>Visual Retrospective</span>
-              </div>
-              <h2 className="font-serif text-3xl sm:text-5xl text-navy-950 font-normal tracking-tight">
-                Moments that matter.
-              </h2>
-              <p className="text-navy-700 text-sm sm:text-base max-w-xl">
-                A photographic glimpse into life, learning, spirit, and heritage on the DAV Public School Qilla Mandi campus.
-              </p>
+              <Reveal direction="down" delay={0.1}>
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-[#2F5D62]/10 text-[#2F5D62] text-[11px] font-mono font-medium tracking-[0.16em] uppercase">
+                  <ImageIcon className="w-3.5 h-3.5" />
+                  <span>08 · CAMPUS ARCHIVE</span>
+                </div>
+              </Reveal>
+              <LineReveal as="h2" className="font-editorial text-4xl sm:text-6xl text-[#0B1F33] font-semibold tracking-tight">
+                {"MOMENTS OF WONDER."}
+              </LineReveal>
+              <Reveal direction="up" delay={0.25}>
+                <p className="text-[#1C2730] text-sm sm:text-base max-w-xl font-normal leading-relaxed">
+                  A photographic glimpse into life, learning, spirit, and heritage on the DAV Public School Qilla Mandi campus.
+                </p>
+              </Reveal>
             </div>
 
             <Link
               href="/gallery"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-navy-900 text-gold-400 hover:bg-navy-950 text-xs font-bold uppercase tracking-wider transition-colors self-start md:self-auto border border-gold-500/20"
+              className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-[#0B1F33] hover:text-[#2F5D62] transition-colors self-start md:self-auto border-b border-[#0B1F33] pb-0.5 font-mono"
             >
-              <span>View Full Photo Archive</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              <span>View Full Archive</span>
+              <ArrowRight className="w-3.5 h-3.5 text-[#2F5D62]" />
             </Link>
           </div>
 
           {/* Asymmetric Gallery Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {items.slice(0, 6).map((item, idx) => {
-              // Create asymmetric height variations
               const isTall = idx === 0 || idx === 3;
               return (
-                <div
-                  key={item.id}
-                  onClick={() => handleOpenLightbox(item)}
-                  className={`group relative rounded-2xl overflow-hidden shadow-md cursor-pointer border border-cream-300 ${
-                    isTall ? "sm:col-span-2 aspect-[16/10]" : "aspect-square"
-                  }`}
-                >
-                  <Image
-                    src={item.imageUrl}
-                    alt={item.alt}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                    sizes="(max-width: 768px) 100vw, 500px"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-navy-950/80 via-navy-950/20 to-transparent opacity-70 group-hover:opacity-90 transition-opacity" />
+                <Reveal key={item.id} direction="up" delay={0.08 * idx + 0.05} className={isTall ? "sm:col-span-2" : ""}>
+                  <div
+                    onClick={() => handleOpenLightbox(item)}
+                    className={`group relative rounded-xl overflow-hidden shadow-xs hover:shadow-md cursor-pointer border border-[#163A5F]/10 transition-all duration-300 ${
+                      isTall ? "aspect-[16/10]" : "aspect-square"
+                    }`}
+                    data-cursor="EXPAND"
+                  >
+                    <Image
+                      src={item.imageUrl}
+                      alt={item.alt}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                      sizes="(max-width: 768px) 100vw, 500px"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0B1F33]/90 via-[#0B1F33]/25 to-transparent opacity-75 group-hover:opacity-95 transition-opacity" />
 
-                  {/* Hover Overlay Content */}
-                  <div className="absolute inset-0 p-5 flex flex-col justify-between text-white">
-                    <div className="flex justify-end">
-                      <div className="p-2 rounded-full bg-navy-950/60 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-opacity">
-                        <Maximize2 className="w-4 h-4 text-gold-400" />
+                    {/* Hover Overlay Content */}
+                    <div className="absolute inset-0 p-4 flex flex-col justify-between text-white">
+                      <div className="flex justify-end">
+                        <div className="p-1.5 rounded bg-[#0B1F33]/80 backdrop-blur-xs opacity-0 group-hover:opacity-100 transition-opacity">
+                          <Maximize2 className="w-3.5 h-3.5 text-[#A8C3BC]" />
+                        </div>
+                      </div>
+
+                      <div className="space-y-1 transform translate-y-1 group-hover:translate-y-0 transition-transform">
+                        <span className="text-[9px] font-mono uppercase tracking-widest text-[#A8C3BC] font-semibold">
+                          {item.category}
+                        </span>
+                        <h4 className="font-editorial text-lg sm:text-xl font-normal leading-snug">
+                          {item.title}
+                        </h4>
                       </div>
                     </div>
-
-                    <div className="space-y-1 transform translate-y-2 group-hover:translate-y-0 transition-transform">
-                      <span className="text-[10px] font-mono uppercase tracking-widest text-gold-300">
-                        {item.category}
-                      </span>
-                      <h4 className="font-serif text-lg sm:text-xl font-medium leading-snug">
-                        {item.title}
-                      </h4>
-                    </div>
                   </div>
-                </div>
+                </Reveal>
               );
             })}
           </div>

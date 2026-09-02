@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Newspaper, Calendar, Clock, User } from "lucide-react";
+import { Newspaper, Calendar, Clock, User, MapPin } from "lucide-react";
 import { NewsStory, SchoolEvent } from "@/types";
 
 interface NewsClientViewProps {
@@ -178,8 +178,9 @@ export function NewsClientView({ news, events }: NewsClientViewProps) {
                         <h3 className="font-serif text-xl font-bold text-navy-950 leading-snug">
                           {event.title}
                         </h3>
-                        <p className="text-xs text-navy-500">
-                          📍 {event.venue}
+                        <p className="text-xs text-[#2F5D62] font-mono flex items-center gap-1">
+                          <MapPin className="w-3.5 h-3.5 text-[#2F5D62]" />
+                          <span>{event.venue}</span>
                         </p>
                       </div>
                     </div>

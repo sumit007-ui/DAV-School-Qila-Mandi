@@ -1,123 +1,191 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Trophy, Heart, Palette, Compass, Flag, Users } from "lucide-react";
+import { ArrowRight, Trophy, Palette, Compass, Flag, Sparkles, Users, Star } from "lucide-react";
+import { motion } from "framer-motion";
+import { LineReveal, Reveal } from "@/components/motion";
+
+const CAMPUS_LIFE_CARDS = [
+  {
+    id: "house-system",
+    title: "Four House Fraternity",
+    tagline: "Dayanand · Hansraj · Shraddhanand · Lajpat",
+    category: "House Culture",
+    description: "Instilling camaraderie, sportsmanship, and healthy competitive pride through weekly inter-house challenges and cultural championships.",
+    image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&q=85&w=900",
+    badge: "Legacy Tradition",
+    icon: Flag,
+    href: "/student-life#houses"
+  },
+  {
+    id: "robotics-hub",
+    title: "Robotics & Innovation Lab",
+    tagline: "Atal Tinkering Cell & IoT Hub",
+    category: "STEM & Tech",
+    description: "Young technocrats building autonomous robotics, 3D prototypes, IoT sensors, and competing in prestigious National Science Olympiads.",
+    image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=85&w=900",
+    badge: "Atal Tinkering Hub",
+    icon: Compass,
+    href: "/student-life#clubs"
+  },
+  {
+    id: "performing-arts",
+    title: "Classical & Folk Arts",
+    tagline: "Harmonium, Tabla & Theatre",
+    category: "Aesthetics & Stage",
+    description: "Vocal and instrumental melodies echoed in our 800-seat auditorium, celebrating Vedic hymns alongside vibrant Punjabi cultural festivals.",
+    image: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=85&w=900",
+    badge: "800-Seat Grand Stage",
+    icon: Palette,
+    href: "/student-life#arts"
+  },
+  {
+    id: "championship-athletics",
+    title: "Athletics & Martial Arts",
+    tagline: "Cricket Turf, Skating & Taekwondo",
+    category: "Sports Excellence",
+    description: "Certified NIS trainers developing discipline, physical stamina, tactical teamwork, and state medalists on our championship arenas.",
+    image: "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&q=85&w=900",
+    badge: "State & National Champions",
+    icon: Trophy,
+    href: "/student-life#sports"
+  },
+  {
+    id: "eco-nature",
+    title: "Eco-Green Campus Life",
+    tagline: "12 Acres Organic Botanical Flora",
+    category: "Campus Sanctuaries",
+    description: "Lush outdoor learning groves, tree plantation drives, and solar sustainability cells fostering deep environmental reverence.",
+    image: "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&q=85&w=900",
+    badge: "12 Green Acres",
+    icon: Star,
+    href: "/campus"
+  },
+  {
+    id: "student-leadership",
+    title: "Prefectorial Guild & Council",
+    tagline: "Democratic Student Governance",
+    category: "Leadership",
+    description: "Head boys, head girls, and house captains orchestrating morning assemblies, social outreach drives, and student peer mentoring.",
+    image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=85&w=900",
+    badge: "Student Council",
+    icon: Users,
+    href: "/student-life"
+  }
+];
 
 export function StudentLifeSection() {
-  const cards = [
-    {
-      title: "Four House System",
-      subtitle: "Dayanand • Hansraj • Shraddhanand • Lajpat",
-      description: "Instilling camaraderie, sportsmanship, and healthy competitive drive through inter-house tournaments and cultural feasts.",
-      image: "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&q=80&w=800",
-      tag: "House Culture",
-      icon: Flag
-    },
-    {
-      title: "Robotics & Innovation Guild",
-      subtitle: "Atal Tinkering Cell",
-      description: "Young technocrats building autonomous robotics, IoT sensors, and participating in National STEM hackathons.",
-      image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=800",
-      tag: "STEM Innovation",
-      icon: Compass
-    },
-    {
-      title: "Performing Arts & Music",
-      subtitle: "Vocal, Instrumental & Classical Dance",
-      description: "Indian classical harmonium, tabla, and Punjabi folk traditions showcased on the grand auditorium stage.",
-      image: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&q=80&w=800",
-      tag: "Cultural Arts",
-      icon: Palette
-    },
-    {
-      title: "Athletics & Martial Arts",
-      subtitle: "Cricket, Skating & Taekwondo",
-      description: "Daily coaching by NIS-certified trainers preparing athletes for state and national championships.",
-      image: "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&q=80&w=800",
-      tag: "Sports Excellence",
-      icon: Trophy
-    }
-  ];
+  // Duplicate for endless loop
+  const marqueeItems = [...CAMPUS_LIFE_CARDS, ...CAMPUS_LIFE_CARDS, ...CAMPUS_LIFE_CARDS];
 
   return (
-    <section className="py-20 lg:py-28 bg-cream-50 text-navy-950 border-b border-cream-200 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-16">
-          <div className="space-y-3">
-            <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-gold-700">
-              <Users className="w-3.5 h-3.5" />
-              <span>Campus Culture & Co-Curriculars</span>
-            </div>
-            <h2 className="font-serif text-3xl sm:text-5xl text-navy-950 font-normal tracking-tight">
-              Beyond the classroom.
-            </h2>
-            <p className="text-navy-700 text-sm sm:text-base max-w-xl">
-              Education at DAV Qilla Mandi flourishes in the art studios, playing fields, robotics labs, and debate stages where passions turn into lifelong mastery.
-            </p>
+    <section className="py-16 lg:py-24 bg-[#0D2238] text-white border-b border-white/10 relative overflow-hidden font-sans">
+      {/* Background Subtle Ambience */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0B1F33] via-[#0D2238] to-[#081827] pointer-events-none" />
+
+      {/* Top Header Strip - Wide Architecture */}
+      <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 relative z-10 space-y-4 mb-10">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-6">
+          <div className="space-y-2">
+            <Reveal direction="down" delay={0.1}>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-[#2F5D62]/40 border border-[#2F5D62] text-[#A8C3BC] text-[11px] font-mono font-medium tracking-[0.16em] uppercase">
+                <Users className="w-3.5 h-3.5 text-[#A8C3BC]" />
+                <span>05 · VIBRANT CAMPUS CULTURE</span>
+              </div>
+            </Reveal>
+
+            <LineReveal as="h2" className="font-editorial text-3xl sm:text-5xl lg:text-6xl text-white font-semibold tracking-tight leading-[1.05]">
+              {"Life Beyond the Lecture Hall."}
+            </LineReveal>
           </div>
 
           <Link
             href="/student-life"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-navy-900 text-gold-400 hover:bg-navy-950 text-xs font-bold uppercase tracking-wider transition-colors self-start md:self-auto border border-gold-500/20"
+            className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-[#A8C3BC] hover:text-white transition-colors border-b border-[#A8C3BC] pb-0.5 font-mono self-start md:self-auto"
           >
-            <span>Explore Student Life</span>
+            <span>Explore All Guilds & Houses</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
+      </div>
 
-        {/* 4 Large Editorial Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {cards.map((card, idx) => {
-            const Icon = card.icon;
+      {/* Continuous Smooth Infinite Marquee Strip */}
+      <div className="w-full overflow-hidden relative z-10 py-2">
+        <motion.div
+          animate={{ x: ["0%", "-33.333%"] }}
+          transition={{
+            duration: 35,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+          className="flex items-center gap-6 w-max"
+        >
+          {marqueeItems.map((item, idx) => {
+            const Icon = item.icon;
             return (
               <div
-                key={idx}
-                className="group bg-white rounded-2xl overflow-hidden shadow-lg border border-cream-200 hover:shadow-2xl transition-all duration-300 flex flex-col"
+                key={`${item.id}-${idx}`}
+                className="w-[300px] sm:w-[380px] lg:w-[420px] aspect-[4/5] sm:aspect-[3/4] relative rounded-2xl overflow-hidden shadow-2xl border border-white/15 group cursor-pointer shrink-0 transition-all duration-500 hover:border-[#A8C3BC]/60 hover:scale-[1.02]"
+                data-cursor="DISCOVER"
               >
-                <div className="relative aspect-[16/10] overflow-hidden">
-                  <Image
-                    src={card.image}
-                    alt={card.title}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                    sizes="(max-width: 768px) 100vw, 600px"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-navy-950/80 via-transparent to-transparent" />
-                  
-                  {/* Tag */}
-                  <div className="absolute top-4 left-4 px-3 py-1 rounded-full bg-white/90 backdrop-blur-md text-navy-950 text-[11px] font-bold uppercase tracking-wider shadow-sm flex items-center gap-1.5">
-                    <Icon className="w-3 h-3 text-gold-600" />
-                    <span>{card.tag}</span>
+                {/* Photographic Layer */}
+                <Image
+                  src={item.image}
+                  alt={item.title}
+                  fill
+                  className="object-cover object-center group-hover:scale-108 transition-transform duration-700 ease-out"
+                  sizes="(max-width: 768px) 320px, 440px"
+                />
+
+                {/* High Contrast Deep Gradient for Text Readability */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0B1F33] via-[#0B1F33]/45 to-transparent opacity-90 group-hover:opacity-95 transition-opacity" />
+
+                {/* Top Category Badge */}
+                <div className="absolute top-4 left-4 right-4 flex items-center justify-between pointer-events-none">
+                  <div className="px-3 py-1 rounded bg-[#0B1F33]/90 backdrop-blur-md text-[#A8C3BC] text-[10px] font-mono font-medium uppercase tracking-wider border border-white/10 flex items-center gap-1.5">
+                    <Icon className="w-3 h-3 text-[#A8C3BC]" />
+                    <span>{item.category}</span>
                   </div>
+
+                  <span className="px-2 py-0.5 rounded bg-white/10 text-white/80 text-[9px] font-mono uppercase tracking-wider backdrop-blur-xs">
+                    {item.badge}
+                  </span>
                 </div>
 
-                <div className="p-6 sm:p-8 flex flex-col justify-between flex-1 space-y-4">
-                  <div className="space-y-2">
-                    <span className="text-xs font-mono font-bold text-gold-700 uppercase tracking-widest block">
-                      {card.subtitle}
+                {/* Bottom Overlay Typography Directly on Image */}
+                <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6 text-white space-y-2.5">
+                  <div className="space-y-1">
+                    <span className="text-[10px] font-mono uppercase tracking-[0.16em] text-[#A8C3BC] block font-semibold">
+                      {item.tagline}
                     </span>
-                    <h3 className="font-serif text-2xl text-navy-950 font-normal group-hover:text-gold-700 transition-colors">
-                      {card.title}
+                    <h3 className="font-editorial text-2xl sm:text-3xl font-normal text-white group-hover:text-[#A8C3BC] transition-colors leading-tight">
+                      {item.title}
                     </h3>
-                    <p className="text-xs sm:text-sm text-navy-600 leading-relaxed">
-                      {card.description}
-                    </p>
                   </div>
 
-                  <div className="pt-2 border-t border-cream-200 flex items-center justify-between">
-                    <Link
-                      href="/student-life"
-                      className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-navy-900 group-hover:text-gold-700 transition-colors"
-                    >
-                      <span>Discover Programs</span>
-                      <ArrowRight className="w-3.5 h-3.5 text-gold-600 group-hover:translate-x-1 transition-transform" />
-                    </Link>
+                  <p className="text-xs text-white/80 leading-relaxed font-sans line-clamp-2 group-hover:line-clamp-none transition-all duration-300">
+                    {item.description}
+                  </p>
+
+                  <div className="pt-2 border-t border-white/15 flex items-center justify-between text-xs font-mono font-bold text-white group-hover:text-[#A8C3BC] transition-colors">
+                    <span className="uppercase tracking-wider">Explore Activity</span>
+                    <ArrowRight className="w-4 h-4 text-[#A8C3BC] group-hover:translate-x-1.5 transition-transform" />
                   </div>
                 </div>
               </div>
             );
           })}
-        </div>
+        </motion.div>
+      </div>
+
+      {/* Sub-bar Guidance */}
+      <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 mt-6 flex items-center justify-between text-xs font-mono text-white/60">
+        <span className="inline-flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-[#A8C3BC] animate-pulse" />
+          Continuous Living Campus Stream · Four House System & Athletics
+        </span>
+        <span className="hidden sm:inline">06 Active Campus Guilds</span>
       </div>
     </section>
   );

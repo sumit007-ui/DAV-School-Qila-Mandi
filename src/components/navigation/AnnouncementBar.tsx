@@ -11,50 +11,50 @@ export function AnnouncementBar() {
   if (!isVisible) return null;
 
   return (
-    <div className="bg-navy-950 text-cream-100 border-b border-navy-800 text-xs py-2 px-4 relative z-50">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-2">
+    <div className="bg-[#0B1F33] text-white border-b border-white/10 text-xs py-2 px-4 relative z-50 font-sans">
+      <div className="w-full max-w-[1600px] mx-auto flex flex-col md:flex-row items-center justify-between gap-2">
         {/* Left: Admissions Notice */}
         <div className="flex items-center gap-2 text-center md:text-left">
-          <span className="inline-flex items-center gap-1 bg-gold-500/20 text-gold-400 border border-gold-500/30 px-2 py-0.5 rounded-full text-[11px] font-semibold uppercase tracking-wider animate-pulse-subtle">
-            <Sparkles className="w-3 h-3" /> Admissions {SCHOOL_CONFIG.admissionsSession}
+          <span className="inline-flex items-center gap-1 bg-[#2F5D62]/40 text-[#A8C3BC] border border-[#2F5D62] px-2.5 py-0.5 rounded text-[10px] font-mono font-medium uppercase tracking-[0.14em]">
+            <Sparkles className="w-3 h-3 text-[#A8C3BC]" /> Admissions {SCHOOL_CONFIG.admissionsSession}
           </span>
-          <span className="text-cream-200 hidden sm:inline">
-            Registration open for Nursery to Class XI • Merit Scholarships available.
+          <span className="text-white/80 hidden sm:inline text-xs">
+            Registration open for Nursery to Class 10 • Merit Scholarships available.
           </span>
           <Link
             href="/admissions"
-            className="text-gold-400 font-medium hover:underline inline-flex items-center gap-0.5 ml-1"
+            className="text-[#A8C3BC] font-semibold hover:underline inline-flex items-center gap-0.5 ml-1 text-xs"
           >
             Apply Online <ChevronRight className="w-3 h-3" />
           </Link>
         </div>
 
         {/* Right: Quick School Info & TC */}
-        <div className="flex items-center gap-4 text-cream-300 text-[11px]">
+        <div className="flex items-center gap-4 text-white/70 text-xs font-mono">
           <div className="hidden lg:flex items-center gap-2">
-            <span className="font-mono text-gold-300/80">CBSE Affiliation No: {SCHOOL_CONFIG.affiliationNo}</span>
-            <span className="text-navy-700">|</span>
+            <span className="text-white/60 tracking-wider text-[11px]">CBSE #{SCHOOL_CONFIG.affiliationNo}</span>
+            <span className="text-white/20">|</span>
           </div>
 
           <a
             href={`tel:${SCHOOL_CONFIG.contact.admissionsHelpline}`}
-            className="flex items-center gap-1 hover:text-gold-300 transition-colors"
+            className="flex items-center gap-1.5 hover:text-white transition-colors text-[11px] tracking-wide"
           >
-            <Phone className="w-3 h-3 text-gold-400" />
-            <span className="font-mono">{SCHOOL_CONFIG.contact.admissionsHelpline}</span>
+            <Phone className="w-3 h-3 text-[#A8C3BC]" />
+            <span>{SCHOOL_CONFIG.contact.admissionsHelpline}</span>
           </a>
 
           <Link
             href="/admissions#fee-structure"
-            className="hidden md:flex items-center gap-1 hover:text-gold-300 transition-colors"
+            className="hidden md:flex items-center gap-1.5 hover:text-white transition-colors text-[11px] tracking-wide"
           >
-            <FileText className="w-3 h-3 text-gold-400" />
+            <FileText className="w-3 h-3 text-[#A8C3BC]" />
             <span>Fee Structure</span>
           </Link>
 
           <button
             onClick={() => setIsVisible(false)}
-            className="text-cream-400 hover:text-white p-0.5 ml-1 transition-colors"
+            className="text-white/60 hover:text-white p-0.5 ml-1 transition-colors cursor-pointer"
             aria-label="Dismiss banner"
           >
             <X className="w-3.5 h-3.5" />

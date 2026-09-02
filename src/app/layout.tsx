@@ -26,7 +26,7 @@ export default async function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="bg-[#FCFBF7] text-[#0A192F] antialiased min-h-screen flex flex-col font-sans selection:bg-gold-500/20 selection:text-navy-950">
+      <body className="bg-[#F6F3ED] text-[#1C2730] antialiased min-h-screen flex flex-col font-sans selection:bg-[#A8C3BC]/40 selection:text-[#0B1F33] overflow-x-hidden">
         <ClientAppWrapper siteSettings={siteSettings}>
           {children}
         </ClientAppWrapper>

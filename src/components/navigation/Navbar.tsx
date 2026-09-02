@@ -91,28 +91,28 @@ export function Navbar({ onOpenSearch, onOpenAdmissionModal, siteSettings }: Nav
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           isScrolled
-            ? "bg-[#060F1E]/85 backdrop-blur-xl border-b border-white/10 py-3.5 shadow-2xl text-white"
-            : "bg-gradient-to-b from-[#060F1E]/90 via-[#060F1E]/40 to-transparent py-5 text-white"
+            ? "bg-[#0B1F33]/95 backdrop-blur-xl border-b border-white/10 py-3 shadow-xl text-white"
+            : "bg-gradient-to-b from-[#0B1F33]/95 via-[#0B1F33]/60 to-transparent py-4 text-white"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+        <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 flex items-center justify-between">
           {/* Brand Crest / Logo */}
           <Link href="/" className="group flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-gold-500/15 border border-gold-400/40 flex items-center justify-center text-gold-300 font-serif font-bold text-sm tracking-wider group-hover:bg-gold-500 group-hover:text-navy-950 transition-all duration-300">
+            <div className="w-9 h-9 rounded bg-[#2F5D62]/40 border border-[#A8C3BC]/40 flex items-center justify-center text-[#A8C3BC] font-editorial font-bold text-sm tracking-wider group-hover:bg-[#2F5D62] group-hover:text-white transition-all duration-300">
               DAV
             </div>
             <div>
-              <span className="font-serif text-lg sm:text-xl font-medium tracking-tight text-white block leading-none">
+              <span className="font-editorial text-lg sm:text-xl font-medium tracking-tight text-white block leading-none">
                 {schoolName}
               </span>
-              <span className="text-[10px] font-mono tracking-[0.25em] text-gold-400 uppercase block mt-1">
+              <span className="text-[10px] font-mono tracking-[0.16em] text-[#A8C3BC] uppercase block mt-1">
                 {SCHOOL_CONFIG.subName} • Nursery – Class 10
               </span>
             </div>
           </Link>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-6 xl:gap-8 text-xs uppercase tracking-[0.18em] font-medium text-cream-200">
+          <nav className="hidden lg:flex items-center gap-6 xl:gap-8 text-xs uppercase tracking-[0.14em] font-sans font-medium text-white/80">
             {navLinks.slice(0, 6).map((item) => {
               const isActive = pathname === item.href;
               return (
@@ -120,12 +120,12 @@ export function Navbar({ onOpenSearch, onOpenAdmissionModal, siteSettings }: Nav
                   key={item.label}
                   href={item.href}
                   className={`transition-colors relative py-1 group ${
-                    isActive ? "text-gold-400 font-semibold" : "hover:text-white"
+                    isActive ? "text-[#A8C3BC] font-semibold" : "hover:text-white"
                   }`}
                 >
                   <span>{item.label}</span>
                   <span
-                    className={`absolute bottom-0 left-0 h-[1.5px] bg-gold-400 transition-all duration-300 ${
+                    className={`absolute bottom-0 left-0 h-[1.5px] bg-[#A8C3BC] transition-all duration-300 ${
                       isActive ? "w-full" : "w-0 group-hover:w-full"
                     }`}
                   />
@@ -139,7 +139,7 @@ export function Navbar({ onOpenSearch, onOpenAdmissionModal, siteSettings }: Nav
             {/* Quick Search Trigger */}
             <button
               onClick={onOpenSearch}
-              className="p-2.5 text-cream-300 hover:text-white hover:bg-white/10 rounded-full transition-colors"
+              className="p-2 text-white/80 hover:text-white hover:bg-white/10 rounded transition-colors cursor-pointer"
               aria-label="Search"
               title="Search website (Cmd+K)"
             >
@@ -149,53 +149,52 @@ export function Navbar({ onOpenSearch, onOpenAdmissionModal, siteSettings }: Nav
             {/* Editorial Admissions Pill */}
             <button
               onClick={onOpenAdmissionModal}
-              className="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gold-500 hover:bg-gold-400 text-navy-950 text-xs font-bold uppercase tracking-[0.15em] transition-all duration-300 shadow-lg shadow-gold-500/20 active:scale-95 group"
+              className="hidden sm:inline-flex items-center gap-2 px-5 py-2 rounded bg-[#163A5F] hover:bg-[#2F5D62] text-white text-xs font-sans font-semibold uppercase tracking-[0.14em] transition-all duration-300 shadow-md active:scale-95 group border border-white/10 cursor-pointer"
             >
-              <Sparkles className="w-3.5 h-3.5 group-hover:rotate-12 transition-transform" />
+              <Sparkles className="w-3.5 h-3.5 text-[#A8C3BC] group-hover:rotate-12 transition-transform" />
               <span>Admissions {SCHOOL_CONFIG.admissionsSession}</span>
             </button>
 
             {/* Fullscreen Menu Trigger */}
             <button
               onClick={() => setMenuOpen(!menuOpen)}
-              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 text-white text-xs uppercase tracking-widest font-mono transition-colors"
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded bg-white/10 hover:bg-white/20 border border-white/15 text-white text-xs uppercase tracking-widest font-mono font-medium transition-colors cursor-pointer"
               aria-label="Toggle menu"
             >
-              {menuOpen ? <X className="w-4 h-4 text-gold-400" /> : <Menu className="w-4 h-4 text-gold-400" />}
+              {menuOpen ? <X className="w-4 h-4 text-[#A8C3BC]" /> : <Menu className="w-4 h-4 text-[#A8C3BC]" />}
               <span className="hidden sm:inline">{menuOpen ? "Close" : "Menu"}</span>
             </button>
           </div>
         </div>
       </header>
 
-      {/* Fullscreen Architectural Menu Overlay (Wesley College Style) */}
+      {/* Fullscreen Architectural Menu Overlay */}
       <div
-        className={`fixed inset-0 z-40 bg-[#060F1E] text-white transition-all duration-700 ease-out overflow-y-auto ${
+        className={`fixed inset-0 z-40 bg-[#0B1F33] text-white transition-all duration-700 ease-out overflow-y-auto ${
           menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
       >
-        {/* Background Grain & Watermark */}
-        <div className="absolute inset-0 editorial-dark-grain opacity-20 pointer-events-none" />
-        <div className="absolute right-0 bottom-0 text-[35vw] font-serif text-white/[0.02] pointer-events-none select-none leading-none -mb-16">
+        {/* Background Watermark */}
+        <div className="absolute right-0 bottom-0 text-[35vw] font-editorial text-white/[0.02] pointer-events-none select-none leading-none -mb-16">
           DAV
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 pt-28 pb-16 min-h-screen flex flex-col justify-between">
+        <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 pt-24 pb-16 min-h-screen flex flex-col justify-between">
           {/* Top Info Strip */}
-          <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-6 text-xs font-mono text-cream-300">
+          <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-6 text-xs font-mono text-white/70">
             <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-              <span>Admissions Open For Session {SCHOOL_CONFIG.admissionsSession}</span>
+              <span className="w-2 h-2 rounded-full bg-[#A8C3BC] animate-pulse"></span>
+              <span>ADMISSIONS OPEN FOR SESSION {SCHOOL_CONFIG.admissionsSession}</span>
             </div>
-            <div className="text-gold-400">
-              CBSE Affiliation No. {SCHOOL_CONFIG.affiliationNo} • School Code: {SCHOOL_CONFIG.schoolCode}
+            <div className="text-[#A8C3BC]">
+              CBSE #{SCHOOL_CONFIG.affiliationNo} • CODE: {SCHOOL_CONFIG.schoolCode}
             </div>
           </div>
 
           {/* Main Grid: Left Big Links + Right Institutional Info */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 py-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 py-10 items-center">
             {/* Big Links Column (Span 7) */}
-            <div className="lg:col-span-7 space-y-2">
+            <div className="lg:col-span-7 space-y-1">
               {navLinks.map((item, idx) => {
                 const isActive = pathname === item.href;
                 return (
@@ -203,47 +202,47 @@ export function Navbar({ onOpenSearch, onOpenAdmissionModal, siteSettings }: Nav
                     key={item.label}
                     href={item.href}
                     onClick={() => setMenuOpen(false)}
-                    className="group flex items-baseline gap-4 py-2 text-3xl sm:text-5xl lg:text-6xl font-serif text-cream-100 hover:text-gold-300 transition-colors duration-300"
-                    style={{ transitionDelay: `${idx * 40}ms` }}
+                    className="group flex items-baseline gap-4 py-1.5 text-3xl sm:text-5xl lg:text-6xl font-editorial text-white hover:text-[#A8C3BC] transition-colors duration-300"
+                    style={{ transitionDelay: `${idx * 30}ms` }}
                   >
-                    <span className="text-xs sm:text-sm font-mono text-gold-500/70 group-hover:text-gold-400">
+                    <span className="text-xs sm:text-sm font-mono font-medium text-[#A8C3BC]/70 group-hover:text-[#A8C3BC]">
                       {item.number}
                     </span>
-                    <span className={`tracking-tight ${isActive ? "text-gold-400 italic" : ""}`}>
+                    <span className={`tracking-tight ${isActive ? "text-[#A8C3BC] italic" : ""}`}>
                       {item.label}
                     </span>
-                    <ArrowUpRight className="w-6 h-6 text-gold-400 opacity-0 group-hover:opacity-100 group-hover:translate-x-2 -translate-y-1 transition-all duration-300" />
+                    <ArrowUpRight className="w-5 h-5 text-[#A8C3BC] opacity-0 group-hover:opacity-100 group-hover:translate-x-1.5 -translate-y-1 transition-all duration-300" />
                   </Link>
                 );
               })}
             </div>
 
             {/* Right Information Column (Span 5) */}
-            <div className="lg:col-span-5 space-y-8 lg:pl-12 lg:border-l lg:border-white/10">
+            <div className="lg:col-span-5 space-y-6 lg:pl-10 lg:border-l lg:border-white/10">
               {/* Admissions Highlight Card */}
-              <div className="p-6 rounded-2xl bg-white/[0.04] border border-gold-500/30 space-y-4 backdrop-blur-md">
-                <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-gold-400 block font-bold">
+              <div className="p-6 rounded-xl bg-white/[0.04] border border-white/10 space-y-3 backdrop-blur-md">
+                <span className="text-[10px] font-mono font-medium uppercase tracking-[0.16em] text-[#A8C3BC] block">
                   Enrolment & Campus Visits
                 </span>
-                <h3 className="font-serif text-2xl text-white font-normal">
+                <h3 className="font-editorial text-2xl text-white font-normal leading-snug">
                   Experience DAV Public School Qilla Mandi
                 </h3>
-                <p className="text-xs text-cream-300 leading-relaxed">
+                <p className="text-xs text-white/80 leading-relaxed font-sans">
                   Join a community dedicated to moral values, intellectual rigor, and future-ready science for young scholars from Nursery through Class 10.
                 </p>
-                <div className="pt-2 flex flex-wrap gap-3">
+                <div className="pt-2 flex flex-wrap gap-2.5">
                   <button
                     onClick={() => {
                       setMenuOpen(false);
                       onOpenAdmissionModal?.();
                     }}
-                    className="px-5 py-2.5 rounded-full bg-gold-500 hover:bg-gold-400 text-navy-950 text-xs font-bold uppercase tracking-wider transition-colors"
+                    className="px-4 py-2 rounded bg-white hover:bg-white/90 text-[#0B1F33] text-xs font-sans font-bold uppercase tracking-wider transition-colors cursor-pointer"
                   >
                     Start Admission Form
                   </button>
                   <a
                     href={`tel:${schoolPhone}`}
-                    className="px-4 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs font-mono transition-colors"
+                    className="px-3.5 py-2 rounded bg-white/10 hover:bg-white/20 text-white text-xs font-mono transition-colors"
                   >
                     {schoolPhone}
                   </a>
@@ -251,18 +250,18 @@ export function Navbar({ onOpenSearch, onOpenAdmissionModal, siteSettings }: Nav
               </div>
 
               {/* Quick Contacts */}
-              <div className="space-y-3 text-xs font-mono text-cream-300">
-                <div className="flex items-start gap-3">
-                  <MapPin className="w-4 h-4 text-gold-400 shrink-0 mt-0.5" />
+              <div className="space-y-2.5 text-xs font-sans text-white/80">
+                <div className="flex items-start gap-2.5">
+                  <MapPin className="w-4 h-4 text-[#A8C3BC] shrink-0 mt-0.5" />
                   <span>{schoolAddress}</span>
                 </div>
-                <div className="flex items-center gap-3">
-                  <Phone className="w-4 h-4 text-gold-400 shrink-0" />
+                <div className="flex items-center gap-2.5">
+                  <Phone className="w-4 h-4 text-[#A8C3BC] shrink-0" />
                   <span>{schoolPhone} (Office: {schoolHours})</span>
                 </div>
-                <div className="flex items-center gap-3">
-                  <MessageCircle className="w-4 h-4 text-emerald-400 shrink-0" />
-                  <a href={SCHOOL_CONFIG.contact.whatsappLink} target="_blank" rel="noopener noreferrer" className="text-emerald-300 hover:underline">
+                <div className="flex items-center gap-2.5">
+                  <MessageCircle className="w-4 h-4 text-[#A8C3BC] shrink-0" />
+                  <a href={SCHOOL_CONFIG.contact.whatsappLink} target="_blank" rel="noopener noreferrer" className="text-[#A8C3BC] hover:underline font-mono">
                     WhatsApp Admissions Desk
                   </a>
                 </div>
@@ -271,11 +270,11 @@ export function Navbar({ onOpenSearch, onOpenAdmissionModal, siteSettings }: Nav
           </div>
 
           {/* Bottom Legal / Motto */}
-          <div className="flex flex-wrap items-center justify-between gap-4 pt-8 border-t border-white/10 text-xs font-mono text-cream-400/80">
+          <div className="flex flex-wrap items-center justify-between gap-4 pt-6 border-t border-white/10 text-xs font-sans text-white/60">
             <div>
               © {new Date().getFullYear()} {schoolName}, {SCHOOL_CONFIG.subName}. Managed by DAVCMC, New Delhi.
             </div>
-            <div className="text-gold-400 italic font-serif text-sm">
+            <div className="text-[#A8C3BC] italic font-editorial text-base">
               {SCHOOL_CONFIG.motto}
             </div>
           </div>

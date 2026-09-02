@@ -47,11 +47,11 @@ export function EditorialEyebrow({
 }) {
   return (
     <div
-      className={`inline-flex items-center gap-2.5 text-[11px] font-mono font-medium tracking-[0.25em] uppercase ${
-        light ? "text-gold-400" : "text-gold-700"
+      className={`inline-flex items-center gap-2.5 text-[11px] font-sans font-semibold tracking-[0.2em] uppercase ${
+        light ? "text-sage-300" : "text-teal-700"
       } ${className}`}
     >
-      <span className={`w-6 h-[1px] ${light ? "bg-gold-400/60" : "bg-gold-600/60"}`} />
+      <span className={`w-6 h-[1px] ${light ? "bg-sage-300/60" : "bg-teal-600/60"}`} />
       <span>{children}</span>
     </div>
   );
