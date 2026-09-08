@@ -90,7 +90,7 @@ export interface SchoolEvent {
 export interface GalleryItem {
   id: string;
   title: string;
-  category: "Campus & Architecture" | "Academic Life" | "Sports & Athletics" | "Cultural & Arts" | "Science & Robotics";
+  category: "Campus & Architecture" | "Academic Life" | "Sports & Athletics" | "Cultural & Arts" | "Science & Robotics" | "Heritage & Ethos" | "Science & Innovation" | "Patriotic & National" | "Technology" | "Early Childhood";
   imageUrl: string;
   alt: string;
   year?: string;
