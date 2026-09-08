@@ -21,7 +21,7 @@ export default function TermsPage() {
           <section className="space-y-2">
             <h2 className="font-serif text-lg font-bold text-navy-950">1. Acceptance of Terms</h2>
             <p>
-              By accessing and navigating the official digital portal of DAV Public School Qilla Mandi, you agree to comply with these terms, school administrative rules, and applicable CBSE/State guidelines.
+              By accessing and navigating the official digital portal of DAV Public School Qilla Mandi, you agree to comply with these terms, school administrative rules, and applicable PSEB/State guidelines.
             </p>
           </section>
 

@@ -23,14 +23,14 @@ export function MobileFloatingBar({ onOpenAdmissionModal }: { onOpenAdmissionMod
   if (!isVisible) return null;
 
   return (
-    <aside aria-label="Quick School Actions" className="fixed bottom-0 left-0 right-0 z-50 bg-[#0B1F33]/95 backdrop-blur-xl border-t border-white/10 p-2 sm:hidden shadow-2xl font-sans pb-[max(8px,env(safe-area-inset-bottom))]">
+    <aside aria-label="Quick School Actions" className="fixed bottom-0 left-0 right-0 z-50 bg-[#4E220F]/95 backdrop-blur-xl border-t border-white/10 p-2 sm:hidden shadow-2xl font-sans pb-[max(8px,env(safe-area-inset-bottom))]">
       <div className="grid grid-cols-4 gap-2 text-center text-[10px] font-mono font-medium text-white/80">
         {/* Quick Call */}
         <a
           href={`tel:${SCHOOL_CONFIG.contact.primaryPhone}`}
           className="flex flex-col items-center justify-center gap-1 py-1.5 px-1 rounded-xl bg-white/5 hover:bg-white/15 active:scale-95 text-white transition-all min-h-[46px] border border-white/10"
         >
-          <Phone className="w-4 h-4 text-[#A8C3BC]" />
+          <Phone className="w-4 h-4 text-[#B0BA99]" />
           <span>Call</span>
         </a>
 
@@ -39,9 +39,9 @@ export function MobileFloatingBar({ onOpenAdmissionModal }: { onOpenAdmissionMod
           href={SCHOOL_CONFIG.contact.whatsappLink}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex flex-col items-center justify-center gap-1 py-1.5 px-1 rounded-xl bg-[#2F5D62]/60 border border-[#2F5D62] text-[#A8C3BC] active:scale-95 transition-all min-h-[46px]"
+          className="flex flex-col items-center justify-center gap-1 py-1.5 px-1 rounded-xl bg-[#9D6638]/60 border border-[#9D6638] text-[#B0BA99] active:scale-95 transition-all min-h-[46px]"
         >
-          <MessageCircle className="w-4 h-4 text-[#A8C3BC]" />
+          <MessageCircle className="w-4 h-4 text-[#B0BA99]" />
           <span>WhatsApp</span>
         </a>
 
@@ -52,16 +52,16 @@ export function MobileFloatingBar({ onOpenAdmissionModal }: { onOpenAdmissionMod
           rel="noopener noreferrer"
           className="flex flex-col items-center justify-center gap-1 py-1.5 px-1 rounded-xl bg-white/5 hover:bg-white/15 active:scale-95 text-white transition-all min-h-[46px] border border-white/10"
         >
-          <MapPin className="w-4 h-4 text-[#A8C3BC]" />
+          <MapPin className="w-4 h-4 text-[#B0BA99]" />
           <span>Location</span>
         </a>
 
         {/* Apply Now Primary CTA */}
         <button
           onClick={onOpenAdmissionModal}
-          className="flex flex-col items-center justify-center gap-1 py-1.5 px-1 rounded-xl bg-white text-[#0B1F33] font-bold active:scale-95 transition-all min-h-[46px] shadow-sm cursor-pointer"
+          className="flex flex-col items-center justify-center gap-1 py-1.5 px-1 rounded-xl bg-[#9D6638] text-white font-bold active:scale-95 transition-all min-h-[46px] shadow-sm cursor-pointer"
         >
-          <Sparkles className="w-4 h-4 text-[#2F5D62]" />
+          <Sparkles className="w-4 h-4 text-white" />
           <span>Apply</span>
         </button>
       </div>

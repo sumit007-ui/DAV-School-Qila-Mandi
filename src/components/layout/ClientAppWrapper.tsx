@@ -7,19 +7,16 @@ import { Footer } from "@/components/navigation/Footer";
 import { MobileFloatingBar } from "@/components/navigation/MobileFloatingBar";
 import { SearchModal } from "@/components/ui/SearchModal";
 import { AdmissionModal } from "@/components/forms/AdmissionModal";
-import { ProspectusDownloadModal } from "@/components/forms/ProspectusDownloadModal";
-import { ScrollProgress, CustomCursor } from "@/components/motion";
+import { ScrollProgress } from "@/components/motion";
 
 interface ModalContextType {
   openAdmissionModal: (defaultGrade?: string) => void;
   openSearchModal: () => void;
-  openProspectusModal: () => void;
 }
 
 const ModalContext = createContext<ModalContextType>({
   openAdmissionModal: () => {},
   openSearchModal: () => {},
-  openProspectusModal: () => {},
 });
 
 export const useAppModals = () => useContext(ModalContext);
@@ -36,7 +33,6 @@ export function ClientAppWrapper({
 
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isAdmissionOpen, setIsAdmissionOpen] = useState(false);
-  const [isProspectusOpen, setIsProspectusOpen] = useState(false);
   const [admissionDefaultGrade, setAdmissionDefaultGrade] = useState("Nursery");
 
   const openAdmissionModal = (grade: string = "Nursery") => {
@@ -45,11 +41,10 @@ export function ClientAppWrapper({
   };
 
   const openSearchModal = () => setIsSearchOpen(true);
-  const openProspectusModal = () => setIsProspectusOpen(true);
 
   if (isAdminRoute) {
     return (
-      <div className="min-h-screen bg-[#060F1E]">
+      <div className="min-h-screen bg-[#4E220F]">
         {children}
       </div>
     );
@@ -60,12 +55,10 @@ export function ClientAppWrapper({
       value={{
         openAdmissionModal,
         openSearchModal,
-        openProspectusModal,
       }}
     >
       <div className="flex flex-col min-h-screen">
         <ScrollProgress />
-        <CustomCursor />
 
         <Navbar
           siteSettings={siteSettings}
@@ -96,11 +89,6 @@ export function ClientAppWrapper({
           isOpen={isAdmissionOpen}
           onClose={() => setIsAdmissionOpen(false)}
           defaultGrade={admissionDefaultGrade}
-        />
-
-        <ProspectusDownloadModal
-          isOpen={isProspectusOpen}
-          onClose={() => setIsProspectusOpen(false)}
         />
       </div>
     </ModalContext.Provider>

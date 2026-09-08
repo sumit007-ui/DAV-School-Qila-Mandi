@@ -9,12 +9,12 @@ export const CAMPUS_FACILITIES: CampusFacility[] = [
     headline: "Digitally empowered interactive lecture studios with 4K touch panels.",
     description: "Every classroom from Primary to Senior Secondary is equipped with high-definition digital smart boards, acoustic paneling, ergonomic modular seating, and high-speed campus intranet.",
     specifications: [
-      "75-inch Ultra HD Interactive Interactive Flat Panels",
+      "75-inch Ultra HD Interactive Flat Panels",
       "Comprehensive digital syllabus 3D simulations & AR animations",
       "Ergonomically designed dual desks with posture support",
       "Energy-efficient climate control and natural daylit ventilation"
     ],
-    image: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&q=80&w=1200",
+    image: "/images/school-building.png",
     badge: "Next-Gen Learning"
   },
   {
@@ -30,7 +30,7 @@ export const CAMPUS_FACILITIES: CampusFacility[] = [
       "High-power binocular optical microscopes and digital sensors",
       "Dedicated botanical herbarium and anatomical models"
     ],
-    image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&q=80&w=1200",
+    image: "/images/science-lab.jpg",
     badge: "Empirical Rigor"
   },
   {
@@ -46,7 +46,7 @@ export const CAMPUS_FACILITIES: CampusFacility[] = [
       "Drone assembly kits, electronics soldering benches",
       "National Robotics Olympiad mentorship zone"
     ],
-    image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=1200",
+    image: "/images/computer-lab.jpg",
     badge: "AI & Innovation"
   },
   {
@@ -62,7 +62,7 @@ export const CAMPUS_FACILITIES: CampusFacility[] = [
       "Automated Koha barcode LMS for swift book reservations",
       "Audiobook listening lounge and digital research stations"
     ],
-    image: "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&q=80&w=1200",
+    image: "/images/library.jpg",
     badge: "15,000+ Volumes"
   },
   {
@@ -78,24 +78,24 @@ export const CAMPUS_FACILITIES: CampusFacility[] = [
       "Speed skating track and roller hockey practice rink",
       "Certified NIS coaches for Athletics, Taekwondo, and Yoga"
     ],
-    image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=1200",
+    image: "/images/sports-ground.jpg",
     badge: "Athletic Excellence"
   },
   {
     id: "performing-arts-auditorium",
     slug: "performing-arts-auditorium",
-    title: "Maharshi Dayanand Auditorium",
+    title: "Maharshi Dayanand Yajnashala & Hall",
     category: "Cultural",
-    headline: "Acoustically treated 800-seat amphitheatre for performing arts and conferences.",
-    description: "The vibrant heart of school festivals, theatrical productions, classical music recitals, inter-school debates, and graduation ceremonies.",
+    headline: "Acoustically treated amphitheatre & sacred Yajnashala for ceremonies.",
+    description: "The vibrant heart of school festivals, theatrical productions, classical music recitals, inter-school debates, and morning Vedic Havans.",
     specifications: [
       "800-seat tiered acoustic auditorium with motorized stage drapery",
       "Line-array professional sound system and dynamic theatrical lighting",
       "Green rooms and backstage makeup wings",
-      "Vedic Yagyashala pavilion for daily morning Havans and sacred mantras"
+      "Vedic Yajnashala pavilion for daily morning Havans and sacred mantras"
     ],
-    image: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&q=80&w=1200",
-    badge: "800-Seater Grand Hall"
+    image: "/images/yajnashala-havan.jpg",
+    badge: "Sacred Yajnashala & Hall"
   },
   {
     id: "campus-safety-transport",
@@ -110,7 +110,7 @@ export const CAMPUS_FACILITIES: CampusFacility[] = [
       "Fleet of GPS & CCTV-fitted school buses covering Batala, Qilla Mandi and rural perimeters",
       "Full-time resident medical nurse and on-call paediatrician"
     ],
-    image: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&q=80&w=1200",
+    image: "/images/independence-day.jpg",
     badge: "Child Safe & Certified"
   }
 ];

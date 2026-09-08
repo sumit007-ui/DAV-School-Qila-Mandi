@@ -5,15 +5,15 @@ import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion
 
 interface ColourTransitionProps {
   children: React.ReactNode;
-  fromBg?: string; // e.g. "#F5F3EE"
-  toBg?: string;   // e.g. "#16324F"
+  fromBg?: string; // e.g. "#F7F1DE"
+  toBg?: string;   // e.g. "#4E220F"
   className?: string;
 }
 
 export function ColourTransition({
   children,
-  fromBg = "#F5F3EE",
-  toBg = "#16324F",
+  fromBg = "#F7F1DE",
+  toBg = "#4E220F",
   className = "",
 }: ColourTransitionProps) {
   const ref = useRef<HTMLDivElement>(null);

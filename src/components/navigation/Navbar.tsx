@@ -91,25 +91,13 @@ export function Navbar({ onOpenSearch, onOpenAdmissionModal, siteSettings }: Nav
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           isScrolled
-            ? "bg-[#0B1F33]/95 backdrop-blur-xl border-b border-white/10 py-3 shadow-xl text-white"
-            : "bg-gradient-to-b from-[#0B1F33]/95 via-[#0B1F33]/60 to-transparent py-4 text-white"
+            ? "bg-[#4E220F]/95 backdrop-blur-xl border-b border-white/10 py-3 shadow-xl text-white"
+            : "bg-gradient-to-b from-[#4E220F]/95 via-[#4E220F]/60 to-transparent py-4 text-white"
         }`}
       >
         <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 flex items-center justify-between">
-          {/* Brand Crest / Logo */}
-          <Link href="/" className="group flex items-center gap-3">
-            <div className="w-9 h-9 rounded bg-[#2F5D62]/40 border border-[#A8C3BC]/40 flex items-center justify-center text-[#A8C3BC] font-editorial font-bold text-sm tracking-wider group-hover:bg-[#2F5D62] group-hover:text-white transition-all duration-300">
-              DAV
-            </div>
-            <div>
-              <span className="font-editorial text-lg sm:text-xl font-medium tracking-tight text-white block leading-none">
-                {schoolName}
-              </span>
-              <span className="text-[10px] font-mono tracking-[0.16em] text-[#A8C3BC] uppercase block mt-1">
-                {SCHOOL_CONFIG.subName} • Nursery – Class 10
-              </span>
-            </div>
-          </Link>
+          {/* Brand Logo with Official Circular Emblem */}
+          <BrandLogo variant="dark" schoolName={schoolName} logoSize={44} />
 
           {/* Desktop Navigation Links */}
           <nav className="hidden lg:flex items-center gap-6 xl:gap-8 text-xs uppercase tracking-[0.14em] font-sans font-medium text-white/80">
@@ -120,12 +108,12 @@ export function Navbar({ onOpenSearch, onOpenAdmissionModal, siteSettings }: Nav
                   key={item.label}
                   href={item.href}
                   className={`transition-colors relative py-1 group ${
-                    isActive ? "text-[#A8C3BC] font-semibold" : "hover:text-white"
+                    isActive ? "text-[#B0BA99] font-semibold" : "hover:text-white"
                   }`}
                 >
                   <span>{item.label}</span>
                   <span
-                    className={`absolute bottom-0 left-0 h-[1.5px] bg-[#A8C3BC] transition-all duration-300 ${
+                    className={`absolute bottom-0 left-0 h-[1.5px] bg-[#B0BA99] transition-all duration-300 ${
                       isActive ? "w-full" : "w-0 group-hover:w-full"
                     }`}
                   />
@@ -149,9 +137,9 @@ export function Navbar({ onOpenSearch, onOpenAdmissionModal, siteSettings }: Nav
             {/* Editorial Admissions Pill */}
             <button
               onClick={onOpenAdmissionModal}
-              className="hidden sm:inline-flex items-center gap-2 px-5 py-2 rounded bg-[#163A5F] hover:bg-[#2F5D62] text-white text-xs font-sans font-semibold uppercase tracking-[0.14em] transition-all duration-300 shadow-md active:scale-95 group border border-white/10 cursor-pointer"
+              className="hidden sm:inline-flex items-center gap-2 px-5 py-2 rounded bg-[#9D6638] hover:bg-[#82522B] text-white text-xs font-sans font-semibold uppercase tracking-[0.14em] transition-all duration-300 shadow-md active:scale-95 group border border-white/10 cursor-pointer"
             >
-              <Sparkles className="w-3.5 h-3.5 text-[#A8C3BC] group-hover:rotate-12 transition-transform" />
+              <Sparkles className="w-3.5 h-3.5 text-[#B0BA99] group-hover:rotate-12 transition-transform" />
               <span>Admissions {SCHOOL_CONFIG.admissionsSession}</span>
             </button>
 
@@ -161,7 +149,7 @@ export function Navbar({ onOpenSearch, onOpenAdmissionModal, siteSettings }: Nav
               className="inline-flex items-center gap-2 px-3 py-1.5 rounded bg-white/10 hover:bg-white/20 border border-white/15 text-white text-xs uppercase tracking-widest font-mono font-medium transition-colors cursor-pointer"
               aria-label="Toggle menu"
             >
-              {menuOpen ? <X className="w-4 h-4 text-[#A8C3BC]" /> : <Menu className="w-4 h-4 text-[#A8C3BC]" />}
+              {menuOpen ? <X className="w-4 h-4 text-[#B0BA99]" /> : <Menu className="w-4 h-4 text-[#B0BA99]" />}
               <span className="hidden sm:inline">{menuOpen ? "Close" : "Menu"}</span>
             </button>
           </div>
@@ -170,12 +158,12 @@ export function Navbar({ onOpenSearch, onOpenAdmissionModal, siteSettings }: Nav
 
       {/* Fullscreen Architectural Menu Overlay */}
       <div
-        className={`fixed inset-0 z-40 bg-[#0B1F33] text-white transition-all duration-700 ease-out overflow-y-auto ${
+        className={`fixed inset-0 z-40 bg-[#4E220F] text-white transition-all duration-700 ease-out overflow-y-auto ${
           menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
       >
         {/* Background Watermark */}
-        <div className="absolute right-0 bottom-0 text-[35vw] font-editorial text-white/[0.02] pointer-events-none select-none leading-none -mb-16">
+        <div className="absolute right-0 bottom-0 text-[30vw] font-editorial text-white/[0.03] pointer-events-none select-none leading-none -mb-16">
           DAV
         </div>
 
@@ -183,11 +171,11 @@ export function Navbar({ onOpenSearch, onOpenAdmissionModal, siteSettings }: Nav
           {/* Top Info Strip */}
           <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-6 text-xs font-mono text-white/70">
             <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-[#A8C3BC] animate-pulse"></span>
+              <span className="w-2 h-2 rounded-full bg-[#B0BA99] animate-pulse"></span>
               <span>ADMISSIONS OPEN FOR SESSION {SCHOOL_CONFIG.admissionsSession}</span>
             </div>
-            <div className="text-[#A8C3BC]">
-              CBSE #{SCHOOL_CONFIG.affiliationNo} • CODE: {SCHOOL_CONFIG.schoolCode}
+            <div className="text-[#B0BA99]">
+              PSEB #{SCHOOL_CONFIG.affiliationNo} • CODE: {SCHOOL_CONFIG.schoolCode}
             </div>
           </div>
 
@@ -202,16 +190,16 @@ export function Navbar({ onOpenSearch, onOpenAdmissionModal, siteSettings }: Nav
                     key={item.label}
                     href={item.href}
                     onClick={() => setMenuOpen(false)}
-                    className="group flex items-baseline gap-4 py-1.5 text-3xl sm:text-5xl lg:text-6xl font-editorial text-white hover:text-[#A8C3BC] transition-colors duration-300"
+                    className="group flex items-baseline gap-4 py-1.5 text-3xl sm:text-5xl lg:text-6xl font-editorial text-white hover:text-[#B0BA99] transition-colors duration-300"
                     style={{ transitionDelay: `${idx * 30}ms` }}
                   >
-                    <span className="text-xs sm:text-sm font-mono font-medium text-[#A8C3BC]/70 group-hover:text-[#A8C3BC]">
+                    <span className="text-xs sm:text-sm font-mono font-medium text-[#B0BA99]/70 group-hover:text-[#B0BA99]">
                       {item.number}
                     </span>
-                    <span className={`tracking-tight ${isActive ? "text-[#A8C3BC] italic" : ""}`}>
+                    <span className={`tracking-tight ${isActive ? "text-[#B0BA99] italic" : ""}`}>
                       {item.label}
                     </span>
-                    <ArrowUpRight className="w-5 h-5 text-[#A8C3BC] opacity-0 group-hover:opacity-100 group-hover:translate-x-1.5 -translate-y-1 transition-all duration-300" />
+                    <ArrowUpRight className="w-5 h-5 text-[#B0BA99] opacity-0 group-hover:opacity-100 group-hover:translate-x-1.5 -translate-y-1 transition-all duration-300" />
                   </Link>
                 );
               })}
@@ -221,11 +209,11 @@ export function Navbar({ onOpenSearch, onOpenAdmissionModal, siteSettings }: Nav
             <div className="lg:col-span-5 space-y-6 lg:pl-10 lg:border-l lg:border-white/10">
               {/* Admissions Highlight Card */}
               <div className="p-6 rounded-xl bg-white/[0.04] border border-white/10 space-y-3 backdrop-blur-md">
-                <span className="text-[10px] font-mono font-medium uppercase tracking-[0.16em] text-[#A8C3BC] block">
+                <span className="text-[10px] font-mono font-medium uppercase tracking-[0.16em] text-[#B0BA99] block">
                   Enrolment & Campus Visits
                 </span>
                 <h3 className="font-editorial text-2xl text-white font-normal leading-snug">
-                  Experience DAV Public School Qilla Mandi
+                  Experience {schoolName}
                 </h3>
                 <p className="text-xs text-white/80 leading-relaxed font-sans">
                   Join a community dedicated to moral values, intellectual rigor, and future-ready science for young scholars from Nursery through Class 10.
@@ -236,7 +224,7 @@ export function Navbar({ onOpenSearch, onOpenAdmissionModal, siteSettings }: Nav
                       setMenuOpen(false);
                       onOpenAdmissionModal?.();
                     }}
-                    className="px-4 py-2 rounded bg-white hover:bg-white/90 text-[#0B1F33] text-xs font-sans font-bold uppercase tracking-wider transition-colors cursor-pointer"
+                    className="px-4 py-2 rounded bg-white hover:bg-white/90 text-[#4E220F] text-xs font-sans font-bold uppercase tracking-wider transition-colors cursor-pointer"
                   >
                     Start Admission Form
                   </button>
@@ -252,16 +240,16 @@ export function Navbar({ onOpenSearch, onOpenAdmissionModal, siteSettings }: Nav
               {/* Quick Contacts */}
               <div className="space-y-2.5 text-xs font-sans text-white/80">
                 <div className="flex items-start gap-2.5">
-                  <MapPin className="w-4 h-4 text-[#A8C3BC] shrink-0 mt-0.5" />
+                  <MapPin className="w-4 h-4 text-[#B0BA99] shrink-0 mt-0.5" />
                   <span>{schoolAddress}</span>
                 </div>
                 <div className="flex items-center gap-2.5">
-                  <Phone className="w-4 h-4 text-[#A8C3BC] shrink-0" />
+                  <Phone className="w-4 h-4 text-[#B0BA99] shrink-0" />
                   <span>{schoolPhone} (Office: {schoolHours})</span>
                 </div>
                 <div className="flex items-center gap-2.5">
-                  <MessageCircle className="w-4 h-4 text-[#A8C3BC] shrink-0" />
-                  <a href={SCHOOL_CONFIG.contact.whatsappLink} target="_blank" rel="noopener noreferrer" className="text-[#A8C3BC] hover:underline font-mono">
+                  <MessageCircle className="w-4 h-4 text-[#B0BA99] shrink-0" />
+                  <a href={SCHOOL_CONFIG.contact.whatsappLink} target="_blank" rel="noopener noreferrer" className="text-[#B0BA99] hover:underline font-mono">
                     WhatsApp Admissions Desk
                   </a>
                 </div>
@@ -274,7 +262,7 @@ export function Navbar({ onOpenSearch, onOpenAdmissionModal, siteSettings }: Nav
             <div>
               © {new Date().getFullYear()} {schoolName}, {SCHOOL_CONFIG.subName}. Managed by DAVCMC, New Delhi.
             </div>
-            <div className="text-[#A8C3BC] italic font-editorial text-base">
+            <div className="text-[#B0BA99] italic font-editorial text-base">
               {SCHOOL_CONFIG.motto}
             </div>
           </div>

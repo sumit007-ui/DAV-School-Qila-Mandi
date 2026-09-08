@@ -32,7 +32,7 @@ export function AcademicsClientView({ programs }: AcademicsClientViewProps) {
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold-500/20 border border-gold-500/40 text-gold-300 text-xs font-semibold uppercase tracking-widest">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>CBSE Affiliated Curriculum</span>
+            <span>PSEB Affiliated Curriculum</span>
           </div>
 
           <h1 className="font-serif text-4xl sm:text-6xl text-white font-normal leading-tight">

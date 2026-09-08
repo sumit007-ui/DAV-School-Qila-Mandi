@@ -1,14 +1,17 @@
 import Link from "next/link";
+import Image from "next/image";
 import { SCHOOL_CONFIG } from "@/config/school";
 
 export function BrandLogo({
   variant = "light",
   className = "",
   schoolName,
+  logoSize = 48,
 }: {
   variant?: "light" | "dark" | "gold";
   className?: string;
   schoolName?: string;
+  logoSize?: number;
 }) {
   const isDark = variant === "dark";
   const name = schoolName || SCHOOL_CONFIG.name;
@@ -16,33 +19,35 @@ export function BrandLogo({
   return (
     <Link
       href="/"
-      className={`group flex items-center gap-3.5 focus:outline-none focus:ring-2 focus:ring-teal-500 rounded-lg transition-transform ${className}`}
-      aria-label="DAV Public School Qilla Mandi Home"
+      className={`group flex items-center gap-3 focus:outline-none rounded-lg transition-transform ${className}`}
+      aria-label={`${name} Home`}
     >
-      {/* Emblem Graphic */}
-      <div className="relative flex items-center justify-center w-11 h-11 rounded-full bg-gradient-to-br from-teal-400 via-teal-600 to-navy-800 shadow-md p-0.5 transition-transform duration-300 group-hover:scale-105">
-        <div className="w-full h-full rounded-full bg-[#16324F] flex items-center justify-center border border-sage-300/40">
-          <span className="font-serif font-bold text-sage-200 text-base tracking-tighter">
-            DAV
-          </span>
-        </div>
+      {/* Official Circular Crest Logo */}
+      <div className="relative shrink-0 transition-transform duration-300 group-hover:scale-105">
+        <Image
+          src="/images/logo.png"
+          alt={`${name} Official Logo`}
+          width={logoSize}
+          height={logoSize}
+          className="object-contain filter drop-shadow-md"
+        />
       </div>
 
       {/* School Typography */}
       <div className="flex flex-col">
         <div className="flex items-center gap-2">
           <span
-            className={`font-serif font-bold text-lg sm:text-xl tracking-tight leading-none transition-colors ${
-              isDark ? "text-white" : "text-[#16324F] group-hover:text-teal-600"
+            className={`font-editorial font-bold text-lg sm:text-xl tracking-tight leading-none transition-colors ${
+              isDark ? "text-white" : "text-[#4E220F] group-hover:text-[#9D6638]"
             }`}
           >
             {name}
           </span>
         </div>
-        <div className="flex items-center gap-1.5 mt-0.5">
+        <div className="flex items-center gap-1.5 mt-1">
           <span
-            className={`text-[10px] sm:text-xs font-semibold tracking-widest uppercase ${
-              isDark ? "text-sage-300" : "text-teal-600"
+            className={`text-[10px] font-mono tracking-widest uppercase ${
+              isDark ? "text-[#B0BA99]" : "text-[#9D6638]"
             }`}
           >
             {SCHOOL_CONFIG.subName}
@@ -50,8 +55,8 @@ export function BrandLogo({
           <span
             className={`text-[9px] px-1.5 py-0.5 rounded font-mono font-medium ${
               isDark
-                ? "bg-navy-800 text-cream-200 border border-navy-700"
-                : "bg-ivory-300 text-navy-800 border border-ivory-400"
+                ? "bg-[#361609] text-[#B0BA99] border border-[#673E1E]"
+                : "bg-[#EBE3C8] text-[#4E220F] border border-[#DCD0AE]"
             }`}
           >
             Est. 1989

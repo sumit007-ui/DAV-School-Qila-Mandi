@@ -24,7 +24,7 @@ export const ADMISSION_STEPS: AdmissionStep[] = [
   {
     stepNumber: "03",
     title: "Document Verification",
-    description: "Verification of foundational certificates to confirm admission eligibility as per CBSE & state guidelines.",
+    description: "Verification of foundational certificates to confirm admission eligibility as per PSEB (Punjab Board) & state guidelines.",
     deliverables: [
       "Original Transfer Certificate (TC) & previous report card",
       "Attested copy of Municipal Birth Certificate",
@@ -47,13 +47,13 @@ export const ADMISSION_STEPS: AdmissionStep[] = [
 export const ADMISSION_FAQS: FAQItem[] = [
   {
     category: "Admissions",
-    question: "What classes are offered at DAV Public School Qilla Mandi?",
-    answer: "Our school provides a comprehensive educational journey from Nursery (Early Childhood / Pre-Primary) up to Class 10, affiliated with the Central Board of Secondary Education (CBSE), New Delhi."
+    question: "What classes are offered at Dr. MRS Bhalla DAV High School Qilla Mandi?",
+    answer: "Our school provides a comprehensive educational journey from Nursery (Early Childhood / Pre-Primary) up to Class 10, affiliated with the Punjab School Education Board (PSEB), Mohali."
   },
   {
     category: "Admissions",
     question: "What is the minimum age criterion for Nursery and Kindergarten admissions for 2026-27?",
-    answer: "As per NEP 2020 and CBSE norms, the child must be 3+ years of age as of March 31, 2026 for Nursery. For LKG, 4+ years; for UKG, 5+ years; and for Class 1, 6+ years as of March 31, 2026."
+    answer: "As per PSEB and state educational norms, the child must be 3+ years of age as of March 31, 2026 for Nursery. For LKG, 4+ years; for UKG, 5+ years; and for Class 1, 6+ years as of March 31, 2026."
   },
   {
     category: "Academics",
@@ -63,7 +63,7 @@ export const ADMISSION_FAQS: FAQItem[] = [
   {
     category: "Campus & Safety",
     question: "How is campus safety and transport managed for younger children?",
-    answer: "The 12-acre campus is secured with 120+ CCTV cameras, female attendants on all school buses, dedicated junior washroom facilities, and a fully staffed infirmary with on-duty nurse."
+    answer: "The campus is secured with CCTV cameras, female attendants on all school buses, dedicated junior washroom facilities, and a fully staffed infirmary with on-duty nurse."
   },
   {
     category: "Transport & Fees",
@@ -78,5 +78,5 @@ export const ELIGIBILITY_CRITERIA = [
   { class: "LKG & UKG", age: "4+ & 5+ Years as on 31st March 2026", criteria: "Foundational interaction & motor coordination" },
   { class: "Classes 1 to 5", age: "6+ to 10+ Years", criteria: "Previous class progress report & basic interaction" },
   { class: "Classes 6 to 8", age: "11+ to 13+ Years", criteria: "Aptitude check in English & Math, previous report card" },
-  { class: "Classes 9 & 10", age: "14+ & 15+ Years", criteria: "CBSE registration transfer & previous academic record" }
+  { class: "Classes 9 & 10", age: "14+ & 15+ Years", criteria: "PSEB registration transfer & previous academic record" }
 ];

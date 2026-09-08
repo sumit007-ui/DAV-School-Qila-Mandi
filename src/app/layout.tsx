@@ -5,8 +5,8 @@ import { ClientAppWrapper } from "@/components/layout/ClientAppWrapper";
 import { getSiteSettings } from "@/sanity/lib/fetch";
 
 export const metadata: Metadata = generateSchoolMetadata({
-  title: "DAV Public School Qilla Mandi Batala | Shaping Curious Minds",
-  description: "Official portal of DAV Public School Qilla Mandi, Batala (Punjab). Affiliated to CBSE New Delhi. Admissions open for session 2026-27 for Nursery to Class XI.",
+  title: "Dr. MRS Bhalla DAV High School Qilla Mandi Batala",
+  description: "Official portal of Dr. MRS Bhalla DAV High School, Qilla Mandi, Batala (Punjab). Affiliated to Punjab School Education Board (PSEB), Mohali. Admissions open for session 2026-27 for Nursery to Class 10.",
   path: "",
 });
 
@@ -26,7 +26,7 @@ export default async function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="bg-[#F6F3ED] text-[#1C2730] antialiased min-h-screen flex flex-col font-sans selection:bg-[#A8C3BC]/40 selection:text-[#0B1F33] overflow-x-hidden">
+      <body className="bg-[#F7F1DE] text-[#4E220F] antialiased min-h-screen flex flex-col font-sans selection:bg-[#9D6638]/30 selection:text-[#4E220F] overflow-x-hidden">
         <ClientAppWrapper siteSettings={siteSettings}>
           {children}
         </ClientAppWrapper>

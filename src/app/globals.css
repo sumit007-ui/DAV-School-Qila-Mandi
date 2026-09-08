@@ -11,26 +11,26 @@
   --font-mono-tag: 'DM Mono', monospace;
   --font-serif-prestige: 'Playfair Display', Georgia, serif;
 
-  /* Primary Color Palette */
-  --midnight-navy: #0B1F33;
-  --oxford-blue: #163A5F;
-  --deep-teal: #2F5D62;
-  --eucalyptus-sage: #A8C3BC;
-  --warm-ivory: #F6F3ED;
+  /* Primary Palette: #F7F1DE, #B0BA99, #9D6638, #4E220F */
+  --midnight-navy: #4E220F;
+  --oxford-blue: #612B13;
+  --deep-teal: #9D6638;
+  --eucalyptus-sage: #B0BA99;
+  --warm-ivory: #F7F1DE;
   --cloud-white: #FFFFFF;
 
   /* Typography Text Tokens */
-  --text-primary: #1C2730;
-  --text-muted: #68747C;
+  --text-primary: #4E220F;
+  --text-muted: #7E5F4E;
   --text-white: #FFFFFF;
 
-  --background: #F6F3ED;
-  --foreground: #1C2730;
+  --background: #F7F1DE;
+  --foreground: #4E220F;
 }
 
 @layer base {
   * {
-    @apply border-[#163A5F]/15 selection:bg-[#A8C3BC]/40 selection:text-[#0B1F33];
+    @apply border-[#9D6638]/20 selection:bg-[#B0BA99]/40 selection:text-[#4E220F];
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
   }
@@ -40,16 +40,16 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     touch-action: manipulation;
-    background-color: #F6F3ED;
-    color: #1C2730;
+    background-color: #F7F1DE;
+    color: #4E220F;
     font-family: var(--font-sans);
   }
 
   body {
     overflow-x: hidden;
     min-height: 100vh;
-    background-color: #F6F3ED;
-    color: #1C2730;
+    background-color: #F7F1DE;
+    color: #4E220F;
   }
 
   /* Editorial Headings use Cormorant Garamond */
@@ -77,14 +77,14 @@
   height: 5px;
 }
 ::-webkit-scrollbar-track {
-  background: #EAE5DC;
+  background: #F7F1DE;
 }
 ::-webkit-scrollbar-thumb {
-  background: #2F5D62;
+  background: #9D6638;
   border-radius: 2px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #163A5F;
+  background: #4E220F;
 }
 
 /* Editorial Grain Texture */
