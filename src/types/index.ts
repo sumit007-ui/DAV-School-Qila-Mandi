@@ -28,7 +28,7 @@ export interface CampusFacility {
   id: string;
   slug: string;
   title: string;
-  category: "Academic" | "Sports" | "Technology" | "Cultural" | "Safety" | "Wellness";
+  category: "Academic" | "Sports" | "Technology" | "Cultural" | "Safety" | "Wellness" | "STEM & Robotics" | "Scientific Research" | "IT & Technology" | "Academic Sanctuary" | "Sports & Athletics" | "Heritage & Ethos";
   headline: string;
   description: string;
   specifications: string[];
