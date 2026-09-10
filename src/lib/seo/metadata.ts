@@ -63,6 +63,11 @@ export function generateSchoolMetadata({
       description,
       images: [ogImage],
     },
+    icons: {
+      icon: "/images/logo-removebg-preview.png",
+      shortcut: "/images/logo-removebg-preview.png",
+      apple: "/images/logo-removebg-preview.png",
+    },
     robots: {
       index: true,
       follow: true,
