@@ -65,8 +65,19 @@ export default function AdminLoginPage() {
 
       <div className="sm:mx-auto sm:w-full sm:max-w-md relative z-10 text-center space-y-3">
         {/* Brand Crest */}
-        <Link href="/" className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-gold-500/20 border border-gold-400/40 text-gold-300 font-serif font-bold text-xl shadow-lg mb-2">
-          DAV
+        <Link
+          href="/"
+          className="inline-flex items-center justify-center p-2 rounded-2xl bg-white/10 hover:bg-white/15 border border-white/20 hover:border-gold-400/50 shadow-2xl mb-2 group transition-all"
+          title="Return to School Website"
+        >
+          <Image
+            src="/images/logo.png"
+            alt="DAV Public School Qilla Mandi Logo"
+            width={64}
+            height={64}
+            className="w-14 h-14 object-contain filter drop-shadow group-hover:scale-105 transition-transform"
+            priority
+          />
         </Link>
 
         <h2 className="font-serif text-2xl sm:text-3xl text-white font-normal tracking-tight">

@@ -43,17 +43,17 @@ export default async function MandatoryDisclosurePage() {
   ];
 
   return (
-    <div className="w-full py-16 bg-cream-50 text-navy-950">
+    <div className="w-full pt-28 sm:pt-36 pb-20 bg-cream-50 text-navy-950 min-h-screen">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         {/* Header */}
         <div className="space-y-3">
-          <span className="text-xs font-mono font-bold uppercase tracking-widest text-gold-700">
+          <span className="text-xs font-mono font-bold uppercase tracking-widest text-gold-700 bg-gold-100/60 px-2.5 py-1 rounded-full border border-gold-300/40 inline-block">
             PSEB & Statutory Compliance
           </span>
           <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-navy-950 font-normal">
             Mandatory Public Disclosure
           </h1>
-          <p className="text-xs sm:text-sm text-navy-600">
+          <p className="text-xs sm:text-sm text-navy-600 max-w-3xl leading-relaxed">
             In compliance with Punjab School Education Board regulations and Department of School Education directives, the following official institutional credentials and compliance documents are published for public inspection.
           </p>
         </div>
@@ -99,7 +99,7 @@ export default async function MandatoryDisclosurePage() {
 
                 <Link
                   href={doc.docUrl}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-cream-100 hover:bg-navy-950 text-navy-800 hover:text-gold-400 font-mono text-xs font-bold uppercase transition-all shrink-0 border border-cream-300"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-cream-100 hover:bg-navy-950 text-navy-800 hover:text-white font-mono text-xs font-bold uppercase transition-all shrink-0 border border-cream-300"
                 >
                   <span>View / Download</span>
                   <ExternalLink className="w-3.5 h-3.5" />

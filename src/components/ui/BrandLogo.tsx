@@ -46,8 +46,8 @@ export function BrandLogo({
         </div>
         <div className="flex items-center gap-1.5 mt-0.5">
           <span
-            className={`text-[9px] sm:text-[10px] font-mono tracking-widest uppercase ${
-              isDark ? "text-[#B0BA99]" : "text-[#9D6638]"
+            className={`text-[9px] sm:text-[10px] font-mono tracking-widest uppercase font-medium ${
+              isDark ? "text-cream-200/95" : "text-[#9D6638]"
             }`}
           >
             {SCHOOL_CONFIG.subName}
@@ -55,7 +55,7 @@ export function BrandLogo({
           <span
             className={`hidden xs:inline-block text-[9px] px-1.5 py-0.2 rounded font-mono font-medium ${
               isDark
-                ? "bg-[#361609] text-[#B0BA99] border border-[#673E1E]"
+                ? "bg-white/10 text-white/95 border border-white/20"
                 : "bg-[#EBE3C8] text-[#4E220F] border border-[#DCD0AE]"
             }`}
           >

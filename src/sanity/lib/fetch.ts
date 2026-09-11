@@ -1,7 +1,9 @@
 import { client } from './client'
+import { getSanityImageUrl } from './image'
 import {
   SITE_SETTINGS_QUERY,
   PRINCIPAL_MESSAGE_QUERY,
+  DIRECTOR_MESSAGE_QUERY,
   ACADEMIC_STAGES_QUERY,
   FACILITIES_QUERY,
   STUDENT_LIFE_QUERY,
@@ -71,26 +73,44 @@ export async function getPrincipalMessage() {
   try {
     const data = await client.fetch(PRINCIPAL_MESSAGE_QUERY, {}, { next: { revalidate: 0 } })
     if (data && data.name) {
-      const fullMessage = Array.isArray(data.message)
-        ? data.message
-            .map((b: any) =>
-              typeof b === 'string'
-                ? b
-                : b.children?.map((c: any) => c.text).join('') || ''
-            )
-            .filter(Boolean)
-        : SCHOOL_CONFIG.leadership.principal.fullMessage
+      let fullMessage: string[] = []
+      if (Array.isArray(data.message)) {
+        fullMessage = data.message
+          .map((b: any) =>
+            typeof b === 'string'
+              ? b
+              : b.children?.map((c: any) => c.text).join('') || ''
+          )
+          .filter(Boolean)
+      } else if (typeof data.message === 'string' && data.message.trim()) {
+        fullMessage = data.message
+          .split(/\n\n+/)
+          .map((p: string) => p.trim())
+          .filter(Boolean)
+      }
 
-      const excerpt = data.shortMessage || (fullMessage.length > 0 ? fullMessage[0] : SCHOOL_CONFIG.leadership.principal.messageExcerpt);
+      if (fullMessage.length === 0) {
+        fullMessage = SCHOOL_CONFIG.leadership.principal.fullMessage
+      }
+
+      const excerpt =
+        data.shortMessage?.trim() ||
+        (fullMessage.length > 0 ? fullMessage[0] : SCHOOL_CONFIG.leadership.principal.messageExcerpt)
+
+      const resolvedPhoto =
+        data.photoUrl ||
+        (data.photo ? getSanityImageUrl(data.photo) : null) ||
+        SCHOOL_CONFIG.leadership.principal.image
 
       return {
         name: data.name || SCHOOL_CONFIG.leadership.principal.name,
         designation: data.designation || SCHOOL_CONFIG.leadership.principal.designation,
-        photoUrl: data.photoUrl || SCHOOL_CONFIG.leadership.principal.image,
-        image: data.photoUrl || SCHOOL_CONFIG.leadership.principal.image,
+        qualifications: data.qualifications || SCHOOL_CONFIG.leadership.principal.qualifications,
+        photoUrl: resolvedPhoto,
+        image: resolvedPhoto,
         shortMessage: excerpt,
         messageExcerpt: excerpt,
-        fullMessage: fullMessage.length > 0 ? fullMessage : SCHOOL_CONFIG.leadership.principal.fullMessage,
+        fullMessage: fullMessage,
       }
     }
   } catch (err) {
@@ -99,11 +119,71 @@ export async function getPrincipalMessage() {
   return {
     name: SCHOOL_CONFIG.leadership.principal.name,
     designation: SCHOOL_CONFIG.leadership.principal.designation,
+    qualifications: SCHOOL_CONFIG.leadership.principal.qualifications,
     photoUrl: SCHOOL_CONFIG.leadership.principal.image,
     image: SCHOOL_CONFIG.leadership.principal.image,
     shortMessage: SCHOOL_CONFIG.leadership.principal.messageExcerpt,
     messageExcerpt: SCHOOL_CONFIG.leadership.principal.messageExcerpt,
     fullMessage: SCHOOL_CONFIG.leadership.principal.fullMessage,
+  }
+}
+
+export async function getDirectorMessage() {
+  try {
+    const data = await client.fetch(DIRECTOR_MESSAGE_QUERY, {}, { next: { revalidate: 0 } })
+    if (data && data.name) {
+      let fullMessage: string[] = []
+      if (Array.isArray(data.message)) {
+        fullMessage = data.message
+          .map((b: any) =>
+            typeof b === 'string'
+              ? b
+              : b.children?.map((c: any) => c.text).join('') || ''
+          )
+          .filter(Boolean)
+      } else if (typeof data.message === 'string' && data.message.trim()) {
+        fullMessage = data.message
+          .split(/\n\n+/)
+          .map((p: string) => p.trim())
+          .filter(Boolean)
+      }
+
+      if (fullMessage.length === 0) {
+        fullMessage = SCHOOL_CONFIG.leadership.director.fullMessage
+      }
+
+      const excerpt =
+        data.shortMessage?.trim() ||
+        (fullMessage.length > 0 ? fullMessage[0] : SCHOOL_CONFIG.leadership.director.messageExcerpt)
+
+      const resolvedPhoto =
+        data.photoUrl ||
+        (data.photo ? getSanityImageUrl(data.photo) : null) ||
+        SCHOOL_CONFIG.leadership.director.image
+
+      return {
+        name: data.name || SCHOOL_CONFIG.leadership.director.name,
+        designation: data.designation || SCHOOL_CONFIG.leadership.director.designation,
+        qualifications: data.qualifications || SCHOOL_CONFIG.leadership.director.qualifications,
+        photoUrl: resolvedPhoto,
+        image: resolvedPhoto,
+        shortMessage: excerpt,
+        messageExcerpt: excerpt,
+        fullMessage: fullMessage,
+      }
+    }
+  } catch (err) {
+    console.warn('[Sanity] Error fetching directorMessage, using fallback:', err)
+  }
+  return {
+    name: SCHOOL_CONFIG.leadership.director.name,
+    designation: SCHOOL_CONFIG.leadership.director.designation,
+    qualifications: SCHOOL_CONFIG.leadership.director.qualifications,
+    photoUrl: SCHOOL_CONFIG.leadership.director.image,
+    image: SCHOOL_CONFIG.leadership.director.image,
+    shortMessage: SCHOOL_CONFIG.leadership.director.messageExcerpt,
+    messageExcerpt: SCHOOL_CONFIG.leadership.director.messageExcerpt,
+    fullMessage: SCHOOL_CONFIG.leadership.director.fullMessage,
   }
 }
 

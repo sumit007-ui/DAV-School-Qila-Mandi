@@ -21,10 +21,10 @@ export default function NotFound() {
         <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
           <Link
             href="/"
-            className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-navy-900 text-gold-400 font-bold text-xs uppercase tracking-wider hover:bg-navy-950 transition-colors shadow-sm inline-flex items-center justify-center gap-2"
+            className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-navy-900 text-white hover:text-cream-100 font-bold text-xs uppercase tracking-wider hover:bg-navy-950 transition-colors shadow-sm inline-flex items-center justify-center gap-2"
           >
             <span>Return to Homepage</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            <ArrowRight className="w-3.5 h-3.5 text-white" />
           </Link>
 
           <Link

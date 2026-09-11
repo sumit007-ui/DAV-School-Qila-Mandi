@@ -2,12 +2,12 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Sparkles, X, ArrowRight, Award } from "lucide-react";
+import { Sparkles, X, ArrowRight, Compass } from "lucide-react";
 import { SCHOOL_CONFIG } from "@/config/school";
 import { Reveal } from "@/components/motion";
 
-interface PrincipalMessageSectionProps {
-  principal?: {
+interface DirectorMessageSectionProps {
+  director?: {
     name?: string;
     designation?: string;
     qualifications?: string;
@@ -19,21 +19,21 @@ interface PrincipalMessageSectionProps {
   };
 }
 
-export function PrincipalMessageSection({ principal: propPrincipal }: PrincipalMessageSectionProps = {}) {
+export function DirectorMessageSection({ director: propDirector }: DirectorMessageSectionProps = {}) {
   const [modalOpen, setModalOpen] = useState(false);
-  const fallback = SCHOOL_CONFIG.leadership.principal;
-  const principal = {
-    name: propPrincipal?.name || fallback.name,
-    designation: propPrincipal?.designation || fallback.designation,
-    qualifications: propPrincipal?.qualifications || fallback.qualifications,
-    messageExcerpt: propPrincipal?.shortMessage || propPrincipal?.messageExcerpt || fallback.messageExcerpt,
-    fullMessage: (propPrincipal?.fullMessage && propPrincipal.fullMessage.length > 0) ? propPrincipal.fullMessage : fallback.fullMessage,
-    image: propPrincipal?.photoUrl || propPrincipal?.image || fallback.image,
+  const fallback = SCHOOL_CONFIG.leadership.director;
+  const director = {
+    name: propDirector?.name || fallback.name,
+    designation: propDirector?.designation || fallback.designation,
+    qualifications: propDirector?.qualifications || fallback.qualifications,
+    messageExcerpt: propDirector?.shortMessage || propDirector?.messageExcerpt || fallback.messageExcerpt,
+    fullMessage: (propDirector?.fullMessage && propDirector.fullMessage.length > 0) ? propDirector.fullMessage : fallback.fullMessage,
+    image: propDirector?.photoUrl || propDirector?.image || fallback.image,
   };
 
   return (
     <>
-      <section className="py-14 lg:py-20 bg-white text-[#4E220F] border-b border-[#9D6638]/15 relative overflow-hidden font-sans">
+      <section className="py-14 lg:py-20 bg-[#FAF6EE] text-[#4E220F] border-b border-[#9D6638]/15 relative overflow-hidden font-sans">
         <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
             
@@ -44,8 +44,8 @@ export function PrincipalMessageSection({ principal: propPrincipal }: PrincipalM
                 onClick={() => setModalOpen(true)}
               >
                 <Image
-                  src={principal.image}
-                  alt={principal.name}
+                  src={director.image}
+                  alt={director.name}
                   fill
                   priority
                   className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
@@ -58,13 +58,13 @@ export function PrincipalMessageSection({ principal: propPrincipal }: PrincipalM
                 {/* Bottom Overlay Label */}
                 <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6 text-white pointer-events-none">
                   <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-[#9D6638] text-white text-[9px] font-mono uppercase tracking-wider mb-2 font-semibold">
-                    <Award className="w-3 h-3 text-gold-300" /> HEAD OF INSTITUTION
+                    <Compass className="w-3 h-3 text-gold-300" /> DAVCMC EXECUTIVE LEADERSHIP
                   </div>
                   <h3 className="font-editorial text-xl sm:text-2xl font-normal text-white">
-                    {principal.name}
+                    {director.name}
                   </h3>
                   <p className="text-xs text-gold-200/90 font-mono mt-0.5">
-                    {principal.qualifications}
+                    {director.qualifications}
                   </p>
                 </div>
               </div>
@@ -78,37 +78,37 @@ export function PrincipalMessageSection({ principal: propPrincipal }: PrincipalM
               <Reveal direction="down" delay={0.1}>
                 <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#4E220F] text-[#F7F1DE] text-[11px] font-mono font-semibold tracking-[0.16em] uppercase shadow-xs">
                   <Sparkles className="w-3 h-3 text-gold-300" />
-                  <span>PRINCIPAL'S PERSPECTIVE</span>
+                  <span>DIRECTOR'S PERSPECTIVE</span>
                 </div>
               </Reveal>
 
               <Reveal direction="up" delay={0.2}>
                 <h2 className="font-editorial text-2xl sm:text-3xl lg:text-4xl text-[#4E220F] font-normal leading-snug">
-                  "{principal.messageExcerpt}"
+                  "{director.messageExcerpt}"
                 </h2>
               </Reveal>
 
               <Reveal direction="up" delay={0.3}>
                 <div className="space-y-3.5 text-[#4E220F]/90 text-sm sm:text-base leading-relaxed">
-                  {principal.fullMessage && principal.fullMessage.length > 0 ? (
-                    principal.fullMessage.slice(0, 2).map((para, i) => (
+                  {director.fullMessage && director.fullMessage.length > 0 ? (
+                    director.fullMessage.slice(0, 2).map((para, i) => (
                       <p key={i}>{para}</p>
                     ))
                   ) : (
-                    <p>{principal.messageExcerpt}</p>
+                    <p>{director.messageExcerpt}</p>
                   )}
                 </div>
               </Reveal>
 
-              {/* Principal Signature Block & Action */}
+              {/* Director Signature & Action Button */}
               <Reveal direction="up" delay={0.4}>
                 <div className="pt-3 border-t border-[#9D6638]/20 flex flex-wrap items-center justify-between gap-4">
                   <div>
                     <h4 className="font-editorial text-xl font-bold text-[#4E220F]">
-                      {principal.name}
+                      {director.name}
                     </h4>
                     <p className="text-xs text-[#7E5F4E] font-mono">
-                      {principal.designation}
+                      {director.designation}
                     </p>
                   </div>
 
@@ -143,29 +143,29 @@ export function PrincipalMessageSection({ principal: propPrincipal }: PrincipalM
                 <X className="w-5 h-5" />
               </button>
               <span className="text-xs text-gold-300 font-mono uppercase tracking-widest block mb-1">
-                From the Principal’s Desk
+                From the Director’s Desk • DAVCMC New Delhi
               </span>
               <h3 className="font-editorial text-2xl text-white font-normal">
-                {principal.name}
+                {director.name}
               </h3>
               <p className="text-xs text-gold-200/90 font-mono mt-0.5">
-                {principal.designation}
+                {director.designation}
               </p>
             </div>
 
             <div className="p-6 overflow-y-auto space-y-4 text-stone-700 text-sm sm:text-base leading-relaxed">
-              {principal.fullMessage && principal.fullMessage.length > 0 ? (
-                principal.fullMessage.map((para, i) => (
+              {director.fullMessage && director.fullMessage.length > 0 ? (
+                director.fullMessage.map((para, i) => (
                   <p key={i}>{para}</p>
                 ))
               ) : (
-                <p>{principal.messageExcerpt}</p>
+                <p>{director.messageExcerpt}</p>
               )}
 
               <div className="pt-4 border-t border-stone-200 mt-6 flex items-center justify-between">
                 <div>
-                  <p className="font-editorial font-bold text-stone-900">{principal.name}</p>
-                  <p className="text-xs text-stone-500 font-mono">{principal.designation}</p>
+                  <p className="font-editorial font-bold text-stone-900">{director.name}</p>
+                  <p className="text-xs text-stone-500 font-mono">{director.designation}</p>
                 </div>
                 <button
                   onClick={() => setModalOpen(false)}

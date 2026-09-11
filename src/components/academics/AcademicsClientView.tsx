@@ -137,10 +137,10 @@ export function AcademicsClientView({ programs }: AcademicsClientViewProps) {
                     <div className="pt-4 flex items-center gap-4">
                       <button
                         onClick={() => openAdmissionModal(prog.level)}
-                        className="px-5 py-2.5 rounded-xl bg-navy-900 text-gold-400 hover:bg-navy-950 text-xs font-bold uppercase tracking-wider transition-colors inline-flex items-center gap-2"
+                        className="px-5 py-2.5 rounded-xl bg-navy-900 text-white hover:text-cream-100 hover:bg-navy-950 text-xs font-bold uppercase tracking-wider transition-all inline-flex items-center gap-2 shadow-md active:scale-95"
                       >
                         <span>Apply for {prog.level}</span>
-                        <ArrowRight className="w-3.5 h-3.5" />
+                        <ArrowRight className="w-3.5 h-3.5 text-white/90" />
                       </button>
                     </div>
                   </div>

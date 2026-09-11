@@ -2,7 +2,7 @@ import { SCHOOL_CONFIG } from "@/config/school";
 
 export default function PrivacyPage() {
   return (
-    <div className="w-full py-16 bg-cream-50 text-navy-950">
+    <div className="w-full pt-28 sm:pt-36 pb-20 bg-cream-50 text-navy-950 min-h-screen">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="space-y-2">
           <span className="text-xs font-mono font-bold uppercase tracking-widest text-gold-700">

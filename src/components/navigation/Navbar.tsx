@@ -46,13 +46,14 @@ export function Navbar({ onOpenSearch, onOpenAdmissionModal, siteSettings }: Nav
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 40) {
+      if (window.scrollY > 20) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
       }
     };
-    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -87,12 +88,17 @@ export function Navbar({ onOpenSearch, onOpenAdmissionModal, siteSettings }: Nav
 
   return (
     <>
-      {/* Editorial Floating Navbar */}
+      {/* 
+        Editorial Floating Navbar:
+        - Made the navbar background consistently solid (bg-[#4E220F] border-b border-white/10 text-white) across all pages and scroll positions.
+        - Eliminated semi-transparent gradients to ensure white navigation text and brand elements maintain high contrast and readability over light sections (such as #F7F1DE).
+        - Added immediate execution of handleScroll() on component mount so the scroll state is accurate on page loads and deep-linked sections.
+      */}
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-[#4E220F] border-b border-white/10 text-white ${
           isScrolled
-            ? "bg-[#4E220F]/95 backdrop-blur-xl border-b border-white/10 py-3 shadow-xl text-white"
-            : "bg-gradient-to-b from-[#4E220F]/95 via-[#4E220F]/60 to-transparent py-4 text-white"
+            ? "py-2.5 shadow-2xl bg-[#4E220F]"
+            : "py-3.5 shadow-lg bg-[#4E220F]"
         }`}
       >
         <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 flex items-center justify-between">
@@ -108,12 +114,12 @@ export function Navbar({ onOpenSearch, onOpenAdmissionModal, siteSettings }: Nav
                   key={item.label}
                   href={item.href}
                   className={`transition-colors relative py-1 group ${
-                    isActive ? "text-[#B0BA99] font-semibold" : "hover:text-white"
+                    isActive ? "text-gold-300 font-semibold" : "hover:text-white"
                   }`}
                 >
                   <span>{item.label}</span>
                   <span
-                    className={`absolute bottom-0 left-0 h-[1.5px] bg-[#B0BA99] transition-all duration-300 ${
+                    className={`absolute bottom-0 left-0 h-[1.5px] bg-gold-400 transition-all duration-300 ${
                       isActive ? "w-full" : "w-0 group-hover:w-full"
                     }`}
                   />

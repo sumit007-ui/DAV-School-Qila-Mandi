@@ -3,6 +3,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { 
   Users, 
   Mail, 
@@ -355,8 +356,19 @@ export default function AdminEnquiriesDashboard() {
       {/* Top Admin Navigation Bar */}
       <header className="border-b border-white/10 bg-[#0B1A30]/90 backdrop-blur-xl sticky top-0 z-30 px-4 sm:px-6 lg:px-8 py-4 flex flex-wrap items-center justify-between gap-4 shadow-xl">
         <div className="flex items-center gap-3.5">
-          <Link href="/" className="flex items-center justify-center w-10 h-10 rounded-full bg-gold-500/20 border border-gold-400/40 text-gold-300 font-serif font-bold text-base shadow-sm hover:scale-105 transition-transform">
-            DAV
+          <Link
+            href="/"
+            className="flex items-center justify-center p-1.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/20 hover:border-gold-400/50 shadow-sm hover:scale-105 transition-all group"
+            title="Return to School Website"
+          >
+            <Image
+              src="/images/logo.png"
+              alt="DAV School Logo"
+              width={36}
+              height={36}
+              className="w-8 h-8 object-contain filter drop-shadow-sm group-hover:scale-105 transition-transform"
+              priority
+            />
           </Link>
           <div>
             <h1 className="font-serif text-lg font-bold text-white leading-tight">

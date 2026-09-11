@@ -16,27 +16,27 @@ export function EditorialStatement() {
   ];
 
   return (
-    <section id="editorial-statement" className="py-14 lg:py-20 bg-[#F7F1DE] text-[#4E220F] relative overflow-hidden border-b border-[#9D6638]/15 font-sans">
-      <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 space-y-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start">
-          {/* Left Large Statement Column (Span 6) */}
-          <div className="lg:col-span-6 space-y-5">
+    <section id="editorial-statement" className="py-10 lg:py-14 bg-[#F7F1DE] text-[#4E220F] relative overflow-hidden border-b border-[#9D6638]/15 font-sans">
+      <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 space-y-6 lg:space-y-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-start">
+          {/* Left Large Statement Column (Span 5) */}
+          <div className="lg:col-span-5 space-y-4">
             <Reveal direction="down" delay={0.1}>
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#4E220F] text-[#F7F1DE] text-[11px] font-mono font-semibold tracking-[0.16em] uppercase shadow-xs">
                 01 · INSTITUTIONAL PHILOSOPHY
               </div>
             </Reveal>
             
-            <LineReveal as="h2" className="font-editorial text-5xl sm:text-6xl lg:text-7xl text-[#4E220F] font-semibold leading-[0.98] tracking-tight">
+            <LineReveal as="h2" className="font-editorial text-4xl sm:text-5xl lg:text-6xl text-[#4E220F] font-semibold leading-[1.0] tracking-tight">
               {"MORE THAN\nA CLASSROOM."}
             </LineReveal>
 
-            <Reveal direction="up" delay={0.25}>
-              <div className="p-5 rounded-xl bg-white border border-[#9D6638]/20 shadow-xs space-y-2">
+            <Reveal direction="up" delay={0.2}>
+              <div className="p-4 sm:p-5 rounded-xl bg-white border border-[#9D6638]/20 shadow-xs space-y-2">
                 <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#9D6638] block font-semibold">
                   Timeless Vedic Motto
                 </span>
-                <p className="font-editorial text-2xl text-[#4E220F] italic">
+                <p className="font-editorial text-xl sm:text-2xl text-[#4E220F] italic">
                   "{SCHOOL_CONFIG.motto}"
                 </p>
                 <p className="text-xs text-[#7E5F4E]">
@@ -46,23 +46,23 @@ export function EditorialStatement() {
             </Reveal>
           </div>
 
-          {/* Right Narrative Paragraphs & Values (Span 6) */}
-          <div className="lg:col-span-6 space-y-6 lg:pt-4">
+          {/* Right Narrative Paragraphs & Values (Span 7) */}
+          <div className="lg:col-span-7 space-y-4">
             <Reveal direction="up" delay={0.15}>
-              <p className="font-editorial text-2xl sm:text-3xl text-[#4E220F] leading-snug font-normal">
+              <p className="font-editorial text-xl sm:text-2xl lg:text-[26px] text-[#4E220F] leading-snug font-normal">
                 At Dr. MRS Bhalla DAV High School Qilla Mandi, we believe true education is not merely the transmission of syllabus facts, but the awakening of conscience, critical courage, and foundational character.
               </p>
             </Reveal>
 
-            <Reveal direction="up" delay={0.25}>
+            <Reveal direction="up" delay={0.2}>
               <p className="text-[#4E220F]/90 text-sm sm:text-base leading-relaxed font-normal">
                 Established under the esteemed DAV College Managing Committee (DAVCMC), New Delhi, we weave together the timeless moral depth of Vedic wisdom with the empirical rigor of modern STEM laboratories, Atal Robotics, and international sports arenas for children from Nursery to Class 10.
               </p>
             </Reveal>
 
             {/* 3 Value Pillars with Hairline Dividers */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-[#9D6638]/20">
-              <Reveal direction="up" delay={0.3}>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-3 border-t border-[#9D6638]/20">
+              <Reveal direction="up" delay={0.25}>
                 <div className="space-y-1">
                   <span className="font-mono text-xs font-semibold text-[#9D6638]">01.</span>
                   <h4 className="font-bold text-xs uppercase tracking-wider text-[#4E220F]">Care & Values</h4>
@@ -70,7 +70,7 @@ export function EditorialStatement() {
                 </div>
               </Reveal>
 
-              <Reveal direction="up" delay={0.4}>
+              <Reveal direction="up" delay={0.3}>
                 <div className="space-y-1">
                   <span className="font-mono text-xs font-semibold text-[#9D6638]">02.</span>
                   <h4 className="font-bold text-xs uppercase tracking-wider text-[#4E220F]">Joyful Intellect</h4>
@@ -78,7 +78,7 @@ export function EditorialStatement() {
                 </div>
               </Reveal>
 
-              <Reveal direction="up" delay={0.5}>
+              <Reveal direction="up" delay={0.35}>
                 <div className="space-y-1">
                   <span className="font-mono text-xs font-semibold text-[#9D6638]">03.</span>
                   <h4 className="font-bold text-xs uppercase tracking-wider text-[#4E220F]">Confidence</h4>
@@ -100,7 +100,7 @@ export function EditorialStatement() {
         </div>
 
         {/* Photography Collage */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-center pt-4">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-center">
           {/* Main Large Image (Span 7) */}
           <div className="md:col-span-7 relative aspect-[16/10] rounded-xl overflow-hidden shadow-md border border-[#9D6638]/20 group" data-cursor="CAMPUS">
             <ImageReveal

@@ -307,13 +307,13 @@ export function ContactClientView({ siteSettings, faqs = [] }: ContactClientView
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full py-4 rounded-xl bg-navy-950 hover:bg-navy-900 text-gold-400 font-bold text-xs uppercase tracking-widest flex items-center justify-center gap-2 shadow-lg transition-all disabled:opacity-50"
+                      className="w-full py-4 rounded-xl bg-navy-950 hover:bg-navy-900 text-white hover:text-cream-100 font-bold text-xs uppercase tracking-widest flex items-center justify-center gap-2 shadow-lg transition-all disabled:opacity-50 active:scale-[0.99] cursor-pointer"
                     >
                       {isSubmitting ? (
                         <span>Transmitting Dispatch...</span>
                       ) : (
                         <>
-                          <Send className="w-4 h-4" />
+                          <Send className="w-4 h-4 text-white" />
                           <span>Transmit Message to School</span>
                         </>
                       )}

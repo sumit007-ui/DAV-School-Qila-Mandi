@@ -1,5 +1,6 @@
 import {
   getPrincipalMessage,
+  getDirectorMessage,
   getAcademicStages,
   getFacilities,
   getAchievements,
@@ -16,6 +17,7 @@ export const revalidate = 0;
 export default async function HomePage() {
   const [
     principalMessage,
+    directorMessage,
     academicStages,
     facilities,
     achievements,
@@ -25,6 +27,7 @@ export default async function HomePage() {
     testimonials,
   ] = await Promise.all([
     getPrincipalMessage(),
+    getDirectorMessage(),
     getAcademicStages(),
     getFacilities(),
     getAchievements(),
@@ -37,6 +40,7 @@ export default async function HomePage() {
   return (
     <HomeClientWrapper
       principalMessage={principalMessage}
+      directorMessage={directorMessage}
       academicStages={academicStages}
       facilities={facilities}
       achievements={achievements}

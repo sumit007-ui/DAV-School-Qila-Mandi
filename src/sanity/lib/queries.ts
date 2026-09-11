@@ -34,8 +34,26 @@ export const PRINCIPAL_MESSAGE_QUERY = groq`
     _id,
     name,
     designation,
+    qualifications,
     "photoUrl": photo.asset->url,
     "photoAlt": photo.alt,
+    photo,
+    shortMessage,
+    message,
+    isPublished
+  }
+`
+
+// 2b. Director Message Query
+export const DIRECTOR_MESSAGE_QUERY = groq`
+  *[_type == "directorMessage" && (!defined(isPublished) || isPublished == true)][0]{
+    _id,
+    name,
+    designation,
+    qualifications,
+    "photoUrl": photo.asset->url,
+    "photoAlt": photo.alt,
+    photo,
     shortMessage,
     message,
     isPublished

@@ -94,7 +94,7 @@ export function GalleryClientView({ items }: GalleryClientViewProps) {
                   onClick={() => setSelectedCategory(cat)}
                   className={`px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-colors ${
                     selectedCategory === cat
-                      ? "bg-navy-900 text-gold-400 font-bold"
+                      ? "bg-navy-900 text-white font-bold shadow-xs"
                       : "bg-cream-100 text-navy-700 hover:bg-cream-200"
                   }`}
                 >

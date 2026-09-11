@@ -81,9 +81,31 @@ export const principalMessage = defineType({
   fields: [
     defineField({ name: 'name', title: 'Principal Name', type: 'string' }),
     defineField({ name: 'designation', title: 'Designation', type: 'string' }),
+    defineField({ name: 'qualifications', title: 'Qualifications', type: 'string' }),
     defineField({
       name: 'photo',
       title: 'Principal Photo',
+      type: 'image',
+      options: { hotspot: true },
+      fields: [{ name: 'alt', title: 'Alt Text', type: 'string' }],
+    }),
+    defineField({ name: 'shortMessage', title: 'Short Excerpt', type: 'text', rows: 3 }),
+    defineField({ name: 'message', title: 'Full Message', type: 'text', rows: 8 }),
+    defineField({ name: 'isPublished', title: 'Is Published', type: 'boolean', initialValue: true }),
+  ],
+})
+
+export const directorMessage = defineType({
+  name: 'directorMessage',
+  title: 'Director Message',
+  type: 'document',
+  fields: [
+    defineField({ name: 'name', title: 'Director Name', type: 'string' }),
+    defineField({ name: 'designation', title: 'Designation', type: 'string' }),
+    defineField({ name: 'qualifications', title: 'Qualifications', type: 'string' }),
+    defineField({
+      name: 'photo',
+      title: 'Director Photo',
       type: 'image',
       options: { hotspot: true },
       fields: [{ name: 'alt', title: 'Alt Text', type: 'string' }],
@@ -270,6 +292,7 @@ export const faq = defineType({
 
 export const schemaTypes = [
   siteSettings,
+  directorMessage,
   principalMessage,
   news,
   event,

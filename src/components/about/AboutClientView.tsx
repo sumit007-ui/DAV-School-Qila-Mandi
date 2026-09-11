@@ -3,22 +3,27 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Sparkles, ArrowRight, ShieldCheck, Heart, Compass, BookOpen, Users, Award } from "lucide-react";
+import { motion } from "framer-motion";
 import { SCHOOL_CONFIG } from "@/config/school";
 import { useAppModals } from "@/components/layout/ClientAppWrapper";
 
+interface LeadershipProfile {
+  name: string;
+  designation: string;
+  qualifications?: string;
+  photoUrl?: string;
+  image?: string;
+  shortMessage?: string;
+  fullMessage?: string[];
+}
+
 interface AboutClientViewProps {
-  principal: {
-    name: string;
-    designation: string;
-    photoUrl?: string;
-    image?: string;
-    shortMessage?: string;
-    fullMessage?: string[];
-  };
+  principal: LeadershipProfile;
+  director?: LeadershipProfile;
   siteSettings?: any;
 }
 
-export function AboutClientView({ principal, siteSettings }: AboutClientViewProps) {
+export function AboutClientView({ principal, director, siteSettings }: AboutClientViewProps) {
   const { openAdmissionModal } = useAppModals();
   const schoolName = siteSettings?.schoolName || SCHOOL_CONFIG.name;
 
@@ -41,9 +46,14 @@ export function AboutClientView({ principal, siteSettings }: AboutClientViewProp
     }
   ];
 
-  const fullMessageList = principal.fullMessage && principal.fullMessage.length > 0
+  const fullPrincipalMessageList = principal.fullMessage && principal.fullMessage.length > 0
     ? principal.fullMessage
     : (principal.shortMessage ? [principal.shortMessage] : SCHOOL_CONFIG.leadership.principal.fullMessage);
+
+  const directorData = director || SCHOOL_CONFIG.leadership.director;
+  const fullDirectorMessageList = directorData.fullMessage && directorData.fullMessage.length > 0
+    ? directorData.fullMessage
+    : (directorData.shortMessage ? [directorData.shortMessage] : SCHOOL_CONFIG.leadership.director.fullMessage);
 
   return (
     <div className="w-full">
@@ -151,8 +161,8 @@ export function AboutClientView({ principal, siteSettings }: AboutClientViewProp
             {/* Mission Card */}
             <div className="p-8 sm:p-10 rounded-2xl bg-cream-50 text-navy-950 border border-cream-300 space-y-6 flex flex-col justify-between shadow-sm">
               <div className="space-y-4">
-                <div className="w-12 h-12 rounded-xl bg-navy-900 text-gold-400 flex items-center justify-center">
-                  <BookOpen className="w-6 h-6" />
+                <div className="w-12 h-12 rounded-xl bg-navy-900 text-cream-100 flex items-center justify-center shadow-xs">
+                  <BookOpen className="w-6 h-6 text-cream-100" />
                 </div>
                 <h3 className="font-serif text-3xl text-navy-950 font-normal">Our Mission</h3>
                 <ul className="text-navy-700 text-sm space-y-2.5 list-disc list-inside">
@@ -203,26 +213,93 @@ export function AboutClientView({ principal, siteSettings }: AboutClientViewProp
         </div>
       </section>
 
-      {/* Leadership Profile Section */}
-      <section id="principal-message" className="py-20 bg-white text-navy-950 border-b border-cream-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            <div className="lg:col-span-5 relative">
-              <div className="relative aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl border border-cream-300">
+      {/* Leadership Profile Section - Director & Principal */}
+      <section id="leadership-messages" className="py-20 bg-white text-navy-950 border-b border-cream-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+          
+          {/* 1. Director's Message */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
+            <div className="lg:col-span-4 relative flex justify-center lg:justify-start">
+              <div className="relative w-full max-w-[320px] sm:max-w-[360px] aspect-[3/4] rounded-2xl overflow-hidden shadow-xl border border-[#9D6638]/20 group bg-[#4E220F]">
+                <Image
+                  src={directorData.photoUrl || directorData.image || SCHOOL_CONFIG.leadership.director.image}
+                  alt={directorData.name}
+                  fill
+                  className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
+                  sizes="(max-width: 1024px) 100vw, 360px"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#321509]/95 via-[#321509]/30 to-transparent pointer-events-none" />
+                <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6 text-white pointer-events-none">
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-[#9D6638] text-white text-[9px] font-mono uppercase tracking-wider mb-2 font-semibold">
+                    <Compass className="w-3 h-3 text-gold-300" /> DAVCMC EXECUTIVE LEADERSHIP
+                  </div>
+                  <h3 className="font-editorial text-xl sm:text-2xl font-normal text-white">
+                    {directorData.name}
+                  </h3>
+                  <p className="text-xs text-gold-200/90 font-mono mt-0.5">
+                    {directorData.qualifications}
+                  </p>
+                </div>
+              </div>
+              <div className="absolute -bottom-2.5 -right-2.5 w-full max-w-[320px] sm:max-w-[360px] h-full rounded-2xl border border-[#9D6638]/20 -z-10 hidden sm:block pointer-events-none" />
+            </div>
+
+            <div className="lg:col-span-8 space-y-5">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#4E220F] text-[#F7F1DE] text-[11px] font-mono font-semibold tracking-[0.16em] uppercase">
+                <Compass className="w-3.5 h-3.5 text-gold-300" />
+                <span>DAVCMC Executive Leadership</span>
+              </div>
+
+              <h2 className="font-serif text-3xl sm:text-4xl text-navy-950 font-normal">
+                {directorData.name}
+              </h2>
+
+              <p className="text-xs font-mono text-gold-700 font-bold">
+                {directorData.designation} {directorData.qualifications ? `• ${directorData.qualifications}` : ''}
+              </p>
+
+              <div className="space-y-4 text-sm text-navy-700 leading-relaxed">
+                {fullDirectorMessageList.map((para, pIdx) => (
+                  <p key={pIdx}>{para}</p>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="border-t border-cream-300" />
+
+          {/* 2. Principal's Message */}
+          <div id="principal-message" className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
+            <div className="lg:col-span-4 relative flex justify-center lg:justify-start">
+              <div className="relative w-full max-w-[320px] sm:max-w-[360px] aspect-[3/4] rounded-2xl overflow-hidden shadow-xl border border-[#9D6638]/20 group bg-[#4E220F]">
                 <Image
                   src={principal.photoUrl || principal.image || SCHOOL_CONFIG.leadership.principal.image}
                   alt={principal.name}
                   fill
-                  className="object-cover object-top"
-                  sizes="(max-width: 1024px) 100vw, 500px"
+                  className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
+                  sizes="(max-width: 1024px) 100vw, 360px"
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#321509]/95 via-[#321509]/30 to-transparent pointer-events-none" />
+                <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6 text-white pointer-events-none">
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-[#9D6638] text-white text-[9px] font-mono uppercase tracking-wider mb-2 font-semibold">
+                    <Award className="w-3 h-3 text-gold-300" /> HEAD OF INSTITUTION
+                  </div>
+                  <h3 className="font-editorial text-xl sm:text-2xl font-normal text-white">
+                    {principal.name}
+                  </h3>
+                  <p className="text-xs text-gold-200/90 font-mono mt-0.5">
+                    {principal.qualifications}
+                  </p>
+                </div>
               </div>
+              <div className="absolute -bottom-2.5 -right-2.5 w-full max-w-[320px] sm:max-w-[360px] h-full rounded-2xl border border-[#9D6638]/20 -z-10 hidden sm:block pointer-events-none" />
             </div>
 
-            <div className="lg:col-span-7 space-y-6">
-              <span className="text-xs font-mono font-bold uppercase tracking-widest text-gold-700">
-                School Leadership
-              </span>
+            <div className="lg:col-span-8 space-y-5">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#4E220F] text-[#F7F1DE] text-[11px] font-mono font-semibold tracking-[0.16em] uppercase">
+                <Award className="w-3.5 h-3.5 text-gold-300" />
+                <span>Head of Institution</span>
+              </div>
 
               <h2 className="font-serif text-3xl sm:text-4xl text-navy-950 font-normal">
                 {principal.name}
@@ -233,7 +310,7 @@ export function AboutClientView({ principal, siteSettings }: AboutClientViewProp
               </p>
 
               <div className="space-y-4 text-sm text-navy-700 leading-relaxed">
-                {fullMessageList.map((para, pIdx) => (
+                {fullPrincipalMessageList.map((para, pIdx) => (
                   <p key={pIdx}>{para}</p>
                 ))}
               </div>
@@ -241,7 +318,7 @@ export function AboutClientView({ principal, siteSettings }: AboutClientViewProp
               <div className="pt-4 border-t border-cream-200 flex items-center gap-4">
                 <button
                   onClick={() => openAdmissionModal("Nursery")}
-                  className="px-6 py-3 rounded-xl bg-navy-900 text-gold-400 font-bold text-xs uppercase tracking-wider hover:bg-navy-950 transition-colors"
+                  className="px-6 py-3 rounded-xl bg-navy-900 text-white hover:text-cream-100 font-bold text-xs uppercase tracking-wider hover:bg-navy-950 transition-all shadow-md active:scale-95"
                 >
                   Apply for Admission 2026-27
                 </button>

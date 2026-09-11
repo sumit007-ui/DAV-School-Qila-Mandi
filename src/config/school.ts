@@ -42,6 +42,7 @@ export const SCHOOL_CONFIG = {
       name: "Mrs. Paramjit Kaur",
       designation: "Principal & Head of Institution",
       qualifications: "M.Sc., M.Ed., M.Phil. (Gold Medalist)",
+      shortMessage: "At Dr. MRS Bhalla DAV High School Qilla Mandi, we believe the formative years from Nursery to Class 10 shape the entire trajectory of a child's life. We fuse timeless Vedic values with modern scientific discovery to nurture curious, grounded, and confident young leaders.",
       messageExcerpt: "At Dr. MRS Bhalla DAV High School Qilla Mandi, we believe the formative years from Nursery to Class 10 shape the entire trajectory of a child's life. We fuse timeless Vedic values with modern scientific discovery to nurture curious, grounded, and confident young leaders.",
       fullMessage: [
         "Welcome to Dr. MRS Bhalla DAV High School, Qilla Mandi. For more than three decades, our campus has served as a nurturing sanctuary where every child's innate potential is recognized, celebrated, and carefully cultivated.",
@@ -49,7 +50,23 @@ export const SCHOOL_CONFIG = {
         "The journey from early childhood to Class 10 is transformative. Our dedicated educators provide a safe, intellectually stimulating, and morally uplifting environment so that every student steps out of our gates with academic strength, social empathy, and steadfast self-confidence.",
         "We invite parents to partner with us in shaping a joyful, purpose-driven foundation for their children."
       ],
-      image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=800",
+      photoUrl: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=800",
+      image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=800",
+    },
+    director: {
+      name: "Dr. Nisha Peshin",
+      designation: "Director (Public Schools), DAVCMC New Delhi",
+      qualifications: "Ph.D., M.A., B.Ed.",
+      shortMessage: "DAV institutions synthesize Maharishi Dayanand Saraswati's luminous Vedic philosophy with cutting-edge 21st-century pedagogy to cultivate enlightened, empathetic global citizens.",
+      messageExcerpt: "DAV institutions synthesize Maharishi Dayanand Saraswati's luminous Vedic philosophy with cutting-edge 21st-century pedagogy to cultivate enlightened, empathetic global citizens.",
+      fullMessage: [
+        "The DAV College Managing Committee (DAVCMC) has stood for more than a century as a premier educational movement across India, committed to holistic human excellence and intellectual fearlessness.",
+        "At Dr. MRS Bhalla DAV High School Qilla Mandi, we take immense pride in fostering an environment where young minds are encouraged to question critically, innovate responsibly, and uphold enduring moral virtues.",
+        "Our progressive academic framework, coupled with vibrant co-curricular disciplines, empowers each student to meet modern global challenges with confidence while remaining deeply rooted in our cultural heritage.",
+        "I extend my warmest blessings to the principal, faculty, parents, and beloved students as we continue this noble voyage of educational empowerment."
+      ],
+      photoUrl: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80&w=800",
+      image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80&w=800",
     },
     manager: {
       name: "Dr. V. K. Sharma",

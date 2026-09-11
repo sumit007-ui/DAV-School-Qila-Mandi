@@ -42,6 +42,25 @@ const config: Config = {
           300: "#EBE3C8",
           400: "#DCD0AE",
         },
+        gold: {
+          50: "#FDFBF4",
+          100: "#FAF3DB",
+          200: "#F4E4AF",
+          300: "#ECD17F",
+          400: "#E2BA48",
+          500: "#C99B23",
+          600: "#A87C14",
+          700: "#835C0C",
+          800: "#624207",
+          900: "#442C03",
+        },
+        crimson: {
+          50: "#FDF2F3",
+          500: "#8E1B29",
+          600: "#75121E",
+          700: "#5B0B15",
+          800: "#44060E",
+        },
         // Mappings for compatibility with existing classes
         midnight: {
           DEFAULT: "#4E220F",

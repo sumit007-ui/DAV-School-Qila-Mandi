@@ -27,17 +27,17 @@ export function LineReveal({
   return (
     <Tag className={className}>
       {lines.map((line, index) => (
-        <span key={index} className="block overflow-hidden pb-1">
+        <span key={index} className="block overflow-hidden py-1">
           <motion.span
-            initial={{ y: "100%", opacity: 0 }}
-            whileInView={{ y: "0%", opacity: 1 }}
-            viewport={{ once: true, amount: 0 }}
+            initial={{ y: 20, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            viewport={{ once: true, margin: "-10px" }}
             transition={{
               duration: 0.75,
               delay: delay + index * 0.1,
               ease: [0.16, 1, 0.3, 1],
             }}
-            className="block"
+            className="block pb-1"
           >
             {line}
           </motion.span>
