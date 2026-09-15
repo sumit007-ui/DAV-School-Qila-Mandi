@@ -32,7 +32,7 @@ export const ACHIEVEMENTS: Achievement[] = [
     year: "2025",
     studentOrTeam: "Class X PSEB Batch 2024-25",
     classOrGrade: "Class X",
-    description: "Dr. MRS Bhalla DAV High School Qilla Mandi set a district benchmark with 100% first divisions and district top positions in PSEB Class 10 Board Examinations.",
+    description: "Dr. MRS Bhalla DAV School Qilla Mandi set a district benchmark with 100% first divisions and district top positions in PSEB Class 10 Board Examinations.",
     badge: "District Rank 1",
     image: "/images/ethos-learning.jpg"
   },

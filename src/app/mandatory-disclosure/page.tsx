@@ -7,7 +7,7 @@ import { SCHOOL_CONFIG } from "@/config/school";
 export const metadata: Metadata = generateSchoolMetadata({
   title: "Mandatory Public Disclosure & PSEB Compliance",
   description:
-    "Official mandatory public disclosure for Dr. MRS Bhalla DAV High School, Qilla Mandi, Batala under Punjab School Education Board (PSEB) regulations.",
+    "Official mandatory public disclosure for Dr. MRS Bhalla DAV School, Qilla Mandi, Batala under Punjab School Education Board (PSEB) regulations.",
   path: "/mandatory-disclosure",
   keywords: [
     "DAV Batala Mandatory Disclosure",

@@ -6,7 +6,7 @@ import { CampusClientView } from "@/components/campus/CampusClientView";
 export const metadata: Metadata = generateSchoolMetadata({
   title: "Campus & Facilities | Smart Labs, Library & Sports",
   description:
-    "Tour the campus of Dr. MRS Bhalla DAV High School, Batala. Featuring modern computer labs, science laboratories, well-stocked library, sports grounds, and Vedic Yajnashala.",
+    "Tour the campus of Dr. MRS Bhalla DAV School, Batala. Featuring modern computer labs, science laboratories, well-stocked library, sports grounds, and Vedic Yajnashala.",
   path: "/campus",
   keywords: [
     "DAV School Batala Campus",

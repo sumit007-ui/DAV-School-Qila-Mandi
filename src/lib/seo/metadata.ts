@@ -27,8 +27,8 @@ export function generateSchoolMetadata({
     title: fullTitle,
     description,
     keywords: [
-      "Dr. MRS Bhalla DAV High School",
-      "Dr. MRS Bhalla DAV High School Batala",
+      "Dr. MRS Bhalla DAV School",
+      "Dr. MRS Bhalla DAV School Batala",
       "DAV School Batala",
       "DAV Qilla Mandi Batala",
       "drmrsbhalladavschool.com",
@@ -109,7 +109,7 @@ export function generateWebSiteJsonLd() {
     "name": `${SCHOOL_CONFIG.name}`,
     "alternateName": [
       `${SCHOOL_CONFIG.name}, ${SCHOOL_CONFIG.subName}`,
-      "Dr. MRS Bhalla DAV High School Qilla Mandi",
+      "Dr. MRS Bhalla DAV School Qilla Mandi",
       "DAV School Batala",
       "DAV High School Batala"
     ],
@@ -128,8 +128,8 @@ export function generateEducationalOrgJsonLd() {
     "@id": `${BASE_URL}/#organization`,
     "name": `${SCHOOL_CONFIG.name} ${SCHOOL_CONFIG.subName}`,
     "alternateName": [
-      "Dr. MRS Bhalla DAV High School",
-      "Dr. MRS Bhalla DAV High School Qilla Mandi, Batala",
+      "Dr. MRS Bhalla DAV School",
+      "Dr. MRS Bhalla DAV School Qilla Mandi, Batala",
       "DAV High School Qilla Mandi Batala"
     ],
     "description": SCHOOL_CONFIG.tagline,

@@ -15,9 +15,9 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = generateSchoolMetadata({
-  title: "Dr. MRS Bhalla DAV High School Qilla Mandi, Batala",
+  title: "Dr. MRS Bhalla DAV School Qilla Mandi, Batala",
   description:
-    "Official portal of Dr. MRS Bhalla DAV High School, Qilla Mandi, Batala (Punjab). Affiliated to Punjab School Education Board (PSEB), Mohali. Admissions open for session 2026-27 for Nursery to Class 10.",
+    "Official portal of Dr. MRS Bhalla DAV School, Qilla Mandi, Batala (Punjab). Affiliated to Punjab School Education Board (PSEB), Mohali. Admissions open for session 2026-27 for Nursery to Class 10.",
   path: "",
 });
 

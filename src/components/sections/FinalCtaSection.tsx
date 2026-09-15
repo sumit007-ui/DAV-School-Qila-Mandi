@@ -17,19 +17,21 @@ export function FinalCtaSection({
       <div className="absolute inset-0 z-0">
         <Image
           src="/images/school-building.png"
-          alt="Dr. MRS Bhalla DAV High School Campus Building"
+          alt="Dr. MRS Bhalla DAV School Campus Building"
           fill
-          className="object-cover object-center scale-105 opacity-25"
+          priority
           sizes="100vw"
+          className="object-cover object-center filter brightness-[0.45] contrast-[1.1] scale-105"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#4E220F] via-[#4E220F]/85 to-[#4E220F]/70" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#2A0D03]/90 via-[#4E220F]/60 to-[#2A0D03]/80" />
+        <div className="absolute inset-0 editorial-dark-grain opacity-20 pointer-events-none" />
       </div>
 
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
         <Reveal direction="down" delay={0.1}>
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#9D6638] text-[#F7F1DE] text-[11px] font-mono font-bold uppercase tracking-[0.16em] shadow-md">
-            <Sparkles className="w-3.5 h-3.5 text-[#F7F1DE]" />
-            <span>DR. MRS BHALLA DAV HIGH SCHOOL · SESSION {SCHOOL_CONFIG.admissionsSession}</span>
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-cream-200 text-xs font-mono font-bold tracking-widest uppercase shadow-lg">
+            <Sparkles className="w-3.5 h-3.5 text-gold-400" />
+            <span>DR. MRS BHALLA DAV SCHOOL · SESSION {SCHOOL_CONFIG.admissionsSession}</span>
           </div>
         </Reveal>
 

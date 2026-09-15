@@ -6,7 +6,7 @@ import { GalleryClientView } from "@/components/gallery/GalleryClientView";
 export const metadata: Metadata = generateSchoolMetadata({
   title: "Campus & Event Photo Gallery | Life at DAV",
   description:
-    "Explore photo highlights from annual functions, sports events, science exhibitions, celebrations, and classroom life at Dr. MRS Bhalla DAV High School, Batala.",
+    "Explore photo highlights from annual functions, sports events, science exhibitions, celebrations, and classroom life at Dr. MRS Bhalla DAV School, Batala.",
   path: "/gallery",
   keywords: [
     "DAV School Batala Photos",

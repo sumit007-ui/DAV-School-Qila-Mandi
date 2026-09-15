@@ -6,7 +6,7 @@ import { AdmissionsClientView } from "@/components/admissions/AdmissionsClientVi
 export const metadata: Metadata = generateSchoolMetadata({
   title: "Admissions Open 2026-27 | Nursery to Class 10",
   description:
-    "Apply for admission at Dr. MRS Bhalla DAV High School, Qilla Mandi, Batala. Admissions open for session 2026-27 from Nursery to Class 10. Check eligibility, fee structure, and procedure.",
+    "Apply for admission at Dr. MRS Bhalla DAV School, Qilla Mandi, Batala. Admissions open for session 2026-27 from Nursery to Class 10. Check eligibility, fee structure, and procedure.",
   path: "/admissions",
   keywords: [
     "DAV Batala Admissions",

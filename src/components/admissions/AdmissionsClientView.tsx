@@ -33,7 +33,7 @@ export function AdmissionsClientView({ info }: AdmissionsClientViewProps) {
         <div className="absolute inset-0 z-0">
           <Image
             src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&q=80&w=1920"
-            alt="Dr. MRS Bhalla DAV High School Admissions"
+            alt="Dr. MRS Bhalla DAV School Admissions"
             fill
             className="object-cover object-center scale-105 opacity-30"
             sizes="100vw"

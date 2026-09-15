@@ -16,7 +16,7 @@ const DEFAULT_ACTIVITIES = [
     title: "Computer Science & IT Club",
     category: "Technology & Coding",
     description: "Hands-on computer training, Scratch programming, digital creativity, multimedia presentations, and typing skills in our modern lab.",
-    image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&q=80&w=800",
+    image: "/images/computer-lab.jpg",
     icon: Cpu,
   },
   {
@@ -24,7 +24,7 @@ const DEFAULT_ACTIVITIES = [
     title: "Sports Academy & Martial Arts",
     category: "Sports Excellence",
     description: "Rigorous coaching in Taekwondo, Badminton, Cricket, Volleyball, and Track & Field tournaments with district and state championship medals.",
-    image: "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&q=80&w=800",
+    image: "/images/sports-champions.jpg",
     icon: Trophy,
   },
   {
@@ -32,7 +32,7 @@ const DEFAULT_ACTIVITIES = [
     title: "Classical Music & Performing Arts",
     category: "Fine Arts & Music",
     description: "Vocal training, classical Indian instrumentation (Harmonium, Tabla, Keyboard), folk dances (Bhangra & Giddha), and theatrical drama.",
-    image: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&q=80&w=800",
+    image: "/images/bhangra-giddha.jpg",
     icon: Music,
   },
   {
@@ -48,7 +48,7 @@ const DEFAULT_ACTIVITIES = [
     title: "Vedic Yajnashala & Ethical Leadership",
     category: "Vedic Values & Seva",
     description: "Daily morning Havan, Vedic chanting, Dharam Shiksha discourses, character formation, and community service guided by Maharshi Dayanand ideals.",
-    image: "https://images.unsplash.com/photo-1609137144822-2639fb80ec6e?auto=format&fit=crop&q=80&w=800",
+    image: "/images/yajnashala-havan.jpg",
     icon: Flame,
   },
   {

@@ -6,11 +6,12 @@ import { ContactClientView } from "@/components/contact/ContactClientView";
 export const metadata: Metadata = generateSchoolMetadata({
   title: "Contact Us & Location | Helpline & Timings",
   description:
-    "Contact Dr. MRS Bhalla DAV High School, Qilla Mandi Road, Batala, Punjab. Phone: 01871-221285. Office hours Monday to Saturday 8:00 AM - 3:30 PM. Get directions and contact details.",
+    "Contact Dr. MRS Bhalla DAV School, Qilla Mandi Road, Batala, Punjab. Phone: 01871-221285. Office hours Monday to Saturday 8:00 AM - 3:30 PM. Get directions and contact details.",
   path: "/contact",
   keywords: [
-    "DAV School Batala Contact Number",
-    "Dr MRS Bhalla DAV High School Address",
+    "Contact DAV Batala",
+    "DAV Qilla Mandi Phone",
+    "Dr MRS Bhalla DAV School Address",
     "DAV Qilla Mandi Batala Phone",
     "School Helpline Batala",
   ],

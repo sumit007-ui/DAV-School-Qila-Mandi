@@ -2,10 +2,10 @@ import { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Dr. MRS Bhalla DAV High School Qilla Mandi, Batala",
-    short_name: "DAV High School",
+    name: "Dr. MRS Bhalla DAV School Qilla Mandi, Batala",
+    short_name: "DAV School",
     description:
-      "Official portal of Dr. MRS Bhalla DAV High School, Qilla Mandi, Batala (Punjab). Affiliated to PSEB Mohali.",
+      "Official portal of Dr. MRS Bhalla DAV School, Qilla Mandi, Batala (Punjab). Affiliated to PSEB Mohali.",
     start_url: "/",
     display: "standalone",
     background_color: "#F7F1DE",

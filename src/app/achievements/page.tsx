@@ -6,7 +6,7 @@ import { AchievementsClientView } from "@/components/achievements/AchievementsCl
 export const metadata: Metadata = generateSchoolMetadata({
   title: "Achievements & Accolades | Board Merits & Sports",
   description:
-    "Celebrating 100% PSEB Class 10 board results, state-level sports championships, Olympiad winners, and cultural honors at Dr. MRS Bhalla DAV High School, Batala.",
+    "Celebrating 100% PSEB Class 10 board results, state-level sports championships, Olympiad winners, and cultural honors at Dr. MRS Bhalla DAV School, Batala.",
   path: "/achievements",
   keywords: [
     "DAV Batala Board Results",

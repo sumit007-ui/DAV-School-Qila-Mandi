@@ -6,7 +6,7 @@ import { AboutClientView } from "@/components/about/AboutClientView";
 export const metadata: Metadata = generateSchoolMetadata({
   title: "About Our School | Legacy, Leadership & Ethos",
   description:
-    "Discover the 35+ year legacy of Dr. MRS Bhalla DAV High School, Qilla Mandi, Batala. Managed by DAVCMC New Delhi. Fostering academic excellence and Vedic values since 1990.",
+    "Discover the 35+ year legacy of Dr. MRS Bhalla DAV School, Qilla Mandi, Batala. Managed by DAVCMC New Delhi. Fostering academic excellence and Vedic values since 1990.",
   path: "/about",
   keywords: [
     "About DAV Batala",

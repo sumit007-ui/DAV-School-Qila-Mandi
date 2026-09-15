@@ -44,7 +44,7 @@ export function EditorialGallerySection({ gallery = GALLERY_ITEMS }: EditorialGa
               </LineReveal>
               <Reveal direction="up" delay={0.25}>
                 <p className="text-[#4E220F]/80 text-sm sm:text-base max-w-xl font-normal leading-relaxed">
-                  A photographic glimpse into life, learning, spirit, and heritage on the Dr. MRS Bhalla DAV High School campus.
+                  A photographic glimpse into life, learning, spirit, and heritage on the Dr. MRS Bhalla DAV School campus.
                 </p>
               </Reveal>
             </div>

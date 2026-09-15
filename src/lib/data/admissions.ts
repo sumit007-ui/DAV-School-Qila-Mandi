@@ -47,7 +47,7 @@ export const ADMISSION_STEPS: AdmissionStep[] = [
 export const ADMISSION_FAQS: FAQItem[] = [
   {
     category: "Admissions",
-    question: "What classes are offered at Dr. MRS Bhalla DAV High School Qilla Mandi?",
+    question: "What classes are offered at Dr. MRS Bhalla DAV School Qilla Mandi?",
     answer: "Our school provides a comprehensive educational journey from Nursery (Early Childhood / Pre-Primary) up to Class 10, affiliated with the Punjab School Education Board (PSEB), Mohali."
   },
   {

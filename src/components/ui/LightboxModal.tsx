@@ -95,7 +95,7 @@ export function LightboxModal({ item, onClose, onPrev, onNext }: LightboxModalPr
           </div>
 
           <div className="text-xs text-white/60 font-sans hidden sm:block text-right">
-            <span>Dr. MRS Bhalla DAV High School Qilla Mandi</span>
+            <span>Dr. MRS Bhalla DAV School Qilla Mandi</span>
           </div>
         </div>
       </div>

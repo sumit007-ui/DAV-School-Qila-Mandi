@@ -1,5 +1,5 @@
 export const SCHOOL_CONFIG = {
-  name: "Dr. MRS Bhalla DAV High School",
+  name: "Dr. MRS Bhalla DAV School",
   subName: "Qilla Mandi, Batala",
   logoUrl: "/images/logo.png",
   educationRange: "Nursery to Class 10",
@@ -18,7 +18,7 @@ export const SCHOOL_CONFIG = {
     state: "Punjab",
     pincode: "143505",
     country: "India",
-    googleMapsUrl: "https://maps.google.com/?q=Dr.+MRS+Bhalla+DAV+High+School+Qilla+Mandi+Batala",
+    googleMapsUrl: "https://maps.google.com/?q=Dr.+MRS+Bhalla+DAV+School+Qilla+Mandi+Batala",
   },
   contact: {
     primaryPhone: "01871-221285",
@@ -26,7 +26,7 @@ export const SCHOOL_CONFIG = {
     officePhone: "01871-501096",
     admissionsHelpline: "01871-501096",
     whatsapp: "+91 98765 43210",
-    whatsappLink: "https://wa.me/919876543210?text=Hello%20Dr.%20MRS%20Bhalla%20DAV%20High%20School%2C%20I%20am%20inquiring%20about%20Admissions",
+    whatsappLink: "https://wa.me/919876543210?text=Hello%20Dr.%20MRS%20Bhalla%20DAV%20School%2C%20I%20am%20inquiring%20about%20Admissions",
     email: "davqillamandi@gmail.com",
     admissionsEmail: "davqillamandi@gmail.com",
     officeHours: "Monday – Saturday: 8:00 AM – 3:30 PM",
@@ -43,10 +43,10 @@ export const SCHOOL_CONFIG = {
       name: "Mrs. Paramjit Kaur",
       designation: "Principal & Head of Institution",
       qualifications: "",
-      shortMessage: "At Dr. MRS Bhalla DAV High School Qilla Mandi, we believe the formative years from Nursery to Class 10 shape the entire trajectory of a child's life. We fuse timeless Vedic values with modern scientific discovery to nurture curious, grounded, and confident young leaders.",
-      messageExcerpt: "At Dr. MRS Bhalla DAV High School Qilla Mandi, we believe the formative years from Nursery to Class 10 shape the entire trajectory of a child's life. We fuse timeless Vedic values with modern scientific discovery to nurture curious, grounded, and confident young leaders.",
+      shortMessage: "At Dr. MRS Bhalla DAV School Qilla Mandi, we believe the formative years from Nursery to Class 10 shape the entire trajectory of a child's life. We fuse timeless Vedic values with modern scientific discovery to nurture curious, grounded, and confident young leaders.",
+      messageExcerpt: "At Dr. MRS Bhalla DAV School Qilla Mandi, we believe the formative years from Nursery to Class 10 shape the entire trajectory of a child's life. We fuse timeless Vedic values with modern scientific discovery to nurture curious, grounded, and confident young leaders.",
       fullMessage: [
-        "Welcome to Dr. MRS Bhalla DAV High School, Qilla Mandi. For over three decades, our campus has served as a nurturing sanctuary where every child's innate potential is recognized, celebrated, and carefully cultivated.",
+        "Welcome to Dr. MRS Bhalla DAV School, Qilla Mandi. For over three decades, our campus has served as a nurturing sanctuary where every child's innate potential is recognized, celebrated, and carefully cultivated.",
         "Under the aegis of the DAV College Managing Committee, New Delhi, we provide a complete Nursery to Class 10 educational journey. Our curriculum blends foundational literacy, joyful exploration, experiential science labs, robotics, classical arts, sportsmanship, and Vedic ethics.",
         "The journey from early childhood to Class 10 is transformative. Our dedicated educators provide a safe, intellectually stimulating, and morally uplifting environment so that every student steps out of our gates with academic strength, social empathy, and steadfast self-confidence.",
         "We invite parents to partner with us in shaping a joyful, purpose-driven foundation for their children."
@@ -62,7 +62,7 @@ export const SCHOOL_CONFIG = {
       messageExcerpt: "DAV institutions synthesize Maharishi Dayanand Saraswati's luminous Vedic philosophy with cutting-edge 21st-century pedagogy to cultivate enlightened, empathetic global citizens.",
       fullMessage: [
         "The DAV College Managing Committee (DAVCMC) has stood for more than a century as a premier educational movement across India, committed to holistic human excellence and intellectual fearlessness.",
-        "At Dr. MRS Bhalla DAV High School Qilla Mandi, we take immense pride in fostering an environment where young minds are encouraged to question critically, innovate responsibly, and uphold enduring moral virtues.",
+        "At Dr. MRS Bhalla DAV School Qilla Mandi, we take immense pride in fostering an environment where young minds are encouraged to question critically, innovate responsibly, and uphold enduring moral virtues.",
         "Our progressive academic framework, coupled with vibrant co-curricular disciplines, empowers each student to meet modern global challenges with confidence while remaining deeply rooted in our cultural heritage.",
         "I extend my warmest blessings to the principal, faculty, parents, and beloved students as we continue this noble voyage of educational empowerment."
       ],

@@ -9,7 +9,7 @@ export function EditorialStatement() {
     "WORK IS WORSHIP",
     "तमसो मा ज्योतिर्गमय",
     "LEARN · EXPLORE · CREATE · LEAD",
-    "DR. MRS BHALLA DAV HIGH SCHOOL",
+    "DR. MRS BHALLA DAV SCHOOL",
     "35+ YEARS OF ACADEMIC EXCELLENCE",
     "PSEB AFFILIATED (PUNJAB BOARD)",
     "HOLISTIC VEDIC PEDAGOGY",
@@ -50,7 +50,7 @@ export function EditorialStatement() {
           <div className="lg:col-span-7 space-y-4">
             <Reveal direction="up" delay={0.15}>
               <p className="font-editorial text-xl sm:text-2xl lg:text-[26px] text-[#4E220F] leading-snug font-normal">
-                At Dr. MRS Bhalla DAV High School Qilla Mandi, we believe true education is not merely the transmission of syllabus facts, but the awakening of conscience, critical courage, and foundational character.
+                At Dr. MRS Bhalla DAV School Qilla Mandi, we believe true education is not merely the transmission of syllabus facts, but the awakening of conscience, critical courage, and foundational character.
               </p>
             </Reveal>
 
@@ -105,7 +105,7 @@ export function EditorialStatement() {
           <div className="md:col-span-7 relative aspect-[16/10] rounded-xl overflow-hidden shadow-md border border-[#9D6638]/20 group" data-cursor="CAMPUS">
             <ImageReveal
               src="/images/ethos-learning.jpg"
-              alt="Students collaborating in classroom at DAV High School"
+              alt="Students collaborating in classroom at DAV School"
               className="w-full h-full"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#4E220F]/80 via-transparent to-transparent opacity-80" />
