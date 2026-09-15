@@ -6,7 +6,6 @@ import {
   getNews,
   getEvents,
   getGallery,
-  getTestimonials,
 } from "@/sanity/lib/fetch";
 import { HomeClientWrapper } from "@/components/home/HomeClientWrapper";
 
@@ -22,7 +21,6 @@ export default async function HomePage() {
     news,
     events,
     gallery,
-    testimonials,
   ] = await Promise.all([
     getPrincipalMessage(),
     getAcademicStages(),
@@ -31,7 +29,6 @@ export default async function HomePage() {
     getNews(),
     getEvents(),
     getGallery(),
-    getTestimonials(),
   ]);
 
   return (
@@ -43,7 +40,6 @@ export default async function HomePage() {
       news={news}
       events={events}
       gallery={gallery}
-      testimonials={testimonials}
     />
   );
 }

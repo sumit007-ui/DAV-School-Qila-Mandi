@@ -8,7 +8,6 @@ import { PrincipalMessageSection } from "@/components/sections/PrincipalMessageS
 import { LearningJourneySection } from "@/components/sections/LearningJourneySection";
 import { WhyDavSection } from "@/components/sections/WhyDavSection";
 import { NewsAndEventsSection } from "@/components/sections/NewsAndEventsSection";
-import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
 import { FinalCtaSection } from "@/components/sections/FinalCtaSection";
 
 interface HomeClientWrapperProps {
@@ -19,7 +18,7 @@ interface HomeClientWrapperProps {
   news: any[];
   events: any[];
   gallery: any[];
-  testimonials: any[];
+  testimonials?: any[];
 }
 
 export function HomeClientWrapper({
@@ -27,7 +26,6 @@ export function HomeClientWrapper({
   academicStages,
   news,
   events,
-  testimonials,
 }: HomeClientWrapperProps) {
   const { openAdmissionModal } = useAppModals();
 
@@ -56,10 +54,7 @@ export function HomeClientWrapper({
       {/* 07. News & Events Calendar */}
       <NewsAndEventsSection news={news} events={events} />
 
-      {/* 08. Parent & Alumni Testimonials */}
-      <TestimonialsSection testimonials={testimonials} />
-
-      {/* 09. Admissions Call to Action */}
+      {/* 08. Admissions Call to Action */}
       <FinalCtaSection
         onOpenAdmissionModal={() => openAdmissionModal("Nursery")}
       />
