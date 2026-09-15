@@ -10,7 +10,9 @@ import {
   FileText, 
   ArrowUpRight, 
   Sparkles,
-  Download
+  Download,
+  Facebook,
+  Instagram
 } from "lucide-react";
 import { SCHOOL_CONFIG } from "@/config/school";
 import { useAppModals } from "@/components/layout/ClientAppWrapper";
@@ -98,6 +100,35 @@ export function Footer({
               <div className="flex items-center gap-2">
                 <FileText className="w-3.5 h-3.5 text-[#B0BA99] shrink-0" />
                 <span>SCHOOL CODE: {SCHOOL_CONFIG.schoolCode}</span>
+              </div>
+            </div>
+
+            {/* Social Media Links */}
+            <div className="pt-2">
+              <span className="text-[10px] font-mono uppercase tracking-[0.16em] text-[#B0BA99] block mb-2 font-semibold">
+                Follow Our Campus
+              </span>
+              <div className="flex items-center gap-2.5">
+                <a
+                  href={SCHOOL_CONFIG.links.facebook}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-[#1877F2] text-white transition-all text-xs font-mono border border-white/10 shadow-xs"
+                  aria-label="Official Facebook Page"
+                >
+                  <Facebook className="w-3.5 h-3.5" />
+                  <span>Facebook</span>
+                </a>
+                <a
+                  href={SCHOOL_CONFIG.links.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-gradient-to-tr hover:from-[#f09433] hover:via-[#dc2743] hover:to-[#bc1888] text-white transition-all text-xs font-mono border border-white/10 shadow-xs"
+                  aria-label="Official Instagram Profile"
+                >
+                  <Instagram className="w-3.5 h-3.5" />
+                  <span>Instagram</span>
+                </a>
               </div>
             </div>
           </div>
@@ -214,7 +245,28 @@ export function Footer({
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p>© {currentYear} {schoolName}, {SCHOOL_CONFIG.subName}. All rights reserved.</p>
 
-          <div className="flex items-center gap-5">
+          <div className="flex flex-wrap items-center gap-5">
+            <a
+              href={SCHOOL_CONFIG.links.facebook}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-white transition-colors flex items-center gap-1.5"
+              aria-label="Facebook"
+            >
+              <Facebook className="w-3.5 h-3.5" />
+              <span>Facebook</span>
+            </a>
+            <a
+              href={SCHOOL_CONFIG.links.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-white transition-colors flex items-center gap-1.5"
+              aria-label="Instagram"
+            >
+              <Instagram className="w-3.5 h-3.5" />
+              <span>Instagram</span>
+            </a>
+            <span className="text-white/20">|</span>
             <Link href="/privacy" className="hover:text-white transition-colors">
               Privacy
             </Link>

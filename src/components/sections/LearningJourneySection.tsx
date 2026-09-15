@@ -29,7 +29,7 @@ const JOURNEY_STAGES = [
     tagline: "Strong Fundamentals, Bilingual Clarity & Scientific Curiosities",
     description: "Transitioning from early wonder into structured conceptual understanding. We emphasize mathematical logic, expressive English & Punjabi articulation, environmental studies, and weekly hands-on experiments in our junior lab.",
     image: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&q=85&w=1200",
-    milestones: ["Conceptual Numeracy & Mental Math", "75-inch Interactive Smart Panels", "Bilingual Public Speaking & Poetry", "Weekly Atal Tinkering Discovery"]
+    milestones: ["Conceptual Numeracy & Mental Math", "75-inch Interactive Smart Panels", "Bilingual Public Speaking & Poetry", "Weekly Computer & Science Lab Practical"]
   },
   {
     phase: "03",

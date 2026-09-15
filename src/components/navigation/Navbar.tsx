@@ -12,7 +12,9 @@ import {
   MessageCircle, 
   MapPin, 
   Sparkles,
-  ChevronRight
+  ChevronRight,
+  Facebook,
+  Instagram
 } from "lucide-react";
 import { BrandLogo } from "@/components/ui/BrandLogo";
 import { SCHOOL_CONFIG } from "@/config/school";
@@ -257,6 +259,26 @@ export function Navbar({ onOpenSearch, onOpenAdmissionModal, siteSettings }: Nav
                   <MessageCircle className="w-4 h-4 text-[#B0BA99] shrink-0" />
                   <a href={SCHOOL_CONFIG.contact.whatsappLink} target="_blank" rel="noopener noreferrer" className="text-[#B0BA99] hover:underline font-mono">
                     WhatsApp Admissions Desk
+                  </a>
+                </div>
+                <div className="flex items-center gap-3 pt-2">
+                  <a
+                    href={SCHOOL_CONFIG.links.facebook}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-[#1877F2] text-white text-xs font-mono transition-colors"
+                  >
+                    <Facebook className="w-3.5 h-3.5" />
+                    <span>Facebook</span>
+                  </a>
+                  <a
+                    href={SCHOOL_CONFIG.links.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-gradient-to-tr hover:from-[#f09433] hover:via-[#dc2743] hover:to-[#bc1888] text-white text-xs font-mono transition-colors"
+                  >
+                    <Instagram className="w-3.5 h-3.5" />
+                    <span>Instagram</span>
                   </a>
                 </div>
               </div>

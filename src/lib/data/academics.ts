@@ -59,7 +59,7 @@ export const ACADEMIC_PROGRAMS: AcademicProgram[] = [
     description: "Middle schoolers expand their analytical horizons through specialized subject labs, robotics workshops, and competitive team challenges, building self-discipline and intellectual curiosity.",
     keyFeatures: [
       "Hands-on Physics, Chemistry & Biology lab experiments",
-      "Robotics, Scratch coding & Atal Tinkering Hub",
+      "Computer science, Scratch coding & digital skills",
       "Inter-house debates & quiz tournaments",
       "Structured sports coaching (Cricket, Badminton, Athletics)",
       "Vocational arts & Sanskrit language introduction"

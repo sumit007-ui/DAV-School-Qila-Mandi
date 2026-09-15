@@ -12,7 +12,7 @@ export const SCHOOL_EVENTS: SchoolEvent[] = [
     description: "An exclusive opportunity for parents to interact with subject educators, review academic assessments, inspect advanced laboratory upgrades, and explore personalized mentoring roadmaps.",
     highlights: [
       "One-on-one progress consultation with class mentors",
-      "Live demonstrations in Atal Tinkering & Robotics Lab",
+      "Live demonstrations in Computer & Science Laboratories",
       "Interactive session with Principal Mrs. Paramjit Kaur",
       "Admissions desk for 2026-27 session queries"
     ],

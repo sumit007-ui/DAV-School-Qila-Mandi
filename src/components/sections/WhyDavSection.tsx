@@ -34,16 +34,16 @@ const PILLARS = [
     metrics: "Daily Hawan · Character Pedagogy"
   },
   {
-    id: "atal-technology",
+    id: "computer-technology",
     index: "03",
-    title: "Technology & Atal Robotics Lab",
-    category: "INNOVATION",
-    subtitle: "Atal Tinkering Cell, 3D Printers & IoT",
-    description: "Equipped with an advanced Atal Tinkering Lab, 3D printers, Python IoT robotics kits, and interactive digital smart panels in every classroom from Class 1 upwards.",
-    image: "/images/stem-robotics.jpg",
+    title: "Computer & Science Laboratories",
+    category: "TECHNOLOGY",
+    subtitle: "Modern Computer Lab & Science Practical Suites",
+    description: "Equipped with modern computer systems, broadband connectivity, composite science laboratories, and interactive digital smart panels in classrooms.",
+    image: "/images/computer-lab.jpg",
     icon: Compass,
-    badge: "Atal Tinkering Hub",
-    metrics: "75\" Smart Panels · Robotics Kits"
+    badge: "Digital Learning",
+    metrics: "75\" Smart Panels · IT Workstations"
   },
   {
     id: "sports-conditioning",

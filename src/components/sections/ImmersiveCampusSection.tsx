@@ -11,15 +11,15 @@ import { LineReveal, Reveal } from "@/components/motion";
 
 const FALLBACK_FACILITIES: CampusFacility[] = [
   {
-    id: "atal-tinkering-lab",
-    title: "Atal Tinkering Innovation Lab",
-    headline: "NITI Aayog STEM Robotics & 3D Prototyping Hub",
-    description: "Equipped with 3D printers, microcontrollers, IoT sensors, and drone kits where students engineer solutions for real-world challenges.",
-    category: "STEM & Robotics",
-    slug: "atal-tinkering-lab",
-    image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&q=80&w=800",
-    specifications: ["3D Printing & CAD Station", "Arduino & Raspberry Pi Kits", "Drones & Sensor Interfacing"],
-    badge: "NITI Aayog Certified"
+    id: "computer-lab",
+    title: "Modern Computer & IT Lab",
+    headline: "High-Speed Internet & IT Learning Workstations",
+    description: "Equipped with modern computer systems, multimedia learning tools, and coding software for digital literacy and IT education.",
+    category: "IT & Technology",
+    slug: "computer-lab",
+    image: "/images/computer-lab.jpg",
+    specifications: ["Networked Workstations", "Broadband Connectivity", "Coding & Multimedia Software"],
+    badge: "Digital Learning"
   },
   {
     id: "composite-science-labs",

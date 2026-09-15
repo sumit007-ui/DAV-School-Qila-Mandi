@@ -63,9 +63,9 @@ export function AcademicsClientView({ programs }: AcademicsClientViewProps) {
               <div className="w-10 h-10 rounded-xl bg-navy-100 text-navy-900 flex items-center justify-center font-bold">
                 <Zap className="w-5 h-5" />
               </div>
-              <h3 className="font-serif text-xl font-bold text-navy-950">Atal Tinkering & STEM</h3>
+              <h3 className="font-serif text-xl font-bold text-navy-950">Computer Science & IT</h3>
               <p className="text-xs text-navy-600 leading-relaxed">
-                Hands-on training in robotics, 3D prototyping, coding, and sensor electronics fosters early creative problem-solving and innovation.
+                Hands-on training in computer systems, typing, coding fundamentals, and digital applications prepares students for modern technological proficiency.
               </p>
             </div>
 

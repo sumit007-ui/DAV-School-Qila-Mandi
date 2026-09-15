@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Sparkles, MapPin, Phone, Mail, Clock, Send, CheckCircle2, MessageCircle, ShieldCheck } from "lucide-react";
+import { Sparkles, MapPin, Phone, Mail, Clock, Send, CheckCircle2, MessageCircle, ShieldCheck, Facebook, Instagram } from "lucide-react";
 import { SCHOOL_CONFIG } from "@/config/school";
 import { contactFormSchema, ContactFormData } from "@/lib/validation/contact";
 
@@ -183,7 +183,7 @@ export function ContactClientView({ siteSettings, faqs = [] }: ContactClientView
                   </div>
                 </div>
 
-                <div className="pt-4 border-t border-cream-200 flex items-center justify-between">
+                <div className="pt-4 border-t border-cream-200 space-y-3">
                   <a
                     href={`https://wa.me/${schoolWhatsApp.replace(/\D/g, "")}?text=Hello%20DAV%20Qilla%20Mandi%20Admission%20Desk`}
                     target="_blank"
@@ -193,6 +193,27 @@ export function ContactClientView({ siteSettings, faqs = [] }: ContactClientView
                     <MessageCircle className="w-4 h-4" />
                     <span>Chat on WhatsApp</span>
                   </a>
+
+                  <div className="grid grid-cols-2 gap-2.5 pt-1">
+                    <a
+                      href={SCHOOL_CONFIG.links.facebook}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="py-2.5 px-3 rounded-xl bg-[#1877F2] hover:bg-[#1565C0] text-white font-bold text-xs flex items-center justify-center gap-2 transition-colors shadow-xs"
+                    >
+                      <Facebook className="w-4 h-4" />
+                      <span>Facebook</span>
+                    </a>
+                    <a
+                      href={SCHOOL_CONFIG.links.instagram}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="py-2.5 px-3 rounded-xl bg-gradient-to-r from-[#f09433] via-[#dc2743] to-[#bc1888] hover:opacity-95 text-white font-bold text-xs flex items-center justify-center gap-2 transition-opacity shadow-xs"
+                    >
+                      <Instagram className="w-4 h-4" />
+                      <span>Instagram</span>
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>

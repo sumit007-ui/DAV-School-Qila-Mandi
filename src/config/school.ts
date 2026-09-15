@@ -77,8 +77,8 @@ export const SCHOOL_CONFIG = {
     psebMandatoryDisclosure: "/mandatory-disclosure",
     prospectusPdf: "/documents/DAV_QillaMandi_Prospectus_2026.pdf",
     transferCertificates: "/tc-verification",
-    facebook: "https://facebook.com",
-    instagram: "https://instagram.com",
+    facebook: "https://www.facebook.com/share/18Fmov8Rc9/?mibextid=wwXIfr",
+    instagram: "https://www.instagram.com/drmrsbhalladavschool_batala?stkn=NHJobHg5N3Rzcmtz&utm_source=qr",
     youtube: "https://youtube.com",
   }
 };

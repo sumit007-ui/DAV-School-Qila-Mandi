@@ -34,20 +34,20 @@ export const CAMPUS_FACILITIES: CampusFacility[] = [
     badge: "Empirical Rigor"
   },
   {
-    id: "atal-tinkering-lab",
-    slug: "atal-tinkering-lab",
-    title: "Atal Tinkering Lab & Robotics Hub",
+    id: "computer-lab",
+    slug: "computer-lab",
+    title: "Modern Computer & IT Lab",
     category: "Technology",
-    headline: "NITI Aayog-supported innovation lab with 3D printers, IoT kits & drone workshops.",
-    description: "Where future engineers, software architects, and inventors build prototypes. Students program microcontrollers, assemble autonomous robots, and develop AI models.",
+    headline: "Modern networked computer laboratory with high-speed internet & multimedia learning.",
+    description: "Equipped with modern desktop computers, high-speed internet, coding tools, and digital literacy software to prepare students for the modern digital era.",
     specifications: [
-      "Industrial-grade dual-extrusion 3D Printers & Laser Cutters",
-      "Arduino, Raspberry Pi, ESP32, and sensor arrays",
-      "Drone assembly kits, electronics soldering benches",
-      "National Robotics Olympiad mentorship zone"
+      "Latest computer workstations with high-speed internet",
+      "Interactive coding and computer science software",
+      "Multimedia projection for IT curriculum and practical classes",
+      "Dedicated power backup and certified computer instructors"
     ],
     image: "/images/computer-lab.jpg",
-    badge: "AI & Innovation"
+    badge: "Digital Literacy"
   },
   {
     id: "knowledge-resource-center",

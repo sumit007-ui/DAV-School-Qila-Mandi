@@ -13,7 +13,7 @@ export const ACADEMIC_TOPPERS: AcademicTopper[] = [
     score: "98.2%",
     streamOrGrade: "Class X PSEB Board • 100/100 Mathematics",
     year: "2024–25",
-    testimonial: "Atal Tinkering Lab experiments and practical science problem-solving sharpened my analytical thinking beyond traditional textbook learning."
+    testimonial: "Science and computer laboratory practicals with hands-on problem-solving sharpened my analytical thinking beyond traditional textbook learning."
   },
   {
     name: "Navjot Kaur",

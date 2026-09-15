@@ -12,10 +12,10 @@ interface StudentLifeClientViewProps {
 
 const DEFAULT_ACTIVITIES = [
   {
-    id: "atl-robotics",
-    title: "Atal Tinkering Lab & Robotics Guild",
-    category: "STEM & Innovation",
-    description: "Hands-on micro-controllers, IoT sensors, Python programming, and rapid 3D prototyping for young engineers under NITI Aayog guidelines.",
+    id: "computer-club",
+    title: "Computer Science & IT Club",
+    category: "Technology & Coding",
+    description: "Hands-on computer training, Scratch programming, digital creativity, multimedia presentations, and typing skills in our modern lab.",
     image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&q=80&w=800",
     icon: Cpu,
   },
