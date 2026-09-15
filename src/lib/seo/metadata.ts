@@ -93,7 +93,7 @@ export function generateEducationalOrgJsonLd() {
     "logo": `${BASE_URL}/images/logo.png`,
     "telephone": SCHOOL_CONFIG.contact.primaryPhone,
     "email": SCHOOL_CONFIG.contact.email,
-    "foundingDate": "1989",
+    "foundingDate": "1975",
     "parentOrganization": {
       "@type": "EducationalOrganization",
       "name": SCHOOL_CONFIG.managedBy,

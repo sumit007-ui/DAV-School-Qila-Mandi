@@ -40,7 +40,7 @@ export function EditorialStatement() {
                   "{SCHOOL_CONFIG.motto}"
                 </p>
                 <p className="text-xs text-[#7E5F4E]">
-                  Lead us from darkness unto light — shaping intellect and character since 1989.
+                  Lead us from darkness unto light — shaping intellect and character since 1975.
                 </p>
               </div>
             </Reveal>

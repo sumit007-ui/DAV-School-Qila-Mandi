@@ -32,7 +32,7 @@ export function CampusClientView({ facilities }: CampusClientViewProps) {
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold-500/20 border border-gold-500/40 text-gold-300 text-xs font-semibold uppercase tracking-widest">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>12-Acre Green Campus</span>
+            <span>Campus Infrastructure & Facilities</span>
           </div>
 
           <h1 className="font-serif text-4xl sm:text-6xl text-white font-normal leading-tight">
@@ -40,7 +40,7 @@ export function CampusClientView({ facilities }: CampusClientViewProps) {
           </h1>
 
           <p className="text-cream-200 text-base sm:text-xl font-light max-w-2xl">
-            A sanctuary where architecture inspires inquiry. Advanced research labs, digital smart classrooms, Olympic athletic arenas, and peaceful study commons.
+            A sanctuary where architecture inspires inquiry. Advanced research labs, digital smart classrooms, sports grounds, and peaceful study commons.
           </p>
         </div>
       </section>

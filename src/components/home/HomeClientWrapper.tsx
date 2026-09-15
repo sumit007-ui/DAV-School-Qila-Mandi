@@ -4,7 +4,6 @@ import { useAppModals } from "@/components/layout/ClientAppWrapper";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { EditorialStatement } from "@/components/sections/EditorialStatement";
 import { StatsSection } from "@/components/sections/StatsSection";
-import { DirectorMessageSection } from "@/components/sections/DirectorMessageSection";
 import { PrincipalMessageSection } from "@/components/sections/PrincipalMessageSection";
 import { LearningJourneySection } from "@/components/sections/LearningJourneySection";
 import { WhyDavSection } from "@/components/sections/WhyDavSection";
@@ -14,7 +13,6 @@ import { FinalCtaSection } from "@/components/sections/FinalCtaSection";
 
 interface HomeClientWrapperProps {
   principalMessage: any;
-  directorMessage?: any;
   academicStages: any[];
   facilities: any[];
   achievements: any[];
@@ -26,7 +24,6 @@ interface HomeClientWrapperProps {
 
 export function HomeClientWrapper({
   principalMessage,
-  directorMessage,
   academicStages,
   news,
   events,
@@ -47,10 +44,7 @@ export function HomeClientWrapper({
       {/* 03. Verified Statistics */}
       <StatsSection />
 
-      {/* 04. DAVCMC Leadership - Director's Perspective */}
-      <DirectorMessageSection director={directorMessage} />
-
-      {/* 05. Principal's Perspective */}
+      {/* 04. Principal's Perspective */}
       <PrincipalMessageSection principal={principalMessage} />
 
       {/* 05. Learning Journey - Nursery to Class 10 Progression */}

@@ -183,7 +183,7 @@ export function ImmersiveCampusSection({ facilities: propsFacilities }: { facili
             <Reveal direction="down" delay={0.1}>
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#9D6638] text-[#F7F1DE] text-[11px] font-mono font-bold tracking-[0.16em] uppercase shadow-md">
                 <Building2 className="w-3.5 h-3.5 text-[#F7F1DE]" />
-                <span>04 · IMMERSIVE 12-ACRE CAMPUS SPACES</span>
+                <span>04 · PURPOSE-BUILT CAMPUS SPACES</span>
               </div>
             </Reveal>
 
@@ -191,7 +191,7 @@ export function ImmersiveCampusSection({ facilities: propsFacilities }: { facili
               {"Spaces Engineered For Discovery."}
             </LineReveal>
             <p className="text-xs sm:text-sm text-white/80 max-w-2xl font-normal leading-relaxed">
-              Explore 9 purpose-built learning sanctuaries across our 12-acre campus. All highlights, research apparatus, and specifications are displayed directly on each facility.
+              Explore purpose-built learning sanctuaries across our campus. All highlights, research apparatus, and specifications are displayed directly on each facility.
             </p>
           </div>
 
@@ -199,7 +199,7 @@ export function ImmersiveCampusSection({ facilities: propsFacilities }: { facili
             href="/campus"
             className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-[#B0BA99] hover:text-white transition-colors border-b border-[#B0BA99] pb-0.5 font-mono self-start md:self-auto"
           >
-            <span>Complete 12-Acre Campus Map</span>
+            <span>Explore Campus Facilities</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>

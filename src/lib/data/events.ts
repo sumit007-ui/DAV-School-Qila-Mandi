@@ -27,7 +27,7 @@ export const SCHOOL_EVENTS: SchoolEvent[] = [
     startDate: "October 18-19, 2026",
     time: "8:30 AM – 4:00 PM",
     venue: "School Sports Complex & Athletic Oval",
-    description: "Two action-packed days of track and field spectacles where Dayanand, Hansraj, Shraddhanand, and Lajpat Houses battle for the prestigious Championship Shield.",
+    description: "Two action-packed days of track and field spectacles where Bose, Azad, Bhagat, and Patel Houses battle for the prestigious Championship Shield.",
     highlights: [
       "March past and torch lighting ceremony",
       "100m, 200m, 400m, 4x100m relay, long jump and shot put",

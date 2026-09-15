@@ -3,11 +3,10 @@ import { LineReveal, Reveal, CountUp } from "@/components/motion";
 
 export function StatsSection() {
   const statNumbers = [
-    { value: 35, suffix: "+", label: "Years Legacy", description: "Serving Batala since 1989" },
-    { value: 2400, suffix: "+", label: "Students Enrolled", description: "Nursery to Class 10" },
+    { value: 50, suffix: "+", label: "Years Legacy", description: "Serving Batala since 1975" },
+    { value: 1250, suffix: "+", label: "Students Enrolled", description: "Nursery to Class 10" },
     { value: 100, suffix: "%", label: "Board Pass Rate", description: "PSEB Class 10 record" },
-    { value: 100, suffix: "+", label: "Expert Faculty", description: "PSEB trained educators" },
-    { value: 12, suffix: "+", label: "Green Acres", description: "Eco-friendly campus" },
+    { value: 60, suffix: "+", label: "Expert Faculty", description: "PSEB trained educators" },
     { value: 50, suffix: "+", label: "Annual Awards", description: "Sports & Olympiads" },
   ];
 
@@ -27,13 +26,13 @@ export function StatsSection() {
           </div>
           <Reveal direction="up" delay={0.25}>
             <p className="text-xs sm:text-sm text-[#7E5F4E] max-w-sm font-sans">
-              Empowering curious young minds in Batala with values, scientific temper, and academic distinction since 1989.
+              Empowering curious young minds in Batala with values, scientific temper, and academic distinction since 1975.
             </p>
           </Reveal>
         </div>
 
         {/* Editorial Numerals Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 pt-2">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 pt-2">
           {statNumbers.map((stat, idx) => (
             <Reveal key={idx} direction="up" delay={0.08 * idx + 0.05}>
               <div className="space-y-1.5 border-t border-[#9D6638]/20 pt-5 group">

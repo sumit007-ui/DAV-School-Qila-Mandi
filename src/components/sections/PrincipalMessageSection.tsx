@@ -63,9 +63,6 @@ export function PrincipalMessageSection({ principal: propPrincipal }: PrincipalM
                   <h3 className="font-editorial text-xl sm:text-2xl font-normal text-white">
                     {principal.name}
                   </h3>
-                  <p className="text-xs text-gold-200/90 font-mono mt-0.5">
-                    {principal.qualifications}
-                  </p>
                 </div>
               </div>
 

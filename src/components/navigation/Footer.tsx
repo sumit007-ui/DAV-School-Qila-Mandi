@@ -149,7 +149,7 @@ export function Footer({
               </li>
               <li>
                 <Link href="/campus" className="hover:text-white transition-colors">
-                  12-Acre Campus & Labs
+                  Campus & Laboratories
                 </Link>
               </li>
               <li>

@@ -19,11 +19,10 @@ interface LeadershipProfile {
 
 interface AboutClientViewProps {
   principal: LeadershipProfile;
-  director?: LeadershipProfile;
   siteSettings?: any;
 }
 
-export function AboutClientView({ principal, director, siteSettings }: AboutClientViewProps) {
+export function AboutClientView({ principal, siteSettings }: AboutClientViewProps) {
   const { openAdmissionModal } = useAppModals();
   const schoolName = siteSettings?.schoolName || SCHOOL_CONFIG.name;
 
@@ -49,11 +48,6 @@ export function AboutClientView({ principal, director, siteSettings }: AboutClie
   const fullPrincipalMessageList = principal.fullMessage && principal.fullMessage.length > 0
     ? principal.fullMessage
     : (principal.shortMessage ? [principal.shortMessage] : SCHOOL_CONFIG.leadership.principal.fullMessage);
-
-  const directorData = director || SCHOOL_CONFIG.leadership.director;
-  const fullDirectorMessageList = directorData.fullMessage && directorData.fullMessage.length > 0
-    ? directorData.fullMessage
-    : (directorData.shortMessage ? [directorData.shortMessage] : SCHOOL_CONFIG.leadership.director.fullMessage);
 
   return (
     <div className="w-full">
@@ -97,7 +91,7 @@ export function AboutClientView({ principal, director, siteSettings }: AboutClie
               </span>
 
               <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-navy-950 font-normal leading-tight">
-                Over 35 Years of Educational Luminescence in Batala
+                Over 50 Years of Educational Luminescence in Batala
               </h2>
 
               <div className="space-y-4 text-navy-700 text-sm sm:text-base leading-relaxed">
@@ -130,7 +124,7 @@ export function AboutClientView({ principal, director, siteSettings }: AboutClie
                 />
               </div>
               <div className="absolute -bottom-6 -left-6 bg-navy-950 text-white p-6 rounded-2xl border border-gold-500/30 shadow-xl hidden sm:block max-w-xs">
-                <span className="font-serif text-3xl text-gold-400 font-bold block">1989</span>
+                <span className="font-serif text-3xl text-gold-400 font-bold block">1975</span>
                 <span className="text-xs text-cream-200 mt-1 block">Founded with a vision to nurture nation-builders and ethical visionaries.</span>
               </div>
             </div>
@@ -213,62 +207,10 @@ export function AboutClientView({ principal, director, siteSettings }: AboutClie
         </div>
       </section>
 
-      {/* Leadership Profile Section - Director & Principal */}
+      {/* Leadership Profile Section - Principal */}
       <section id="leadership-messages" className="py-20 bg-white text-navy-950 border-b border-cream-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
-          
-          {/* 1. Director's Message */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
-            <div className="lg:col-span-4 relative flex justify-center lg:justify-start">
-              <div className="relative w-full max-w-[320px] sm:max-w-[360px] aspect-[3/4] rounded-2xl overflow-hidden shadow-xl border border-[#9D6638]/20 group bg-[#4E220F]">
-                <Image
-                  src={directorData.photoUrl || directorData.image || SCHOOL_CONFIG.leadership.director.image}
-                  alt={directorData.name}
-                  fill
-                  className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
-                  sizes="(max-width: 1024px) 100vw, 360px"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#321509]/95 via-[#321509]/30 to-transparent pointer-events-none" />
-                <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6 text-white pointer-events-none">
-                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-[#9D6638] text-white text-[9px] font-mono uppercase tracking-wider mb-2 font-semibold">
-                    <Compass className="w-3 h-3 text-gold-300" /> DAVCMC EXECUTIVE LEADERSHIP
-                  </div>
-                  <h3 className="font-editorial text-xl sm:text-2xl font-normal text-white">
-                    {directorData.name}
-                  </h3>
-                  <p className="text-xs text-gold-200/90 font-mono mt-0.5">
-                    {directorData.qualifications}
-                  </p>
-                </div>
-              </div>
-              <div className="absolute -bottom-2.5 -right-2.5 w-full max-w-[320px] sm:max-w-[360px] h-full rounded-2xl border border-[#9D6638]/20 -z-10 hidden sm:block pointer-events-none" />
-            </div>
-
-            <div className="lg:col-span-8 space-y-5">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#4E220F] text-[#F7F1DE] text-[11px] font-mono font-semibold tracking-[0.16em] uppercase">
-                <Compass className="w-3.5 h-3.5 text-gold-300" />
-                <span>DAVCMC Executive Leadership</span>
-              </div>
-
-              <h2 className="font-serif text-3xl sm:text-4xl text-navy-950 font-normal">
-                {directorData.name}
-              </h2>
-
-              <p className="text-xs font-mono text-gold-700 font-bold">
-                {directorData.designation} {directorData.qualifications ? `• ${directorData.qualifications}` : ''}
-              </p>
-
-              <div className="space-y-4 text-sm text-navy-700 leading-relaxed">
-                {fullDirectorMessageList.map((para, pIdx) => (
-                  <p key={pIdx}>{para}</p>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <div className="border-t border-cream-300" />
-
-          {/* 2. Principal's Message */}
+          {/* Principal's Message */}
           <div id="principal-message" className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
             <div className="lg:col-span-4 relative flex justify-center lg:justify-start">
               <div className="relative w-full max-w-[320px] sm:max-w-[360px] aspect-[3/4] rounded-2xl overflow-hidden shadow-xl border border-[#9D6638]/20 group bg-[#4E220F]">
@@ -287,9 +229,6 @@ export function AboutClientView({ principal, director, siteSettings }: AboutClie
                   <h3 className="font-editorial text-xl sm:text-2xl font-normal text-white">
                     {principal.name}
                   </h3>
-                  <p className="text-xs text-gold-200/90 font-mono mt-0.5">
-                    {principal.qualifications}
-                  </p>
                 </div>
               </div>
               <div className="absolute -bottom-2.5 -right-2.5 w-full max-w-[320px] sm:max-w-[360px] h-full rounded-2xl border border-[#9D6638]/20 -z-10 hidden sm:block pointer-events-none" />

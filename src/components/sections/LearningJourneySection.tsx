@@ -40,7 +40,7 @@ const JOURNEY_STAGES = [
     tagline: "Independent Critical Thinking, Robotics & Broadened Horizons",
     description: "Middle schoolers develop analytical depth, scientific experimentation in composite laboratories, inter-house debates, competitive athletics, and value-based Vedic grounding with daily moral discourses.",
     image: "https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&q=85&w=1200",
-    milestones: ["Hands-on Science Lab Experiments", "Robotics, IoT & Python Coding", "Dayanand Inter-House League", "Vedic Heritage & Moral Ethics"]
+    milestones: ["Hands-on Science Lab Experiments", "Robotics, IoT & Python Coding", "Inter-House Championship League", "Vedic Heritage & Moral Ethics"]
   },
   {
     phase: "04",

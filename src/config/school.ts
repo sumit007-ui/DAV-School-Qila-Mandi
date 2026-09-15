@@ -6,10 +6,10 @@ export const SCHOOL_CONFIG = {
   tagline: "Where Curiosity Begins. Growing Minds, Building Futures.",
   motto: "तमसो मा ज्योतिर्गमय • Work is Worship",
   affiliation: "Affiliated to Punjab School Education Board (PSEB), Mohali",
-  affiliationNo: "PSEB-BTL-1989",
+  affiliationNo: "PSEB-BTL-1975",
   schoolCode: "PB-20176",
   managedBy: "DAV College Managing Committee (DAVCMC), New Delhi",
-  establishedYear: 1989,
+  establishedYear: 1975,
   address: {
     street: "Qilla Mandi Road",
     area: "Near Historic Qilla Mandi",
@@ -30,22 +30,21 @@ export const SCHOOL_CONFIG = {
     officeHours: "Monday – Saturday: 8:00 AM – 3:30 PM",
   },
   stats: [
-    { value: "35+", label: "Years of Educational Legacy", description: "Empowering young learners since 1989" },
-    { value: "2,400+", label: "Enrolled Scholars", description: "From Nursery to Class 10" },
+    { value: "50+", label: "Years of Educational Legacy", description: "Empowering young learners since 1975" },
+    { value: "1,250+", label: "Enrolled Scholars", description: "From Nursery to Class 10" },
     { value: "100%", label: "PSEB Class 10 Pass Rate", description: "Consistently leading Punjab board results" },
-    { value: "100+", label: "Dedicated Master Educators", description: "1:22 Teacher-to-Student Mentorship" },
-    { value: "12+", label: "Acres of Green Campus", description: "Smart classrooms, science labs & sports pavilion" },
+    { value: "60+", label: "Dedicated Master Educators", description: "PSEB trained educators" },
     { value: "50+", label: "State & National Accolades", description: "In Olympiads, Sports & Performing Arts" },
   ],
   leadership: {
     principal: {
       name: "Mrs. Paramjit Kaur",
       designation: "Principal & Head of Institution",
-      qualifications: "M.Sc., M.Ed., M.Phil. (Gold Medalist)",
+      qualifications: "",
       shortMessage: "At Dr. MRS Bhalla DAV High School Qilla Mandi, we believe the formative years from Nursery to Class 10 shape the entire trajectory of a child's life. We fuse timeless Vedic values with modern scientific discovery to nurture curious, grounded, and confident young leaders.",
       messageExcerpt: "At Dr. MRS Bhalla DAV High School Qilla Mandi, we believe the formative years from Nursery to Class 10 shape the entire trajectory of a child's life. We fuse timeless Vedic values with modern scientific discovery to nurture curious, grounded, and confident young leaders.",
       fullMessage: [
-        "Welcome to Dr. MRS Bhalla DAV High School, Qilla Mandi. For more than three decades, our campus has served as a nurturing sanctuary where every child's innate potential is recognized, celebrated, and carefully cultivated.",
+        "Welcome to Dr. MRS Bhalla DAV High School, Qilla Mandi. For five decades, our campus has served as a nurturing sanctuary where every child's innate potential is recognized, celebrated, and carefully cultivated.",
         "Under the aegis of the DAV College Managing Committee, New Delhi, we provide a complete Nursery to Class 10 educational journey. Our curriculum blends foundational literacy, joyful exploration, experiential science labs, robotics, classical arts, sportsmanship, and Vedic ethics.",
         "The journey from early childhood to Class 10 is transformative. Our dedicated educators provide a safe, intellectually stimulating, and morally uplifting environment so that every student steps out of our gates with academic strength, social empathy, and steadfast self-confidence.",
         "We invite parents to partner with us in shaping a joyful, purpose-driven foundation for their children."
