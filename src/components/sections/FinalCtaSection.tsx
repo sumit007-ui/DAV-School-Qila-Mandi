@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Sparkles, ArrowRight, MessageCircle, Download, Phone, MapPin, Mail } from "lucide-react";
+import { Sparkles, ArrowRight, Download, Phone, MapPin, Mail } from "lucide-react";
 import { SCHOOL_CONFIG } from "@/config/school";
 import { LineReveal, Reveal } from "@/components/motion";
 
@@ -71,7 +71,9 @@ export function FinalCtaSection({
             </span>
             <span className="inline-flex items-center gap-1.5">
               <Phone className="w-3.5 h-3.5 text-[#B0BA99]" />
-              <span>{SCHOOL_CONFIG.contact.primaryPhone}</span>
+              <a href={`tel:${SCHOOL_CONFIG.contact.receptionPhone}`} className="hover:text-white">Reception: {SCHOOL_CONFIG.contact.receptionPhone}</a>
+              <span className="text-white/30">|</span>
+              <a href={`tel:${SCHOOL_CONFIG.contact.officePhone}`} className="hover:text-white">Office: {SCHOOL_CONFIG.contact.officePhone}</a>
             </span>
             <span className="inline-flex items-center gap-1.5">
               <Mail className="w-3.5 h-3.5 text-[#B0BA99]" />

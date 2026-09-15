@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Sparkles, ArrowRight, FileCheck, Calendar, ShieldCheck, CheckCircle2, Phone, MessageCircle } from "lucide-react";
+import { Sparkles, ArrowRight, FileCheck, Calendar, ShieldCheck, CheckCircle2, Phone } from "lucide-react";
 import { ADMISSION_STEPS, ELIGIBILITY_CRITERIA } from "@/lib/data/admissions";
 import { SCHOOL_CONFIG } from "@/config/school";
 import { LineReveal, Reveal } from "@/components/motion";
@@ -46,21 +46,19 @@ export function AdmissionsConversionSection({
               </button>
 
               <a
-                href={`tel:${SCHOOL_CONFIG.contact.primaryPhone}`}
+                href={`tel:${SCHOOL_CONFIG.contact.officePhone}`}
                 className="px-5 py-3 rounded bg-white/10 hover:bg-white/20 text-white font-mono text-xs uppercase tracking-wider border border-white/15 transition-colors flex items-center gap-2"
               >
                 <Phone className="w-3.5 h-3.5 text-[#B0BA99]" />
-                <span>{SCHOOL_CONFIG.contact.primaryPhone}</span>
+                <span>Office: {SCHOOL_CONFIG.contact.officePhone}</span>
               </a>
 
               <a
-                href={SCHOOL_CONFIG.contact.whatsappLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-5 py-3 rounded bg-[#9D6638]/50 hover:bg-[#9D6638] text-white font-mono text-xs uppercase tracking-wider border border-[#9D6638] transition-colors flex items-center gap-2"
+                href={`tel:${SCHOOL_CONFIG.contact.receptionPhone}`}
+                className="px-5 py-3 rounded bg-white/10 hover:bg-white/20 text-white font-mono text-xs uppercase tracking-wider border border-white/15 transition-colors flex items-center gap-2"
               >
-                <MessageCircle className="w-4 h-4 text-[#B0BA99]" />
-                <span>WhatsApp</span>
+                <Phone className="w-3.5 h-3.5 text-[#B0BA99]" />
+                <span>Reception: {SCHOOL_CONFIG.contact.receptionPhone}</span>
               </a>
             </div>
           </Reveal>

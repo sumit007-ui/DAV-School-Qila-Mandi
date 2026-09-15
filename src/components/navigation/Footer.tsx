@@ -6,8 +6,6 @@ import {
   Mail, 
   MapPin, 
   Clock, 
-  ShieldCheck, 
-  FileText, 
   ArrowUpRight, 
   Sparkles,
   Download,
@@ -92,16 +90,7 @@ export function Footer({
               {schoolDesc}
             </p>
 
-            <div className="space-y-1.5 text-xs text-white/70 font-mono">
-              <div className="flex items-center gap-2">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#B0BA99] shrink-0" />
-                <span>PSEB AFFILIATION NO. {SCHOOL_CONFIG.affiliationNo}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <FileText className="w-3.5 h-3.5 text-[#B0BA99] shrink-0" />
-                <span>SCHOOL CODE: {SCHOOL_CONFIG.schoolCode}</span>
-              </div>
-            </div>
+
 
             {/* Social Media Links */}
             <div className="pt-2">
@@ -217,11 +206,18 @@ export function Footer({
                 <span>{schoolAddress}</span>
               </div>
 
-              <div className="flex items-center gap-2">
-                <Phone className="w-3.5 h-3.5 text-[#B0BA99] shrink-0" />
-                <a href={`tel:${schoolPhone}`} className="hover:text-white transition-colors font-mono">
-                  {schoolPhone}
-                </a>
+              <div className="space-y-1">
+                <div className="flex items-center gap-2">
+                  <Phone className="w-3.5 h-3.5 text-[#B0BA99] shrink-0" />
+                  <a href={`tel:${SCHOOL_CONFIG.contact.receptionPhone}`} className="hover:text-white transition-colors font-mono">
+                    {SCHOOL_CONFIG.contact.receptionPhone} <span className="text-white/50 text-[10px] font-sans">(Reception)</span>
+                  </a>
+                </div>
+                <div className="flex items-center gap-2 pl-5.5">
+                  <a href={`tel:${SCHOOL_CONFIG.contact.officePhone}`} className="hover:text-white transition-colors font-mono">
+                    {SCHOOL_CONFIG.contact.officePhone} <span className="text-white/50 text-[10px] font-sans">(Office)</span>
+                  </a>
+                </div>
               </div>
 
               <div className="flex items-center gap-2">

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Sparkles, ArrowRight, Phone, MessageCircle, CheckCircle2, ShieldCheck, HelpCircle, FileText } from "lucide-react";
+import { Sparkles, ArrowRight, Phone, CheckCircle2, ShieldCheck, HelpCircle, FileText } from "lucide-react";
 import { AdmissionStep, FAQItem } from "@/types";
 import { SCHOOL_CONFIG } from "@/config/school";
 import { useAppModals } from "@/components/layout/ClientAppWrapper";

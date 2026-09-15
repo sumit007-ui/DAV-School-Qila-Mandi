@@ -21,7 +21,7 @@ export function AdmissionModal({ isOpen, onClose, defaultGrade = "Nursery" }: Ad
     phone: "",
     email: "",
     cityOrArea: "Batala",
-    preferredContact: "WhatsApp",
+    preferredContact: "Phone",
     message: "",
   });
 
@@ -177,12 +177,11 @@ export function AdmissionModal({ isOpen, onClose, defaultGrade = "Nursery" }: Ad
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
                 <a
-                  href={`https://wa.me/91${SCHOOL_CONFIG.contact.primaryPhone}?text=Hello%20DAV%20Qilla%20Mandi%2C%20I%20have%20submitted%20admission%20enquiry%20with%20Reference%20ID%20${referenceId}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-[#9D6638] hover:bg-[#82522B] text-white font-bold text-xs tracking-wide uppercase transition-colors"
+                  href={`tel:${SCHOOL_CONFIG.contact.officePhone}`}
+                  className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-[#9D6638] hover:bg-[#82522B] text-white font-bold text-xs tracking-wide uppercase transition-colors flex items-center justify-center gap-2"
                 >
-                  Chat with Admissions on WhatsApp
+                  <Phone className="w-3.5 h-3.5" />
+                  <span>Call Admissions Office</span>
                 </a>
                 <button
                   onClick={handleReset}
@@ -310,8 +309,8 @@ export function AdmissionModal({ isOpen, onClose, defaultGrade = "Nursery" }: Ad
                 <label className="block text-xs font-bold text-[#4E220F] mb-1.5">
                   Preferred Contact Mode
                 </label>
-                <div className="grid grid-cols-3 gap-2">
-                  {(["WhatsApp", "Phone", "Email"] as const).map((mode) => (
+                <div className="grid grid-cols-2 gap-2">
+                  {(["Phone", "Email"] as const).map((mode) => (
                     <button
                       type="button"
                       key={mode}

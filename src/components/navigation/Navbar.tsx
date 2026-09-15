@@ -9,7 +9,6 @@ import {
   Search, 
   ArrowUpRight, 
   Phone, 
-  MessageCircle, 
   MapPin, 
   Sparkles,
   ChevronRight,
@@ -183,7 +182,7 @@ export function Navbar({ onOpenSearch, onOpenAdmissionModal, siteSettings }: Nav
               <span>ADMISSIONS OPEN FOR SESSION {SCHOOL_CONFIG.admissionsSession}</span>
             </div>
             <div className="text-[#B0BA99]">
-              PSEB #{SCHOOL_CONFIG.affiliationNo} • CODE: {SCHOOL_CONFIG.schoolCode}
+              Affiliated under PSEB Mohali
             </div>
           </div>
 
@@ -251,16 +250,20 @@ export function Navbar({ onOpenSearch, onOpenAdmissionModal, siteSettings }: Nav
                   <MapPin className="w-4 h-4 text-[#B0BA99] shrink-0 mt-0.5" />
                   <span>{schoolAddress}</span>
                 </div>
-                <div className="flex items-center gap-2.5">
-                  <Phone className="w-4 h-4 text-[#B0BA99] shrink-0" />
-                  <span>{schoolPhone} (Office: {schoolHours})</span>
+                <div className="flex items-start gap-2.5">
+                  <Phone className="w-4 h-4 text-[#B0BA99] shrink-0 mt-0.5" />
+                  <div className="font-mono text-xs space-y-0.5">
+                    <div>
+                      <a href={`tel:${SCHOOL_CONFIG.contact.receptionPhone}`} className="hover:underline">{SCHOOL_CONFIG.contact.receptionPhone}</a>
+                      <span className="text-white/50 font-sans text-[10px] ml-1">(Reception)</span>
+                    </div>
+                    <div>
+                      <a href={`tel:${SCHOOL_CONFIG.contact.officePhone}`} className="hover:underline">{SCHOOL_CONFIG.contact.officePhone}</a>
+                      <span className="text-white/50 font-sans text-[10px] ml-1">(Office)</span>
+                    </div>
+                  </div>
                 </div>
-                <div className="flex items-center gap-2.5">
-                  <MessageCircle className="w-4 h-4 text-[#B0BA99] shrink-0" />
-                  <a href={SCHOOL_CONFIG.contact.whatsappLink} target="_blank" rel="noopener noreferrer" className="text-[#B0BA99] hover:underline font-mono">
-                    WhatsApp Admissions Desk
-                  </a>
-                </div>
+
                 <div className="flex items-center gap-3 pt-2">
                   <a
                     href={SCHOOL_CONFIG.links.facebook}

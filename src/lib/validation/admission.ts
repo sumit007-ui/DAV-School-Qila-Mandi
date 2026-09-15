@@ -8,7 +8,7 @@ export const admissionEnquirySchema = z.object({
   phone: z.string().regex(/^[6-9]\d{9}$/, "Please enter a valid 10-digit Indian mobile number"),
   email: z.string().email("Please enter a valid email address"),
   cityOrArea: z.string().min(2, "Please enter your city/locality"),
-  preferredContact: z.enum(["Phone", "WhatsApp", "Email"]).default("WhatsApp"),
+  preferredContact: z.enum(["Phone", "WhatsApp", "Email"]).default("Phone"),
   message: z.string().optional(),
 });
 

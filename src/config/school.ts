@@ -21,8 +21,10 @@ export const SCHOOL_CONFIG = {
     googleMapsUrl: "https://maps.google.com/?q=Dr.+MRS+Bhalla+DAV+High+School+Qilla+Mandi+Batala",
   },
   contact: {
-    primaryPhone: "+91 1871 240567",
-    admissionsHelpline: "+91 98765 43210",
+    primaryPhone: "01871-221285",
+    receptionPhone: "01871-221285",
+    officePhone: "01871-501096",
+    admissionsHelpline: "01871-501096",
     whatsapp: "+91 98765 43210",
     whatsappLink: "https://wa.me/919876543210?text=Hello%20Dr.%20MRS%20Bhalla%20DAV%20High%20School%2C%20I%20am%20inquiring%20about%20Admissions",
     email: "davqillamandi@gmail.com",

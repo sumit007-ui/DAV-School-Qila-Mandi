@@ -41,7 +41,7 @@ export default function PrivacyPage() {
           <section className="space-y-2">
             <h2 className="font-serif text-lg font-bold text-navy-950">4. Contact Information</h2>
             <p>
-              For questions concerning this privacy policy or your stored biodata, please contact: <strong className="text-navy-950">{SCHOOL_CONFIG.contact.email}</strong> or call <strong className="text-navy-950">{SCHOOL_CONFIG.contact.primaryPhone}</strong>.
+              For questions concerning this privacy policy or your stored biodata, please contact: <strong className="text-navy-950">{SCHOOL_CONFIG.contact.email}</strong> or call <strong className="text-navy-950">{SCHOOL_CONFIG.contact.receptionPhone} / {SCHOOL_CONFIG.contact.officePhone}</strong>.
             </p>
           </section>
         </div>

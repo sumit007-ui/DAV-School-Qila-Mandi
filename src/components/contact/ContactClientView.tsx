@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Sparkles, MapPin, Phone, Mail, Clock, Send, CheckCircle2, MessageCircle, ShieldCheck, Facebook, Instagram } from "lucide-react";
+import { Sparkles, MapPin, Phone, Mail, Clock, Send, CheckCircle2, ShieldCheck, Facebook, Instagram } from "lucide-react";
 import { SCHOOL_CONFIG } from "@/config/school";
 import { contactFormSchema, ContactFormData } from "@/lib/validation/contact";
 
@@ -151,10 +151,17 @@ export function ContactClientView({ siteSettings, faqs = [] }: ContactClientView
                       <Phone className="w-5 h-5" />
                     </div>
                     <div className="space-y-1">
-                      <p className="font-bold text-navy-950">Reception & Helpline</p>
-                      <p className="text-xs font-mono text-navy-600">
-                        <a href={`tel:${schoolPhone}`} className="hover:text-gold-700">{schoolPhone}</a>
-                      </p>
+                      <p className="font-bold text-navy-950">Telephone Helpdesk</p>
+                      <div className="text-xs font-mono text-navy-700 space-y-1">
+                        <div>
+                          <span className="text-navy-500 font-sans font-medium">Reception: </span>
+                          <a href={`tel:${SCHOOL_CONFIG.contact.receptionPhone}`} className="hover:text-gold-700 font-semibold">{SCHOOL_CONFIG.contact.receptionPhone}</a>
+                        </div>
+                        <div>
+                          <span className="text-navy-500 font-sans font-medium">Office: </span>
+                          <a href={`tel:${SCHOOL_CONFIG.contact.officePhone}`} className="hover:text-gold-700 font-semibold">{SCHOOL_CONFIG.contact.officePhone}</a>
+                        </div>
+                      </div>
                     </div>
                   </div>
 
@@ -184,17 +191,7 @@ export function ContactClientView({ siteSettings, faqs = [] }: ContactClientView
                 </div>
 
                 <div className="pt-4 border-t border-cream-200 space-y-3">
-                  <a
-                    href={`https://wa.me/${schoolWhatsApp.replace(/\D/g, "")}?text=Hello%20DAV%20Qilla%20Mandi%20Admission%20Desk`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-colors shadow-sm"
-                  >
-                    <MessageCircle className="w-4 h-4" />
-                    <span>Chat on WhatsApp</span>
-                  </a>
-
-                  <div className="grid grid-cols-2 gap-2.5 pt-1">
+                  <div className="grid grid-cols-2 gap-2.5">
                     <a
                       href={SCHOOL_CONFIG.links.facebook}
                       target="_blank"

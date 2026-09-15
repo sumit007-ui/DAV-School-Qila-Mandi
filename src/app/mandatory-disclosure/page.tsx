@@ -24,7 +24,7 @@ export default async function MandatoryDisclosurePage() {
     { label: "Complete Campus Address", value: schoolAddress },
     { label: "Principal Name & Qualification", value: `${principal.name} (${principal.designation})` },
     { label: "Official Email ID", value: schoolEmail },
-    { label: "Contact Telephone", value: schoolPhone },
+    { label: "Contact Telephone", value: `${SCHOOL_CONFIG.contact.receptionPhone} (Reception) / ${SCHOOL_CONFIG.contact.officePhone} (Office)` },
   ];
 
   return (
