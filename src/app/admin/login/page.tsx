@@ -21,6 +21,7 @@ export default function AdminLoginPage() {
       if (!supabase) return;
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
+        document.cookie = `sb-admin-session=${session.access_token}; path=/; max-age=${session.expires_in || 3600}; SameSite=Lax; Secure`;
         router.push("/admin/enquiries");
       }
     };
@@ -48,6 +49,7 @@ export default function AdminLoginPage() {
       }
 
       if (data.session) {
+        document.cookie = `sb-admin-session=${data.session.access_token}; path=/; max-age=${data.session.expires_in || 3600}; SameSite=Lax; Secure`;
         router.push("/admin/enquiries");
       }
     } catch (err: any) {

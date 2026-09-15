@@ -144,6 +144,7 @@ export default function AdminEnquiriesDashboard() {
     if (supabase) {
       await supabase.auth.signOut();
     }
+    document.cookie = "sb-admin-session=; path=/; max-age=0; SameSite=Lax; Secure";
     router.push("/admin/login");
   };
 
@@ -229,9 +230,14 @@ export default function AdminEnquiriesDashboard() {
 
       // 2. Fallback to API route with Service Role if direct RLS blocks
       if (!deleteSuccess) {
+        const sessionRes = await supabase?.auth.getSession();
+        const accessToken = sessionRes?.data.session?.access_token;
         const res = await fetch("/api/admin/enquiries/delete", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
+          },
           body: JSON.stringify({ id, type }),
         });
         const resData = await res.json();

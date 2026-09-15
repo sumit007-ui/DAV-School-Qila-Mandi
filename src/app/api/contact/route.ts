@@ -1,12 +1,34 @@
 import { NextResponse } from 'next/server'
 import { contactFormSchema } from '@/lib/validation/contact'
 import { getSupabaseServerClient } from '@/lib/supabase/server'
+import { checkRateLimit, getClientIp } from '@/lib/security/rateLimit'
 
 export async function POST(request: Request) {
   try {
+    // 1. IP Rate Limiting (5 requests per 10 minutes)
+    const clientIp = getClientIp(request)
+    const rateLimit = checkRateLimit(`contact:${clientIp}`, 5, 10 * 60 * 1000)
+
+    if (!rateLimit.success) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Too many requests. Please try again later.',
+        },
+        {
+          status: 429,
+          headers: {
+            'Retry-After': rateLimit.retryAfter.toString(),
+            'X-RateLimit-Limit': rateLimit.limit.toString(),
+            'X-RateLimit-Remaining': '0',
+          },
+        }
+      )
+    }
+
     const body = await request.json()
 
-    // 1. Zod Validation
+    // 2. Zod Validation
     const validationResult = contactFormSchema.safeParse(body)
     if (!validationResult.success) {
       const fieldErrors: Record<string, string> = {}
@@ -27,7 +49,7 @@ export async function POST(request: Request) {
 
     const { fullName, phone, email, subject, category, message } = validationResult.data
 
-    // 2. Insert into Supabase
+    // 3. Insert into Supabase
     const supabase = getSupabaseServerClient()
     const { error: dbError } = await supabase
       .from('contact_enquiries')
@@ -53,10 +75,18 @@ export async function POST(request: Request) {
       )
     }
 
-    return NextResponse.json({
-      success: true,
-      message: 'Your message has been dispatched successfully.',
-    })
+    return NextResponse.json(
+      {
+        success: true,
+        message: 'Your message has been dispatched successfully.',
+      },
+      {
+        headers: {
+          'X-RateLimit-Limit': rateLimit.limit.toString(),
+          'X-RateLimit-Remaining': rateLimit.remaining.toString(),
+        },
+      }
+    )
   } catch (error: any) {
     console.error('[API Error] /api/contact:', error)
     return NextResponse.json(
