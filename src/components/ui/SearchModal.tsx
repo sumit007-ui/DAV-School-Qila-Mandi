@@ -43,9 +43,9 @@ const SITE_PAGES: SearchPageItem[] = [
     id: "about-page",
     title: "About Dr. MRS Bhalla DAV High School",
     category: "About Us",
-    description: "Institutional genesis since 1975, over 50 years of educational legacy, and DAVCMC New Delhi management.",
+    description: "Institutional genesis since 1990, over 35 years of educational legacy, and DAVCMC New Delhi management.",
     href: "/about",
-    keywords: ["about", "about school", "history", "genesis", "1975", "davcmc", "heritage", "legacy", "motto"],
+    keywords: ["about", "about school", "history", "genesis", "1990", "davcmc", "heritage", "legacy", "motto"],
   },
   {
     id: "principal-message",

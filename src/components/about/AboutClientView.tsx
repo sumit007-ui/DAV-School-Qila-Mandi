@@ -124,7 +124,7 @@ export function AboutClientView({ principal, siteSettings }: AboutClientViewProp
                 />
               </div>
               <div className="absolute -bottom-6 -left-6 bg-navy-950 text-white p-6 rounded-2xl border border-gold-500/30 shadow-xl hidden sm:block max-w-xs">
-                <span className="font-serif text-3xl text-gold-400 font-bold block">1975</span>
+                <span className="font-serif text-3xl text-gold-400 font-bold block">1990</span>
                 <span className="text-xs text-cream-200 mt-1 block">Founded with a vision to nurture nation-builders and ethical visionaries.</span>
               </div>
             </div>

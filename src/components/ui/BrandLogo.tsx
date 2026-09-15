@@ -59,7 +59,7 @@ export function BrandLogo({
                 : "bg-[#EBE3C8] text-[#4E220F] border border-[#DCD0AE]"
             }`}
           >
-            Est. 1975
+            Est. 1990
           </span>
         </div>
       </div>

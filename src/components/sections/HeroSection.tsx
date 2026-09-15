@@ -109,7 +109,7 @@ export function HeroSection({ onOpenAdmissionModal }: HeroSectionProps) {
             </div>
             <div className="flex items-center gap-1.5">
               <Award className="w-3.5 h-3.5 text-gold-400 shrink-0" />
-              <span className="tracking-wide">EST. 1975</span>
+              <span className="tracking-wide">EST. 1990</span>
             </div>
           </div>
 

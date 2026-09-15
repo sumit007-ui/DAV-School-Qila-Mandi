@@ -3,11 +3,18 @@ import { BASE_URL } from '@/lib/seo/metadata';
 
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: {
-      userAgent: '*',
-      allow: '/',
-      disallow: ['/api/'],
-    },
+    rules: [
+      {
+        userAgent: '*',
+        allow: '/',
+        disallow: ['/api/', '/admin/'],
+      },
+      {
+        userAgent: 'Googlebot-Image',
+        allow: ['/', '/images/', '/favicon.ico', '/favicon-*.png', '/apple-touch-icon.png'],
+      },
+    ],
     sitemap: `${BASE_URL}/sitemap.xml`,
+    host: BASE_URL,
   };
 }

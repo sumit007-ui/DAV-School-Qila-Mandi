@@ -1,6 +1,20 @@
+import { Metadata } from "next";
+import { generateSchoolMetadata } from "@/lib/seo/metadata";
 import { ShieldCheck } from "lucide-react";
 import { getSiteSettings, getPrincipalMessage } from "@/sanity/lib/fetch";
 import { SCHOOL_CONFIG } from "@/config/school";
+
+export const metadata: Metadata = generateSchoolMetadata({
+  title: "Mandatory Public Disclosure & PSEB Compliance",
+  description:
+    "Official mandatory public disclosure for Dr. MRS Bhalla DAV High School, Qilla Mandi, Batala under Punjab School Education Board (PSEB) regulations.",
+  path: "/mandatory-disclosure",
+  keywords: [
+    "DAV Batala Mandatory Disclosure",
+    "PSEB Compliance Batala",
+    "DAV School Batala Society",
+  ],
+});
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;

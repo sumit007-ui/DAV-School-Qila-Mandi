@@ -1,14 +1,16 @@
 import { Metadata } from "next";
 import { SCHOOL_CONFIG } from "@/config/school";
 
-export const BASE_URL = "https://davqillamandi.edu.in";
+export const BASE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/+$/, "") ||
+  "https://www.drmrsbhalladavschool.com";
 
 export function generateSchoolMetadata({
   title,
   description,
   path = "",
   keywords = [],
-  ogImage = "https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&q=80&w=1200",
+  ogImage = `${BASE_URL}/images/og-school.jpg`,
 }: {
   title: string;
   description: string;
@@ -16,7 +18,9 @@ export function generateSchoolMetadata({
   keywords?: string[];
   ogImage?: string;
 }): Metadata {
-  const fullTitle = `${title} | ${SCHOOL_CONFIG.name}, ${SCHOOL_CONFIG.subName}`;
+  const fullTitle = path === ""
+    ? `${title}`
+    : `${title} | ${SCHOOL_CONFIG.name}, ${SCHOOL_CONFIG.subName}`;
   const canonicalUrl = `${BASE_URL}${path}`;
 
   return {
@@ -25,17 +29,20 @@ export function generateSchoolMetadata({
     keywords: [
       "Dr. MRS Bhalla DAV High School",
       "Dr. MRS Bhalla DAV High School Batala",
+      "DAV School Batala",
       "DAV Qilla Mandi Batala",
+      "drmrsbhalladavschool.com",
       "Best School in Batala",
       "PSEB School Batala Punjab",
       "DAV College Managing Committee",
       "Admissions 2026-27",
       "Best PSEB School Gurdaspur",
       "Top High School Punjab Board",
+      "Nursery to 10th School in Batala",
       ...keywords,
     ],
-    authors: [{ name: SCHOOL_CONFIG.name }],
-    creator: "Devnxy",
+    authors: [{ name: SCHOOL_CONFIG.name, url: BASE_URL }],
+    creator: SCHOOL_CONFIG.name,
     publisher: SCHOOL_CONFIG.name,
     metadataBase: new URL(BASE_URL),
     alternates: {
@@ -53,7 +60,7 @@ export function generateSchoolMetadata({
           url: ogImage,
           width: 1200,
           height: 630,
-          alt: `${SCHOOL_CONFIG.name} Campus`,
+          alt: `${SCHOOL_CONFIG.name} Campus & Emblem`,
         },
       ],
     },
@@ -64,9 +71,21 @@ export function generateSchoolMetadata({
       images: [ogImage],
     },
     icons: {
-      icon: "/images/logo-removebg-preview.png",
-      shortcut: "/images/logo-removebg-preview.png",
-      apple: "/images/logo-removebg-preview.png",
+      icon: [
+        { url: "/favicon.ico", sizes: "48x48" },
+        { url: "/favicon-48x48.png", sizes: "48x48", type: "image/png" },
+        { url: "/favicon-96x96.png", sizes: "96x96", type: "image/png" },
+        { url: "/favicon-192x192.png", sizes: "192x192", type: "image/png" },
+        { url: "/favicon-512x512.png", sizes: "512x512", type: "image/png" },
+      ],
+      shortcut: "/favicon.ico",
+      apple: [
+        { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+      ],
+    },
+    manifest: "/site.webmanifest",
+    verification: {
+      google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || undefined,
     },
     robots: {
       index: true,
@@ -82,18 +101,53 @@ export function generateSchoolMetadata({
   };
 }
 
+export function generateWebSiteJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${BASE_URL}/#website`,
+    "name": `${SCHOOL_CONFIG.name}`,
+    "alternateName": [
+      `${SCHOOL_CONFIG.name}, ${SCHOOL_CONFIG.subName}`,
+      "Dr. MRS Bhalla DAV High School Qilla Mandi",
+      "DAV School Batala",
+      "DAV High School Batala"
+    ],
+    "url": BASE_URL,
+    "inLanguage": "en-IN",
+    "publisher": {
+      "@id": `${BASE_URL}/#organization`
+    }
+  };
+}
+
 export function generateEducationalOrgJsonLd() {
   return {
     "@context": "https://schema.org",
     "@type": ["EducationalOrganization", "School"],
+    "@id": `${BASE_URL}/#organization`,
     "name": `${SCHOOL_CONFIG.name} ${SCHOOL_CONFIG.subName}`,
-    "alternateName": "Dr. MRS Bhalla DAV High School Qilla Mandi",
+    "alternateName": [
+      "Dr. MRS Bhalla DAV High School",
+      "Dr. MRS Bhalla DAV High School Qilla Mandi, Batala",
+      "DAV High School Qilla Mandi Batala"
+    ],
     "description": SCHOOL_CONFIG.tagline,
     "url": BASE_URL,
-    "logo": `${BASE_URL}/images/logo.png`,
-    "telephone": [SCHOOL_CONFIG.contact.receptionPhone, SCHOOL_CONFIG.contact.officePhone],
+    "logo": {
+      "@type": "ImageObject",
+      "url": `${BASE_URL}/favicon-512x512.png`,
+      "width": "512",
+      "height": "512",
+      "caption": `${SCHOOL_CONFIG.name} Emblem`
+    },
+    "image": `${BASE_URL}/images/og-school.jpg`,
+    "telephone": [
+      SCHOOL_CONFIG.contact.receptionPhone,
+      SCHOOL_CONFIG.contact.officePhone,
+    ],
     "email": SCHOOL_CONFIG.contact.email,
-    "foundingDate": "1975",
+    "foundingDate": "1990",
     "parentOrganization": {
       "@type": "EducationalOrganization",
       "name": SCHOOL_CONFIG.managedBy,
@@ -115,6 +169,6 @@ export function generateEducationalOrgJsonLd() {
       SCHOOL_CONFIG.links.facebook,
       SCHOOL_CONFIG.links.instagram,
       SCHOOL_CONFIG.links.youtube,
-    ],
+    ].filter(Boolean),
   };
 }

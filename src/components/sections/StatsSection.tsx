@@ -3,7 +3,7 @@ import { LineReveal, Reveal, CountUp } from "@/components/motion";
 
 export function StatsSection() {
   const statNumbers = [
-    { value: 50, suffix: "+", label: "Years Legacy", description: "Serving Batala since 1975" },
+    { value: 35, suffix: "+", label: "Years Legacy", description: "Serving Batala since 1990" },
     { value: 1250, suffix: "+", label: "Students Enrolled", description: "Nursery to Class 10" },
     { value: 100, suffix: "%", label: "Board Pass Rate", description: "PSEB Class 10 record" },
     { value: 60, suffix: "+", label: "Expert Faculty", description: "PSEB trained educators" },
@@ -26,7 +26,7 @@ export function StatsSection() {
           </div>
           <Reveal direction="up" delay={0.25}>
             <p className="text-xs sm:text-sm text-[#7E5F4E] max-w-sm font-sans">
-              Empowering curious young minds in Batala with values, scientific temper, and academic distinction since 1975.
+              Empowering curious young minds in Batala with values, scientific temper, and academic distinction since 1990.
             </p>
           </Reveal>
         </div>
