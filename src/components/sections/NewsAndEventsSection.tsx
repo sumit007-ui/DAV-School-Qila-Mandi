@@ -32,11 +32,13 @@ export function NewsAndEventsSection({
     initialNews && initialNews.length > 0 ? initialNews : NEWS_STORIES
   );
   const [activeCategory, setActiveCategory] = useState<string>("All");
+  const [isLoading, setIsLoading] = useState(false);
 
   // Fetch live articles from CMS API
   useEffect(() => {
     let isMounted = true;
     const fetchLiveNews = async () => {
+      setIsLoading(true);
       try {
         const res = await fetch("/api/news");
         if (res.ok) {
@@ -47,6 +49,8 @@ export function NewsAndEventsSection({
         }
       } catch (e) {
         // Fallback to initial stories seamlessly
+      } finally {
+        if (isMounted) setIsLoading(false);
       }
     };
 
@@ -136,6 +140,29 @@ export function NewsAndEventsSection({
         </div>
 
         {/* Magazine Editorial Grid */}
+        {/* Skeleton loading state */}
+        {isLoading ? (
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 animate-pulse">
+            <div className="lg:col-span-7 bg-[#FAF6EB] rounded-3xl border border-[#9D6638]/15 p-7 space-y-4">
+              <div className="aspect-[16/10] rounded-2xl bg-[#9D6638]/10" />
+              <div className="h-4 bg-[#9D6638]/10 rounded-full w-1/3" />
+              <div className="h-8 bg-[#9D6638]/10 rounded-xl w-full" />
+              <div className="h-4 bg-[#9D6638]/10 rounded-full w-2/3" />
+            </div>
+            <div className="lg:col-span-5 space-y-4">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="p-5 rounded-2xl bg-[#FAF6EB] border border-[#9D6638]/15 flex gap-4">
+                  <div className="w-24 h-24 rounded-xl bg-[#9D6638]/10 shrink-0" />
+                  <div className="flex-1 space-y-2.5">
+                    <div className="h-3 bg-[#9D6638]/10 rounded-full w-1/4" />
+                    <div className="h-5 bg-[#9D6638]/10 rounded-lg w-full" />
+                    <div className="h-3 bg-[#9D6638]/10 rounded-full w-3/4" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           {/* Main Featured Editorial (Span 7) */}
           {featuredStory && (
@@ -240,7 +267,17 @@ export function NewsAndEventsSection({
                     )}
                     <div className="space-y-1.5 flex-1 min-w-0">
                       <div className="flex items-center gap-2 text-[10px] font-mono text-[#7E5F4E]">
-                        <span className="px-2 py-0.5 rounded bg-[#9D6638]/15 text-[#9D6638] font-bold uppercase">
+                        <span className={`px-2 py-0.5 rounded font-bold uppercase text-white ${
+                          story.category?.toLowerCase().includes("notice") || story.category?.toLowerCase().includes("circular")
+                            ? "bg-red-500"
+                            : story.category?.toLowerCase().includes("achievement") || story.category?.toLowerCase().includes("honor")
+                            ? "bg-blue-600"
+                            : story.category?.toLowerCase().includes("sport") || story.category?.toLowerCase().includes("art")
+                            ? "bg-emerald-600"
+                            : story.category?.toLowerCase().includes("event")
+                            ? "bg-violet-600"
+                            : "bg-[#9D6638]"
+                        }`}>
                           {story.category}
                         </span>
                         <span>·</span>
@@ -300,6 +337,7 @@ export function NewsAndEventsSection({
             </div>
           </div>
         </div>
+        )} {/* End isLoading ternary */}
       </div>
     </section>
   );

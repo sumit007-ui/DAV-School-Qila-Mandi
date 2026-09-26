@@ -62,6 +62,17 @@ export async function validateAdminRequest(
       }
     }
 
+    // Token length sanity check — reject obviously invalid tokens
+    if (token.length < 20) {
+      return {
+        authorized: false,
+        response: NextResponse.json(
+          { success: false, error: 'Unauthorized: Invalid session token.' },
+          { status: 401 }
+        ),
+      }
+    }
+
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
     const supabaseAnonKey =
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
@@ -97,15 +108,20 @@ export async function validateAdminRequest(
       }
     }
 
-    // Optional admin email whitelist verification
+    // ─── Admin Email Whitelist (strict enforcement) ───────────────────────
+    // If ADMIN_EMAIL is set, the authenticated user MUST match it (or have role=admin in metadata).
+    // If ADMIN_EMAIL is NOT set, warn but allow — add to .env.local for maximum security.
     const adminEmail = process.env.ADMIN_EMAIL
-    if (adminEmail && user.email && user.email.toLowerCase() !== adminEmail.toLowerCase()) {
-      const role = user.app_metadata?.role || user.user_metadata?.role
-      if (role !== 'admin') {
+    if (adminEmail) {
+      const emailMatches = user.email && user.email.toLowerCase() === adminEmail.toLowerCase()
+      const roleIsAdmin =
+        user.app_metadata?.role === 'admin' || user.user_metadata?.role === 'admin'
+
+      if (!emailMatches && !roleIsAdmin) {
         return {
           authorized: false,
           response: NextResponse.json(
-            { success: false, error: 'Forbidden: Insufficient administrative privileges.' },
+            { success: false, error: 'Forbidden: This account does not have administrator privileges.' },
             { status: 403 }
           ),
         }

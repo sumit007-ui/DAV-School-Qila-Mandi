@@ -3,6 +3,8 @@ import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { SCHOOL_CONFIG } from "@/config/school";
 import { validateAdminRequest } from "@/lib/security/adminAuth";
 import { sanitizeString } from "@/lib/security/sanitize";
+import { logAdminAction, getAdminEmail } from "@/lib/security/auditLog";
+import { getClientIp } from "@/lib/security/rateLimit";
 
 export const dynamic = "force-dynamic";
 
@@ -191,6 +193,13 @@ export async function POST(req: NextRequest) {
       console.error("[Admin Settings Save Error]:", error);
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
+
+    await logAdminAction({
+      action: "settings_update",
+      adminEmail: getAdminEmail(authResult.user),
+      ip: getClientIp(req),
+      details: { heroTitleLine1, heroTitleLine2, principalName },
+    });
 
     return NextResponse.json({
       success: true,

@@ -328,6 +328,26 @@ export function Footer({
           </div>
         </div>
       </div>
+
+      {/* DEVNXY Developer Credit Strip */}
+      <div className="border-t border-white/5 py-3 relative z-10 bg-[#3A1808]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-center">
+          <p className="text-[10px] text-white/35 font-mono tracking-wider flex items-center gap-1.5">
+            <span>Designed &amp; Developed by</span>
+            <a
+              href="https://devnxy.in/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#C9A96E] hover:text-[#F4E4AF] transition-colors duration-200 font-semibold tracking-widest uppercase"
+              aria-label="DEVNXY - High-Performance Web & App Development Agency"
+            >
+              DEVNXY™
+            </a>
+            <span className="text-white/20 mx-0.5">·</span>
+            <span>High-Performance Web &amp; App Development Agency</span>
+          </p>
+        </div>
+      </div>
     </footer>
   );
 }

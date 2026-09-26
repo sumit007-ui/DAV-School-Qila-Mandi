@@ -3,6 +3,7 @@ import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { validateAdminRequest } from "@/lib/security/adminAuth";
 import { optimizeImage, validateMagicBytes, isOptimizableImage, formatFileSize } from "@/lib/imageOptimize";
 import { checkRateLimit, getClientIp } from "@/lib/security/rateLimit";
+import { logAdminAction, getAdminEmail } from "@/lib/security/auditLog";
 
 export const dynamic = "force-dynamic";
 
@@ -156,6 +157,13 @@ export async function POST(req: NextRequest) {
     const savedPercent = originalSize > 0
       ? Math.round((1 - optimizedSize / originalSize) * 100)
       : 0;
+
+    await logAdminAction({
+      action: "photo_upload",
+      adminEmail: getAdminEmail(authResult.user),
+      ip: getClientIp(req),
+      details: { key: photoKey, filename, originalSize, optimizedSize, savedPercent },
+    });
 
     return NextResponse.json({
       success: true,

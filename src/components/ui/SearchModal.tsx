@@ -7,6 +7,7 @@ import { ACADEMIC_PROGRAMS } from "@/lib/data/academics";
 import { CAMPUS_FACILITIES } from "@/lib/data/campus";
 import { ACHIEVEMENTS } from "@/lib/data/achievements";
 import { NEWS_STORIES } from "@/lib/data/news";
+import { trackSearch } from "@/lib/firebase/analytics";
 
 interface SearchModalProps {
   isOpen: boolean;
@@ -153,6 +154,16 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
   useEffect(() => {
     if (isOpen) setQuery("");
   }, [isOpen]);
+
+  // Debounced search tracking — fires 800ms after user stops typing
+  // Only for queries >= 3 characters (avoid tracking single letters)
+  useEffect(() => {
+    if (query.trim().length < 3) return;
+    const timer = setTimeout(() => {
+      trackSearch(query.trim());
+    }, 800);
+    return () => clearTimeout(timer);
+  }, [query]);
 
   if (!isOpen) return null;
 

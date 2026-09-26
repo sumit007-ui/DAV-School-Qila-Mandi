@@ -8,6 +8,8 @@ import { MobileFloatingBar } from "@/components/navigation/MobileFloatingBar";
 import { SearchModal } from "@/components/ui/SearchModal";
 import { AdmissionModal } from "@/components/forms/AdmissionModal";
 import { ScrollProgress } from "@/components/motion";
+import { WhatsAppFloatingButton } from "@/components/ui/WhatsAppFloatingButton";
+import { AnalyticsProvider } from "@/components/analytics/AnalyticsProvider";
 
 interface ModalContextType {
   openAdmissionModal: (defaultGrade?: string) => void;
@@ -58,6 +60,8 @@ export function ClientAppWrapper({
       }}
     >
       <div className="flex flex-col min-h-screen">
+        {/* Analytics — browser-only, no DOM output */}
+        <AnalyticsProvider />
         <ScrollProgress />
 
         <Navbar
@@ -78,6 +82,9 @@ export function ClientAppWrapper({
         <MobileFloatingBar
           onOpenAdmissionModal={() => openAdmissionModal("Nursery")}
         />
+
+        {/* WhatsApp Floating Button */}
+        <WhatsAppFloatingButton />
 
         {/* Global Modals */}
         <SearchModal

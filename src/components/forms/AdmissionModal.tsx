@@ -5,6 +5,7 @@ import { X, Sparkles, CheckCircle2, ShieldCheck, Phone, ArrowRight, ArrowLeft, S
 import confetti from "canvas-confetti";
 import { admissionEnquirySchema, AdmissionEnquiryFormData } from "@/lib/validation/admission";
 import { SCHOOL_CONFIG } from "@/config/school";
+import { trackFormStart, trackFormSubmit, trackFormError, trackCTAClick } from "@/lib/firebase/analytics";
 
 interface AdmissionModalProps {
   isOpen: boolean;
@@ -29,10 +30,15 @@ export function AdmissionModal({ isOpen, onClose, defaultGrade = "Nursery" }: Ad
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [referenceId, setReferenceId] = useState("");
+  const [formStarted, setFormStarted] = useState(false);
 
   if (!isOpen) return null;
 
   const handleChange = (field: keyof AdmissionEnquiryFormData, value: string) => {
+    if (!formStarted) {
+      setFormStarted(true);
+      trackFormStart("admission_enquiry");
+    }
     setFormData((prev) => ({ ...prev, [field]: value }));
     if (errors[field]) {
       setErrors((prev) => {
@@ -73,6 +79,9 @@ export function AdmissionModal({ isOpen, onClose, defaultGrade = "Nursery" }: Ad
       if (response.ok && data.success) {
         setReferenceId(data.referenceId || `DAVQM-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`);
         setIsSubmitted(true);
+        // Track successful lead generation — GA4 recommended event
+        trackFormSubmit("admission_enquiry", { grade: formData.gradeApplying || "unspecified" });
+        trackCTAClick("admission_submitted", "admission_modal");
 
         try {
           confetti({
@@ -88,6 +97,7 @@ export function AdmissionModal({ isOpen, onClose, defaultGrade = "Nursery" }: Ad
         if (data.details) {
           setErrors(data.details);
         } else {
+          trackFormError("admission_enquiry", data.error || "submission_failed");
           setErrors({ form: data.error || "Submission failed. Please try again." });
         }
       }
@@ -95,6 +105,7 @@ export function AdmissionModal({ isOpen, onClose, defaultGrade = "Nursery" }: Ad
       const ref = `DAVQM-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
       setReferenceId(ref);
       setIsSubmitted(true);
+      trackFormSubmit("admission_enquiry", { grade: formData.gradeApplying || "unspecified", fallback: "true" });
     } finally {
       setIsSubmitting(false);
     }

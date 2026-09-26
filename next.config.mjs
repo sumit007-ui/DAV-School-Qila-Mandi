@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 
 // ── Content Security Policy ────────────────────────────────────────────────
-// Tight CSP — no Sanity CDN (removed), only Supabase + Google Fonts
 const contentSecurityPolicy = `
   default-src 'self';
   script-src 'self' 'unsafe-inline' 'unsafe-eval';
@@ -10,7 +9,7 @@ const contentSecurityPolicy = `
   font-src 'self' data: https://fonts.gstatic.com;
   connect-src 'self' https://*.supabase.co wss://*.supabase.co;
   media-src 'self' https://*.supabase.co;
-  frame-ancestors 'none';
+  frame-ancestors 'self';
   base-uri 'self';
   form-action 'self';
   upgrade-insecure-requests;
@@ -69,7 +68,6 @@ const nextConfig = {
           { key: 'X-Content-Type-Options', value: 'nosniff' },
           { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
           { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=(), browsing-topics=(), interest-cohort=()' },
-          { key: 'Cross-Origin-Opener-Policy', value: 'same-origin' },
           { key: 'Cross-Origin-Resource-Policy', value: 'same-origin' },
           { key: 'Cross-Origin-Embedder-Policy', value: 'credentialless' },
           { key: 'X-Permitted-Cross-Domain-Policies', value: 'none' },

@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Sparkles, MapPin, Phone, Mail, Clock, Send, CheckCircle2, ShieldCheck, Facebook, Instagram, Youtube } from "lucide-react";
 import { SCHOOL_CONFIG } from "@/config/school";
 import { contactFormSchema, ContactFormData } from "@/lib/validation/contact";
+import { trackFormStart, trackFormSubmit, trackFormError, trackPhoneClick, trackExternalLink } from "@/lib/firebase/analytics";
 
 interface ContactClientViewProps {
   siteSettings?: any;
@@ -31,8 +32,14 @@ export function ContactClientView({ siteSettings, faqs = [] }: ContactClientView
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [formStarted, setFormStarted] = useState(false);
 
   const handleChange = (field: keyof ContactFormData, value: string) => {
+    // Track form_start on first interaction
+    if (!formStarted) {
+      setFormStarted(true);
+      trackFormStart("contact_form");
+    }
     setFormData((prev) => ({ ...prev, [field]: value }));
     if (errors[field]) {
       setErrors((prev) => {
@@ -71,6 +78,7 @@ export function ContactClientView({ siteSettings, faqs = [] }: ContactClientView
       const data = await response.json();
 
       if (response.ok && data.success) {
+        trackFormSubmit("contact_form", { category: formData.category || "General" });
         setIsSubmitted(true);
         setFormData({
           fullName: "",
@@ -81,9 +89,11 @@ export function ContactClientView({ siteSettings, faqs = [] }: ContactClientView
           message: "",
         });
       } else {
+        trackFormError("contact_form", data.error || "submission_failed");
         setErrors({ form: data.error || "Submission failed. Please try again." });
       }
     } catch (err) {
+      trackFormError("contact_form", "network_error");
       setErrors({ form: "An unexpected error occurred. Please try again." });
     } finally {
       setIsSubmitting(false);
