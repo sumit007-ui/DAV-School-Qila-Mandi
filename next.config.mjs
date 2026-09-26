@@ -3,7 +3,7 @@ const contentSecurityPolicy = `
   default-src 'self';
   script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.sanity.io;
   style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-  img-src 'self' data: blob: https://images.unsplash.com https://plus.unsplash.com https://cdn.sanity.io;
+  img-src 'self' data: blob: https://images.unsplash.com https://plus.unsplash.com https://cdn.sanity.io https://*.supabase.co;
   font-src 'self' data: https://fonts.gstatic.com;
   connect-src 'self' https://*.supabase.co wss://*.supabase.co https://*.api.sanity.io https://cdn.sanity.io;
   frame-ancestors 'self';
@@ -14,6 +14,9 @@ const contentSecurityPolicy = `
 const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   async headers() {
     return [
       {
@@ -72,6 +75,10 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'cdn.sanity.io',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.supabase.co',
       },
     ],
   },

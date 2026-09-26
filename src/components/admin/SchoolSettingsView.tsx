@@ -20,7 +20,10 @@ import {
   FileCode,
   Copy,
   Check,
-  X
+  X,
+  Type,
+  Eye,
+  RotateCcw
 } from "lucide-react";
 import { SCHOOL_CONFIG } from "@/config/school";
 
@@ -38,6 +41,10 @@ interface SettingsState {
   youtubeUrl: string;
   facebookUrl: string;
   instagramUrl: string;
+  heroBadgeText: string;
+  heroTitleLine1: string;
+  heroTitleLine2: string;
+  heroDescription: string;
 }
 
 export function SchoolSettingsView() {
@@ -63,6 +70,10 @@ export function SchoolSettingsView() {
     youtubeUrl: SCHOOL_CONFIG.links.youtube,
     facebookUrl: SCHOOL_CONFIG.links.facebook,
     instagramUrl: SCHOOL_CONFIG.links.instagram,
+    heroBadgeText: SCHOOL_CONFIG.hero.badgeText,
+    heroTitleLine1: SCHOOL_CONFIG.hero.titleLine1,
+    heroTitleLine2: SCHOOL_CONFIG.hero.titleLine2,
+    heroDescription: SCHOOL_CONFIG.hero.description,
   });
 
   // Calculate current year preview
@@ -91,6 +102,10 @@ export function SchoolSettingsView() {
             youtubeUrl: data.settings.youtubeUrl || SCHOOL_CONFIG.links.youtube,
             facebookUrl: data.settings.facebookUrl || SCHOOL_CONFIG.links.facebook,
             instagramUrl: data.settings.instagramUrl || SCHOOL_CONFIG.links.instagram,
+            heroBadgeText: data.settings.heroBadgeText || SCHOOL_CONFIG.hero.badgeText,
+            heroTitleLine1: data.settings.heroTitleLine1 || SCHOOL_CONFIG.hero.titleLine1,
+            heroTitleLine2: data.settings.heroTitleLine2 || SCHOOL_CONFIG.hero.titleLine2,
+            heroDescription: data.settings.heroDescription || SCHOOL_CONFIG.hero.description,
           });
         }
       }
@@ -125,7 +140,8 @@ export function SchoolSettingsView() {
         throw new Error(resData.error || "Failed to update school settings");
       }
 
-      setSuccessMsg("Settings updated successfully! Changes are now live across the website.");
+      window.dispatchEvent(new CustomEvent("school_settings_updated"));
+      setSuccessMsg(resData.warning || "Settings updated successfully! Changes are now live across the website.");
       setTimeout(() => setSuccessMsg(null), 5000);
     } catch (err: any) {
       setErrorMsg(err.message || "Could not save settings. Please check your Supabase connection.");
@@ -134,7 +150,7 @@ export function SchoolSettingsView() {
     }
   };
 
-  const sqlQueryText = `-- SQL to create school_settings table in Supabase
+  const sqlQueryText = `-- SQL to create or update school_settings table in Supabase
 CREATE TABLE IF NOT EXISTS public.school_settings (
     id TEXT PRIMARY KEY DEFAULT 'default',
     school_name TEXT NOT NULL DEFAULT 'Dr. MRS Bhalla DAV School',
@@ -150,9 +166,20 @@ CREATE TABLE IF NOT EXISTS public.school_settings (
     youtube_url TEXT NOT NULL DEFAULT 'https://www.youtube.com/@DrMRSBhalla',
     facebook_url TEXT NOT NULL DEFAULT 'https://www.facebook.com/share/18Fmov8Rc9/?mibextid=wwXIfr',
     instagram_url TEXT NOT NULL DEFAULT 'https://www.instagram.com/drmrsbhalladavschool_batala?stkn=NHJobHg5N3Rzcmtz&utm_source=qr',
+    hero_badge_text TEXT DEFAULT 'Welcome to Dr. M.R.S. Bhalla D.A.V. School',
+    hero_title_line1 TEXT DEFAULT 'Nurturing Excellence,',
+    hero_title_line2 TEXT DEFAULT 'Inspiring Futures.',
+    hero_description TEXT DEFAULT 'An acclaimed academic sanctuary cultivating intellectual rigor, Vedic values, and holistic leadership at Qila Mandi, Batala.',
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
+
+-- If table already exists, add new hero columns:
+ALTER TABLE public.school_settings
+ADD COLUMN IF NOT EXISTS hero_badge_text TEXT DEFAULT 'Welcome to Dr. M.R.S. Bhalla D.A.V. School',
+ADD COLUMN IF NOT EXISTS hero_title_line1 TEXT DEFAULT 'Nurturing Excellence,',
+ADD COLUMN IF NOT EXISTS hero_title_line2 TEXT DEFAULT 'Inspiring Futures.',
+ADD COLUMN IF NOT EXISTS hero_description TEXT DEFAULT 'An acclaimed academic sanctuary cultivating intellectual rigor, Vedic values, and holistic leadership at Qila Mandi, Batala.';
 
 ALTER TABLE public.school_settings ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS "Allow public read access to school_settings" ON public.school_settings;
@@ -162,8 +189,8 @@ CREATE POLICY "Allow authenticated admins to modify school_settings" ON public.s
 DROP POLICY IF EXISTS "Allow service role full access to school_settings" ON public.school_settings;
 CREATE POLICY "Allow service role full access to school_settings" ON public.school_settings FOR ALL TO service_role USING (true) WITH CHECK (true);
 
-INSERT INTO public.school_settings (id, office_hours, established_year, youtube_url)
-VALUES ('default', 'Monday – Saturday: 8:00 AM – 2:30 PM', 1990, 'https://www.youtube.com/@DrMRSBhalla')
+INSERT INTO public.school_settings (id, office_hours, established_year, youtube_url, hero_title_line1, hero_title_line2)
+VALUES ('default', 'Monday – Saturday: 8:00 AM – 2:30 PM', 1990, 'https://www.youtube.com/@DrMRSBhalla', 'Nurturing Excellence,', 'Inspiring Futures.')
 ON CONFLICT (id) DO NOTHING;`;
 
   const copySql = () => {
@@ -234,6 +261,129 @@ ON CONFLICT (id) DO NOTHING;`;
       )}
 
       <form onSubmit={handleSave} className="space-y-6">
+        {/* Card 0: Homepage Hero Headline & Subtitle */}
+        <div className="bg-[#0B1A30] rounded-2xl border border-white/10 p-6 sm:p-8 space-y-6 shadow-sm">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-white/10 pb-4 gap-2">
+            <div className="flex items-center gap-2.5">
+              <Type className="w-5 h-5 text-gold-400" />
+              <div>
+                <h3 className="font-serif text-lg font-bold text-white">Homepage Hero Headline & Subtitle</h3>
+                <p className="text-xs text-cream-400 font-mono">Main title & introductory statement displayed at the very top of the Home page</p>
+              </div>
+            </div>
+            <span className="px-2.5 py-1 rounded-full bg-gold-500/15 border border-gold-500/30 text-gold-300 text-[10px] font-mono uppercase font-bold self-start sm:self-auto">
+              Live Homepage Hero
+            </span>
+          </div>
+
+          {/* Live Preview Box */}
+          <div className="rounded-xl bg-[#4E220F] border border-white/15 p-5 sm:p-6 text-white relative overflow-hidden shadow-inner">
+            <div className="flex items-center justify-between mb-3 text-[11px] font-mono text-gold-300 uppercase tracking-wider">
+              <span className="flex items-center gap-1.5">
+                <Eye className="w-3.5 h-3.5" />
+                Live Preview (Real-time appearance)
+              </span>
+              <button
+                type="button"
+                onClick={() => setForm({
+                  ...form,
+                  heroBadgeText: SCHOOL_CONFIG.hero.badgeText,
+                  heroTitleLine1: SCHOOL_CONFIG.hero.titleLine1,
+                  heroTitleLine2: SCHOOL_CONFIG.hero.titleLine2,
+                  heroDescription: SCHOOL_CONFIG.hero.description,
+                })}
+                className="flex items-center gap-1 px-2.5 py-1 rounded bg-white/10 hover:bg-white/20 text-cream-200 text-[10px] font-mono transition-colors cursor-pointer"
+                title="Reset to default copy"
+              >
+                <RotateCcw className="w-3 h-3" />
+                <span>Reset to Default</span>
+              </button>
+            </div>
+
+            <div className="space-y-3 pt-1">
+              <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-black/40 border border-white/20 text-[11px] text-white">
+                <span className="w-1.5 h-1.5 rounded-full bg-gold-400" />
+                <span className="font-sans font-medium uppercase tracking-wider text-[10px]">
+                  {form.heroBadgeText || SCHOOL_CONFIG.hero.badgeText}
+                </span>
+              </div>
+
+              <div className="font-editorial text-2xl sm:text-3xl lg:text-4xl leading-tight">
+                <span className="block text-white font-normal drop-shadow-md">
+                  {form.heroTitleLine1 || "Nurturing Excellence,"}
+                </span>
+                <span className="block text-[#F4E4AF] font-normal drop-shadow-md pt-0.5">
+                  {form.heroTitleLine2 || "Inspiring Futures."}
+                </span>
+              </div>
+
+              <p className="text-[#F7F1DE]/90 text-xs sm:text-sm font-light max-w-xl font-sans leading-relaxed">
+                {form.heroDescription || SCHOOL_CONFIG.hero.description}
+              </p>
+            </div>
+          </div>
+
+          {/* Form Fields */}
+          <div className="space-y-4 pt-1">
+            <div className="space-y-2">
+              <label className="block text-xs font-mono uppercase tracking-wider text-cream-300">
+                Top Eyebrow Badge Text
+              </label>
+              <input
+                type="text"
+                value={form.heroBadgeText}
+                onChange={(e) => setForm({ ...form, heroBadgeText: e.target.value })}
+                placeholder="Welcome to Dr. M.R.S. Bhalla D.A.V. School"
+                className="w-full px-4 py-3 bg-navy-950 border border-white/15 rounded-xl text-sm font-mono text-white focus:outline-none focus:ring-2 focus:ring-gold-500 placeholder:text-cream-400/40"
+              />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <label className="block text-xs font-mono uppercase tracking-wider text-cream-300">
+                  Headline — First Line (White)
+                </label>
+                <input
+                  type="text"
+                  value={form.heroTitleLine1}
+                  onChange={(e) => setForm({ ...form, heroTitleLine1: e.target.value })}
+                  placeholder="Nurturing Excellence,"
+                  className="w-full px-4 py-3 bg-navy-950 border border-white/15 rounded-xl text-sm font-sans text-white focus:outline-none focus:ring-2 focus:ring-gold-500 placeholder:text-cream-400/40 font-medium"
+                  required
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="block text-xs font-mono uppercase tracking-wider text-gold-300">
+                  Headline — Second Line (Gold Highlighted)
+                </label>
+                <input
+                  type="text"
+                  value={form.heroTitleLine2}
+                  onChange={(e) => setForm({ ...form, heroTitleLine2: e.target.value })}
+                  placeholder="Inspiring Futures."
+                  className="w-full px-4 py-3 bg-navy-950 border border-gold-500/30 rounded-xl text-sm font-sans text-[#F4E4AF] focus:outline-none focus:ring-2 focus:ring-gold-500 placeholder:text-gold-400/40 font-medium"
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <label className="block text-xs font-mono uppercase tracking-wider text-cream-300">
+                Hero Subtitle / Descriptive Paragraph
+              </label>
+              <textarea
+                rows={3}
+                value={form.heroDescription}
+                onChange={(e) => setForm({ ...form, heroDescription: e.target.value })}
+                placeholder="An acclaimed academic sanctuary cultivating intellectual rigor, Vedic values, and holistic leadership at Qila Mandi, Batala."
+                className="w-full px-4 py-3 bg-navy-950 border border-white/15 rounded-xl text-sm font-sans text-white focus:outline-none focus:ring-2 focus:ring-gold-500 placeholder:text-cream-400/40 leading-relaxed"
+                required
+              />
+            </div>
+          </div>
+        </div>
+
         {/* Card 1: Office Hours / Timings */}
         <div className="bg-[#0B1A30] rounded-2xl border border-white/10 p-6 sm:p-8 space-y-5 shadow-sm">
           <div className="flex items-center justify-between border-b border-white/10 pb-4">

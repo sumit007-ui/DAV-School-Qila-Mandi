@@ -1,10 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
+import { validateAdminRequest } from "@/lib/security/adminAuth";
 
 export const dynamic = "force-dynamic";
 
 export async function POST(req: NextRequest) {
   try {
+    const authResult = await validateAdminRequest(req);
+    if (!authResult.authorized) {
+      return authResult.response!;
+    }
+
     const formData = await req.formData();
     const file = formData.get("file") as File | null;
 

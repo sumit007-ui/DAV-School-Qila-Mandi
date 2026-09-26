@@ -5,6 +5,7 @@ import { ArrowRight, ArrowDown, Compass, ShieldCheck, Users, MapPin, Award } fro
 import { SCHOOL_CONFIG } from "@/config/school";
 import { LineReveal, Reveal } from "@/components/motion";
 import { useWebsitePhotos } from "@/lib/hooks/useWebsitePhotos";
+import { useSchoolSettings } from "@/lib/hooks/useSchoolSettings";
 
 interface HeroSectionProps {
   onOpenAdmissionModal?: () => void;
@@ -12,7 +13,13 @@ interface HeroSectionProps {
 
 export function HeroSection({ onOpenAdmissionModal }: HeroSectionProps) {
   const { getPhoto } = useWebsitePhotos();
+  const { settings } = useSchoolSettings();
   const heroBgImage = getPhoto("home_hero", "/images/school-building.png");
+
+  const heroBadge = settings.heroBadgeText || SCHOOL_CONFIG.hero.badgeText;
+  const heroTitle1 = settings.heroTitleLine1 || SCHOOL_CONFIG.hero.titleLine1;
+  const heroTitle2 = settings.heroTitleLine2 || SCHOOL_CONFIG.hero.titleLine2;
+  const heroDesc = settings.heroDescription || SCHOOL_CONFIG.hero.description;
 
   const scrollToExplore = () => {
     const el = document.getElementById("editorial-statement");
@@ -55,7 +62,7 @@ export function HeroSection({ onOpenAdmissionModal }: HeroSectionProps) {
                 />
               </div>
               <span className="font-sans font-semibold text-[9.5px] xs:text-[11px] sm:text-xs text-white uppercase tracking-normal xs:tracking-wide sm:tracking-wider whitespace-nowrap overflow-hidden text-ellipsis sm:overflow-visible">
-                Welcome to Dr. M.R.S. Bhalla D.A.V. School
+                {heroBadge}
               </span>
             </div>
           </div>
@@ -63,14 +70,14 @@ export function HeroSection({ onOpenAdmissionModal }: HeroSectionProps) {
           {/* Grand Prestigious Headline */}
           <div className="space-y-5 sm:space-y-6">
             <h1 className="font-editorial text-4xl sm:text-6xl md:text-7xl lg:text-[76px] font-normal text-white leading-[1.2] sm:leading-[1.15] tracking-[-0.02em]">
-              <span className="block drop-shadow-md">Nurturing Excellence,</span>
+              <span className="block drop-shadow-md">{heroTitle1}</span>
               <span className="block text-[#F4E4AF] font-normal drop-shadow-md pt-1 pb-2 sm:pb-3">
-                Inspiring Futures.
+                {heroTitle2}
               </span>
             </h1>
 
             <p className="text-[#F7F1DE]/90 text-sm sm:text-base md:text-lg font-light leading-relaxed max-w-xl font-sans drop-shadow-sm pt-1">
-              An acclaimed academic sanctuary cultivating intellectual rigor, Vedic values, and holistic leadership at Qila Mandi, Batala.
+              {heroDesc}
             </p>
           </div>
 

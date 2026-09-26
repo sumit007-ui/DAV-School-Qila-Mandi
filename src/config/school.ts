@@ -82,5 +82,11 @@ export const SCHOOL_CONFIG = {
     facebook: "https://www.facebook.com/share/18Fmov8Rc9/?mibextid=wwXIfr",
     instagram: "https://www.instagram.com/drmrsbhalladavschool_batala?stkn=NHJobHg5N3Rzcmtz&utm_source=qr",
     youtube: "https://www.youtube.com/@DrMRSBhalla",
+  },
+  hero: {
+    badgeText: "Welcome to Dr. M.R.S. Bhalla D.A.V. School",
+    titleLine1: "Nurturing Excellence,",
+    titleLine2: "Inspiring Futures.",
+    description: "An acclaimed academic sanctuary cultivating intellectual rigor, Vedic values, and holistic leadership at Qila Mandi, Batala.",
   }
 };

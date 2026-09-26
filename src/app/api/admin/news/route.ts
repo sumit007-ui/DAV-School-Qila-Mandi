@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { NEWS_STORIES } from "@/lib/data/news";
+import { validateAdminRequest } from "@/lib/security/adminAuth";
+import { sanitizeString } from "@/lib/security/sanitize";
 
 export const dynamic = "force-dynamic";
 
@@ -66,6 +68,11 @@ export async function GET() {
 // 2. CREATE NEW ARTICLE
 export async function POST(req: NextRequest) {
   try {
+    const authResult = await validateAdminRequest(req);
+    if (!authResult.authorized) {
+      return authResult.response!;
+    }
+
     const body = await req.json();
     const {
       title,
@@ -146,6 +153,11 @@ export async function POST(req: NextRequest) {
 // 3. UPDATE ARTICLE
 export async function PUT(req: NextRequest) {
   try {
+    const authResult = await validateAdminRequest(req);
+    if (!authResult.authorized) {
+      return authResult.response!;
+    }
+
     const body = await req.json();
     const { id, ...updates } = body;
 
@@ -198,6 +210,11 @@ export async function PUT(req: NextRequest) {
 // 4. DELETE ARTICLE
 export async function DELETE(req: NextRequest) {
   try {
+    const authResult = await validateAdminRequest(req);
+    if (!authResult.authorized) {
+      return authResult.response!;
+    }
+
     const { searchParams } = new URL(req.url);
     const id = searchParams.get("id");
 

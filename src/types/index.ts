@@ -119,3 +119,26 @@ export interface AdmissionStep {
   description: string;
   deliverables: string[];
 }
+
+export interface SiteSettings {
+  schoolName: string;
+  subName: string;
+  establishedYear: number;
+  yearsOverride: number | null;
+  yearsCount: number;
+  officeHours: string;
+  primaryPhone: string;
+  receptionPhone: string;
+  officePhone: string;
+  email: string;
+  address: string;
+  googleMapsUrl: string;
+  youtubeUrl: string;
+  facebookUrl: string;
+  instagramUrl: string;
+  heroBadgeText?: string;
+  heroTitleLine1?: string;
+  heroTitleLine2?: string;
+  heroDescription?: string;
+}
+

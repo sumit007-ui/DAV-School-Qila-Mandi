@@ -42,6 +42,10 @@ export async function GET() {
             youtubeUrl: data.youtube_url || SCHOOL_CONFIG.links.youtube,
             facebookUrl: data.facebook_url || SCHOOL_CONFIG.links.facebook,
             instagramUrl: data.instagram_url || SCHOOL_CONFIG.links.instagram,
+            heroBadgeText: data.hero_badge_text || SCHOOL_CONFIG.hero.badgeText,
+            heroTitleLine1: data.hero_title_line1 || SCHOOL_CONFIG.hero.titleLine1,
+            heroTitleLine2: data.hero_title_line2 || SCHOOL_CONFIG.hero.titleLine2,
+            heroDescription: data.hero_description || SCHOOL_CONFIG.hero.description,
           }
         });
       }
@@ -69,6 +73,10 @@ export async function GET() {
       youtubeUrl: SCHOOL_CONFIG.links.youtube,
       facebookUrl: SCHOOL_CONFIG.links.facebook,
       instagramUrl: SCHOOL_CONFIG.links.instagram,
+      heroBadgeText: SCHOOL_CONFIG.hero.badgeText,
+      heroTitleLine1: SCHOOL_CONFIG.hero.titleLine1,
+      heroTitleLine2: SCHOOL_CONFIG.hero.titleLine2,
+      heroDescription: SCHOOL_CONFIG.hero.description,
     }
   });
 }

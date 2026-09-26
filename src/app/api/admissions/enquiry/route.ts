@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { admissionEnquirySchema } from '@/lib/validation/admission'
 import { getSupabaseServerClient } from '@/lib/supabase/server'
 import { checkRateLimit, getClientIp } from '@/lib/security/rateLimit'
+import { sanitizeString } from '@/lib/security/sanitize'
 
 export async function POST(request: Request) {
   try {
@@ -57,18 +58,18 @@ export async function POST(request: Request) {
       message,
     } = validationResult.data
 
-    // 3. Insert into Supabase
+    // 3. Insert into Supabase with sanitized data
     const supabase = getSupabaseServerClient()
     const { error: dbError } = await supabase
       .from('admission_enquiries')
       .insert({
-        parent_name: parentName,
-        student_name: studentName,
-        applying_for_class: gradeApplying,
-        phone,
-        email: email || null,
-        preferred_contact_method: preferredContact || 'WhatsApp',
-        message: message || null,
+        parent_name: sanitizeString(parentName),
+        student_name: sanitizeString(studentName),
+        applying_for_class: sanitizeString(gradeApplying),
+        phone: sanitizeString(phone),
+        email: email ? sanitizeString(email) : null,
+        preferred_contact_method: sanitizeString(preferredContact || 'WhatsApp'),
+        message: message ? sanitizeString(message) : null,
         status: 'new',
         source: 'website_admission_form',
       })

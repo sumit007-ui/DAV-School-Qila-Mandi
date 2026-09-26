@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
-import { DEFAULT_WEBSITE_PHOTOS } from "@/app/api/photos/route";
+import { DEFAULT_WEBSITE_PHOTOS } from "@/lib/constants/photos";
+import { validateAdminRequest } from "@/lib/security/adminAuth";
 
 export const dynamic = "force-dynamic";
 
@@ -40,6 +41,11 @@ export async function GET() {
 
 export async function PUT(req: NextRequest) {
   try {
+    const authResult = await validateAdminRequest(req);
+    if (!authResult.authorized) {
+      return authResult.response!;
+    }
+
     const supabase = getSupabaseServerClient();
     if (!supabase) {
       return NextResponse.json({ error: "Supabase client not available" }, { status: 500 });

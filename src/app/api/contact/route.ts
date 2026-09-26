@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { contactFormSchema } from '@/lib/validation/contact'
 import { getSupabaseServerClient } from '@/lib/supabase/server'
 import { checkRateLimit, getClientIp } from '@/lib/security/rateLimit'
+import { sanitizeString } from '@/lib/security/sanitize'
 
 export async function POST(request: Request) {
   try {
@@ -49,17 +50,17 @@ export async function POST(request: Request) {
 
     const { fullName, phone, email, subject, category, message } = validationResult.data
 
-    // 3. Insert into Supabase
+    // 3. Insert into Supabase with sanitized data
     const supabase = getSupabaseServerClient()
     const { error: dbError } = await supabase
       .from('contact_enquiries')
       .insert({
-        name: fullName,
-        phone: phone || null,
-        email: email || null,
-        subject: subject || null,
-        category: category || 'General Enquiry',
-        message,
+        name: sanitizeString(fullName),
+        phone: phone ? sanitizeString(phone) : null,
+        email: email ? sanitizeString(email) : null,
+        subject: subject ? sanitizeString(subject) : null,
+        category: sanitizeString(category || 'General Enquiry'),
+        message: sanitizeString(message),
         status: 'new',
         source: 'website_contact_form',
       })

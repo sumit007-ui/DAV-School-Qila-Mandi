@@ -1,53 +1,13 @@
 import { NextResponse } from 'next/server'
-import { createClient } from '@supabase/supabase-js'
 import { getSupabaseServerClient } from '@/lib/supabase/server'
+import { validateAdminRequest } from '@/lib/security/adminAuth'
 
 export async function POST(request: Request) {
   try {
     // 1. Authenticate Requester via Bearer Token or Cookie
-    const authHeader = request.headers.get('Authorization') || request.headers.get('authorization')
-    const token = authHeader?.startsWith('Bearer ') ? authHeader.slice(7).trim() : null
-
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
-    const supabaseAnonKey =
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
-      process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
-      ''
-
-    if (!token || !supabaseUrl || !supabaseAnonKey) {
-      return NextResponse.json(
-        { success: false, error: 'Unauthorized: Authentication required' },
-        { status: 401 }
-      )
-    }
-
-    const authClient = createClient(supabaseUrl, supabaseAnonKey, {
-      auth: { persistSession: false, autoRefreshToken: false },
-    })
-
-    const {
-      data: { user },
-      error: userError,
-    } = await authClient.auth.getUser(token)
-
-    if (userError || !user) {
-      return NextResponse.json(
-        { success: false, error: 'Unauthorized: Invalid or expired session' },
-        { status: 401 }
-      )
-    }
-
-    // 2. Enforce Administrative Role Authorization
-    const role = user.app_metadata?.role || user.user_metadata?.role
-    const adminEmail = process.env.ADMIN_EMAIL
-    const isAuthorizedAdmin =
-      role === 'admin' || (adminEmail && user.email?.toLowerCase() === adminEmail.toLowerCase())
-
-    if (!isAuthorizedAdmin) {
-      return NextResponse.json(
-        { success: false, error: 'Forbidden: Administrator privileges required' },
-        { status: 403 }
-      )
+    const authResult = await validateAdminRequest(request)
+    if (!authResult.authorized) {
+      return authResult.response!
     }
 
     // 3. Validate Request Parameters

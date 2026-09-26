@@ -1,10 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
+import { validateAdminRequest } from "@/lib/security/adminAuth";
 
 export const dynamic = "force-dynamic";
 
 export async function POST(req: NextRequest) {
   try {
+    const authResult = await validateAdminRequest(req);
+    if (!authResult.authorized) {
+      return authResult.response!;
+    }
+
     const supabase = getSupabaseServerClient();
     if (!supabase) {
       return NextResponse.json({ error: "Supabase client not available" }, { status: 500 });
@@ -18,9 +24,10 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "No file provided for upload" }, { status: 400 });
     }
 
-    const validTypes = ["image/jpeg", "image/png", "image/webp", "image/gif", "image/svg+xml"];
+    // Strict raster image MIME types (disallowing SVG to prevent embedded script attacks)
+    const validTypes = ["image/jpeg", "image/png", "image/webp"];
     if (!validTypes.includes(file.type)) {
-      return NextResponse.json({ error: "Only image files (JPEG, PNG, WEBP, SVG) are permitted" }, { status: 400 });
+      return NextResponse.json({ error: "Only safe image files (JPEG, PNG, WEBP) are permitted" }, { status: 400 });
     }
 
     if (file.size > 10 * 1024 * 1024) {
@@ -30,9 +37,10 @@ export async function POST(req: NextRequest) {
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
-    const ext = file.name.split(".").pop() || "jpg";
+    const ext = file.name.split(".").pop()?.toLowerCase() || "jpg";
+    const safeExt = ["jpg", "jpeg", "png", "webp"].includes(ext) ? ext : "jpg";
     const prefix = photoKey ? photoKey.replace(/[^a-zA-Z0-9_-]/g, "") : "photo";
-    const filename = `${prefix}_${Date.now()}.${ext}`;
+    const filename = `${prefix}_${Date.now()}_${Math.random().toString(36).substring(2, 8)}.${safeExt}`;
 
     const BUCKET_NAME = "website-photos";
 
