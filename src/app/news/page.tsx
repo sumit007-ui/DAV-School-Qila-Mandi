@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { generateSchoolMetadata } from "@/lib/seo/metadata";
+import { generateSchoolMetadata, generateBreadcrumbJsonLd } from "@/lib/seo/metadata";
 import { getNews, getEvents } from "@/sanity/lib/fetch";
 import { NewsClientView } from "@/components/news/NewsClientView";
 
@@ -25,5 +25,17 @@ export default async function NewsPage() {
     getEvents(),
   ]);
 
-  return <NewsClientView news={news} events={events} />;
+  const breadcrumbJsonLd = generateBreadcrumbJsonLd([
+    { name: "News & Events", path: "/news" }
+  ]);
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      <NewsClientView news={news} events={events} />
+    </>
+  );
 }

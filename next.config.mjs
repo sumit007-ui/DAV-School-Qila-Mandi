@@ -3,11 +3,11 @@
 // ── Content Security Policy ────────────────────────────────────────────────
 const contentSecurityPolicy = `
   default-src 'self';
-  script-src 'self' 'unsafe-inline' 'unsafe-eval';
+  script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.googletagmanager.com https://*.google-analytics.com;
   style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-  img-src 'self' data: blob: https://images.unsplash.com https://plus.unsplash.com https://*.supabase.co;
+  img-src 'self' data: blob: https://images.unsplash.com https://plus.unsplash.com https://*.supabase.co https://cdn.sanity.io https://*.google-analytics.com https://*.googletagmanager.com;
   font-src 'self' data: https://fonts.gstatic.com;
-  connect-src 'self' https://*.supabase.co wss://*.supabase.co;
+  connect-src 'self' https://*.supabase.co wss://*.supabase.co https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://*.googleapis.com https://firebaseinstallations.googleapis.com https://*.sanity.io https://*.api.sanity.io;
   media-src 'self' https://*.supabase.co;
   frame-ancestors 'self';
   base-uri 'self';
@@ -32,7 +32,7 @@ const nextConfig = {
     formats: ['image/avif', 'image/webp'],
     // Aggressive caching: 30 days TTL for optimized images
     minimumCacheTTL: 60 * 60 * 24 * 30,
-    // Allow images from Supabase & Unsplash only
+    // Allow images from Supabase, Unsplash, and Sanity
     remotePatterns: [
       {
         protocol: 'https',
@@ -45,6 +45,10 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: '**.supabase.co',
+      },
+      {
+        protocol: 'https',
+        hostname: 'cdn.sanity.io',
       },
     ],
     // Device sizes for responsive images
@@ -68,8 +72,7 @@ const nextConfig = {
           { key: 'X-Content-Type-Options', value: 'nosniff' },
           { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
           { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=(), browsing-topics=(), interest-cohort=()' },
-          { key: 'Cross-Origin-Resource-Policy', value: 'same-origin' },
-          { key: 'Cross-Origin-Embedder-Policy', value: 'credentialless' },
+          { key: 'Cross-Origin-Resource-Policy', value: 'cross-origin' },
           { key: 'X-Permitted-Cross-Domain-Policies', value: 'none' },
         ],
       },

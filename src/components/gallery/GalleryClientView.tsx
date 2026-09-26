@@ -23,9 +23,10 @@ export function GalleryClientView({ items }: GalleryClientViewProps) {
     "Science & Robotics"
   ];
 
+  const safeItems = Array.isArray(items) ? items : [];
   const filtered = selectedCategory === "All"
-    ? items
-    : items.filter((item) => item.category === selectedCategory);
+    ? safeItems
+    : safeItems.filter((item) => item.category === selectedCategory);
 
   const activeIndex = activeLightboxItem
     ? filtered.findIndex((i) => i.id === activeLightboxItem.id)

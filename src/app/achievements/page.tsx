@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { generateSchoolMetadata } from "@/lib/seo/metadata";
+import { generateSchoolMetadata, generateBreadcrumbJsonLd } from "@/lib/seo/metadata";
 import { getAchievements } from "@/sanity/lib/fetch";
 import { AchievementsClientView } from "@/components/achievements/AchievementsClientView";
 
@@ -21,6 +21,17 @@ export const revalidate = 0;
 
 export default async function AchievementsPage() {
   const achievements = await getAchievements();
+  const breadcrumbJsonLd = generateBreadcrumbJsonLd([
+    { name: "Achievements", path: "/achievements" }
+  ]);
 
-  return <AchievementsClientView achievements={achievements} />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      <AchievementsClientView achievements={achievements} />
+    </>
+  );
 }

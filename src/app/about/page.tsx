@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { generateSchoolMetadata } from "@/lib/seo/metadata";
+import { generateSchoolMetadata, generateBreadcrumbJsonLd } from "@/lib/seo/metadata";
 import { getPrincipalMessage, getSiteSettings } from "@/sanity/lib/fetch";
 import { AboutClientView } from "@/components/about/AboutClientView";
 
@@ -24,5 +24,17 @@ export default async function AboutPage() {
     getSiteSettings(),
   ]);
 
-  return <AboutClientView principal={principal} siteSettings={siteSettings} />;
+  const breadcrumbJsonLd = generateBreadcrumbJsonLd([
+    { name: "About Us", path: "/about" }
+  ]);
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      <AboutClientView principal={principal} siteSettings={siteSettings} />
+    </>
+  );
 }

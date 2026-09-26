@@ -95,8 +95,14 @@ export function AcademicsClientView({ programs }: AcademicsClientViewProps) {
           </div>
 
           <div className="space-y-16">
-            {programs.map((prog, idx) => {
+            {(programs || []).map((prog, idx) => {
               const isEven = idx % 2 === 1;
+              const features = Array.isArray(prog.keyFeatures)
+                ? prog.keyFeatures
+                : Array.isArray((prog as any).milestones)
+                ? (prog as any).milestones
+                : [];
+
               return (
                 <div
                   key={prog.id}
@@ -125,7 +131,7 @@ export function AcademicsClientView({ programs }: AcademicsClientViewProps) {
                         Key Curricular Pillars:
                       </h4>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                        {prog.keyFeatures.map((feat, fIdx) => (
+                        {features.map((feat: string, fIdx: number) => (
                           <div key={fIdx} className="flex items-center gap-2 text-xs text-navy-800">
                             <CheckCircle2 className="w-3.5 h-3.5 text-gold-600 shrink-0" />
                             <span>{feat}</span>

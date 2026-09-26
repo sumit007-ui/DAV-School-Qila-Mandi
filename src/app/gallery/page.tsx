@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { generateSchoolMetadata } from "@/lib/seo/metadata";
+import { generateSchoolMetadata, generateBreadcrumbJsonLd } from "@/lib/seo/metadata";
 import { getGallery } from "@/sanity/lib/fetch";
 import { GalleryClientView } from "@/components/gallery/GalleryClientView";
 
@@ -20,6 +20,17 @@ export const revalidate = 0;
 
 export default async function GalleryPage() {
   const items = await getGallery();
+  const breadcrumbJsonLd = generateBreadcrumbJsonLd([
+    { name: "Gallery", path: "/gallery" }
+  ]);
 
-  return <GalleryClientView items={items} />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      <GalleryClientView items={items} />
+    </>
+  );
 }

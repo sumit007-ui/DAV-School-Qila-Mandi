@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { generateSchoolMetadata } from "@/lib/seo/metadata";
+import { generateSchoolMetadata, generateFaqJsonLd, generateBreadcrumbJsonLd } from "@/lib/seo/metadata";
 import { getSiteSettings, getFAQs } from "@/sanity/lib/fetch";
 import { ContactClientView } from "@/components/contact/ContactClientView";
 
@@ -26,5 +26,24 @@ export default async function ContactPage() {
     getFAQs(),
   ]);
 
-  return <ContactClientView siteSettings={siteSettings} faqs={faqs} />;
+  const breadcrumbJsonLd = generateBreadcrumbJsonLd([
+    { name: "Contact Us", path: "/contact" }
+  ]);
+  const faqJsonLd = Array.isArray(faqs) && faqs.length > 0 ? generateFaqJsonLd(faqs) : null;
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      {faqJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
+      )}
+      <ContactClientView siteSettings={siteSettings} faqs={faqs} />
+    </>
+  );
 }

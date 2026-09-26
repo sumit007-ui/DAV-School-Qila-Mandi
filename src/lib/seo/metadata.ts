@@ -20,30 +20,37 @@ export function generateSchoolMetadata({
 }): Metadata {
   const fullTitle = path === ""
     ? `${title}`
-    : `${title} | ${SCHOOL_CONFIG.name}, ${SCHOOL_CONFIG.subName}`;
+    : `${title} | DAV School Batala`;
   const canonicalUrl = `${BASE_URL}${path}`;
 
   return {
     title: fullTitle,
     description,
     keywords: [
+      "DAV School",
+      "DAV School Batala",
+      "DAV Batala",
+      "DAV Public School Batala",
+      "DAV School Qila Mandi",
+      "DAV Qila Mandi Batala",
       "Dr. MRS Bhalla DAV School",
       "Dr. MRS Bhalla DAV School Batala",
-      "DAV School Batala",
-      "DAV Qila Mandi Batala",
-      "drmrsbhalladavschool.com",
+      "Dr MRS Bhalla DAV Public School",
+      "DAV Senior Secondary School Batala",
+      "DAV High School Batala",
       "Best School in Batala",
-      "PSEB School Batala Punjab",
-      "DAV College Managing Committee",
-      "Admissions 2026-27",
-      "Best PSEB School Gurdaspur",
-      "Top High School Punjab Board",
+      "Top School in Batala",
+      "Schools in Batala Punjab",
+      "Best PSEB School in Batala",
+      "DAV College Managing Committee Batala",
+      "DAV Admissions Batala 2026",
       "Nursery to 10th School in Batala",
+      "drmrsbhalladavschool.com",
       ...keywords,
     ],
-    authors: [{ name: SCHOOL_CONFIG.name, url: BASE_URL }],
-    creator: SCHOOL_CONFIG.name,
-    publisher: SCHOOL_CONFIG.name,
+    authors: [{ name: "DAV School Batala", url: BASE_URL }],
+    creator: "DAV School Batala",
+    publisher: "DAV School Batala",
     metadataBase: new URL(BASE_URL),
     alternates: {
       canonical: canonicalUrl,
@@ -52,7 +59,7 @@ export function generateSchoolMetadata({
       title: fullTitle,
       description,
       url: canonicalUrl,
-      siteName: `${SCHOOL_CONFIG.name} ${SCHOOL_CONFIG.subName}`,
+      siteName: "DAV School Batala - Dr. MRS Bhalla DAV Public School",
       locale: "en_IN",
       type: "website",
       images: [
@@ -60,7 +67,7 @@ export function generateSchoolMetadata({
           url: ogImage,
           width: 1200,
           height: 630,
-          alt: `${SCHOOL_CONFIG.name} Campus & Emblem`,
+          alt: "DAV School Batala Campus & Crest",
         },
       ],
     },
@@ -106,17 +113,29 @@ export function generateWebSiteJsonLd() {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "@id": `${BASE_URL}/#website`,
-    "name": `${SCHOOL_CONFIG.name}`,
+    "name": "DAV School Batala",
     "alternateName": [
-      `${SCHOOL_CONFIG.name}, ${SCHOOL_CONFIG.subName}`,
-      "Dr. MRS Bhalla DAV School Qila Mandi",
-      "DAV School Batala",
+      "DAV School",
+      "DAV Batala",
+      "DAV Public School Batala",
+      "DAV School Qila Mandi",
+      "Dr. MRS Bhalla DAV School",
+      "Dr. MRS Bhalla DAV School, Qila Mandi, Batala",
+      "Dr MRS Bhalla DAV Public School",
       "DAV High School Batala"
     ],
     "url": BASE_URL,
     "inLanguage": "en-IN",
     "publisher": {
       "@id": `${BASE_URL}/#organization`
+    },
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": `${BASE_URL}/?search={search_term_string}`
+      },
+      "query-input": "required name=search_term_string"
     }
   };
 }
@@ -126,20 +145,30 @@ export function generateEducationalOrgJsonLd() {
     "@context": "https://schema.org",
     "@type": ["EducationalOrganization", "School"],
     "@id": `${BASE_URL}/#organization`,
-    "name": `${SCHOOL_CONFIG.name} ${SCHOOL_CONFIG.subName}`,
+    "name": "DAV School Batala - Dr. MRS Bhalla DAV Senior Secondary Public School",
+    "legalName": "Dr. M.R.S. Bhalla D.A.V. Senior Secondary Public School, Qila Mandi, Batala",
     "alternateName": [
+      "DAV School",
+      "DAV School Batala",
+      "DAV Batala",
+      "DAV Public School Batala",
+      "DAV School Qila Mandi",
+      "DAV Qila Mandi Batala",
       "Dr. MRS Bhalla DAV School",
       "Dr. MRS Bhalla DAV School Qila Mandi, Batala",
-      "DAV High School Qila Mandi Batala"
+      "Dr MRS Bhalla DAV Public School",
+      "DAV High School Qila Mandi Batala",
+      "DAV Senior Secondary School Batala"
     ],
-    "description": SCHOOL_CONFIG.tagline,
+    "description": "Dr. MRS Bhalla DAV School Batala is a premier PSEB-affiliated Nursery to Class 10 school in Batala, Punjab, managed by DAV College Managing Committee (DAVCMC) New Delhi.",
     "url": BASE_URL,
+    "hasMap": "https://maps.google.com/?q=Dr.+MRS+Bhalla+DAV+School+Qila+Mandi+Batala",
     "logo": {
       "@type": "ImageObject",
       "url": `${BASE_URL}/favicon-512x512.png`,
       "width": "512",
       "height": "512",
-      "caption": `${SCHOOL_CONFIG.name} Emblem`
+      "caption": "DAV School Batala Crest"
     },
     "image": `${BASE_URL}/images/og-school.jpg`,
     "telephone": [
@@ -148,6 +177,21 @@ export function generateEducationalOrgJsonLd() {
     ],
     "email": SCHOOL_CONFIG.contact.email,
     "foundingDate": "1990",
+    "priceRange": "₹₹",
+    "currenciesAccepted": "INR",
+    "paymentAccepted": "Cash, Bank Transfer, UPI",
+    "areaServed": {
+      "@type": "AdministrativeArea",
+      "name": "Batala, Gurdaspur, Punjab, India"
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        "opens": "08:00",
+        "closes": "15:30"
+      }
+    ],
     "parentOrganization": {
       "@type": "EducationalOrganization",
       "name": SCHOOL_CONFIG.managedBy,
@@ -170,5 +214,41 @@ export function generateEducationalOrgJsonLd() {
       SCHOOL_CONFIG.links.instagram,
       SCHOOL_CONFIG.links.youtube,
     ].filter(Boolean),
+  };
+}
+
+export function generateBreadcrumbJsonLd(items: { name: string; path: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": BASE_URL,
+      },
+      ...items.map((item, index) => ({
+        "@type": "ListItem",
+        "position": index + 2,
+        "name": item.name,
+        "item": `${BASE_URL}${item.path}`,
+      })),
+    ],
+  };
+}
+
+export function generateFaqJsonLd(faqs: { question: string; answer: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map((faq) => ({
+      "@type": "Question",
+      "name": faq.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.answer,
+      },
+    })),
   };
 }

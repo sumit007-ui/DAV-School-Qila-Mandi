@@ -318,20 +318,32 @@ export async function getAcademicStages() {
         .order("phase", { ascending: true });
 
       if (!error && data && data.length > 0) {
-        return data.map((item: any) => ({
-          id: item.id,
-          slug: `phase-${item.phase}`,
-          phase: item.phase,
-          title: item.title,
-          classes: item.classes,
-          age: item.age,
-          tag: item.tag,
-          lead: item.lead,
-          description: item.description,
-          milestones: Array.isArray(item.milestones) ? item.milestones : [],
-          subjects: Array.isArray(item.subjects) ? item.subjects : [],
-          image: item.image_url,
-        }));
+        return data.map((item: any) => {
+          const milestonesArr = Array.isArray(item.milestones) ? item.milestones : [];
+          const keyFeaturesArr = Array.isArray(item.key_features)
+            ? item.key_features
+            : Array.isArray(item.keyFeatures)
+            ? item.keyFeatures
+            : milestonesArr;
+
+          return {
+            id: item.id,
+            slug: item.slug || `phase-${item.phase}`,
+            phase: item.phase || "01",
+            title: item.title || item.level || "",
+            level: item.title || item.level || `Phase ${item.phase}`,
+            classes: item.classes || "",
+            age: item.age || "",
+            tag: item.tag || "",
+            lead: item.lead || item.tagline || "",
+            tagline: item.tagline || item.lead || item.description?.slice(0, 100) || "",
+            description: item.description || "",
+            milestones: milestonesArr,
+            keyFeatures: keyFeaturesArr,
+            subjects: Array.isArray(item.subjects) ? item.subjects : [],
+            image: item.image_url || "/images/ethos-learning.jpg",
+          };
+        });
       }
     }
   } catch (supabaseErr) {
@@ -341,17 +353,27 @@ export async function getAcademicStages() {
   try {
     const data = await client.fetch(ACADEMIC_STAGES_QUERY, {}, { next: { revalidate: 0 } })
     if (data && Array.isArray(data) && data.length > 0) {
-      return data.map((item: any) => ({
-        id: item._id,
-        slug: item.slug || item._id,
-        level: item.stage || item.title,
-        classes: item.shortDescription || item.title,
-        tagline: item.shortDescription || item.title,
-        description: item.description || '',
-        keyFeatures: item.keyFeatures || [],
-        subjects: ['Mathematics', 'Science & EVS', 'English Literature', 'Hindi', 'Punjabi', 'Social Studies'],
-        image: item.featuredImageUrl || 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&q=80&w=1200',
-      }))
+      return data.map((item: any) => {
+        const featuresArr = Array.isArray(item.keyFeatures) ? item.keyFeatures : [];
+        const milestonesArr = Array.isArray(item.milestones) ? item.milestones : featuresArr;
+
+        return {
+          id: item._id,
+          slug: item.slug || item._id,
+          phase: item.phase || "01",
+          title: item.title || item.stage || "",
+          level: item.stage || item.title || "",
+          classes: item.shortDescription || item.title || "",
+          tagline: item.shortDescription || item.title || "",
+          description: item.description || "",
+          keyFeatures: featuresArr,
+          milestones: milestonesArr,
+          subjects: Array.isArray(item.subjects)
+            ? item.subjects
+            : ["Mathematics", "Science & EVS", "English Literature", "Hindi", "Punjabi", "Social Studies"],
+          image: item.featuredImageUrl || "https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&q=80&w=1200",
+        };
+      });
     }
   } catch (err) {
     console.warn('[Sanity] Error fetching academicStages, using fallback:', err)

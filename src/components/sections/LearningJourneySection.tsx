@@ -147,7 +147,7 @@ function PhaseCard({ stage, index, onInView }: { stage: typeof JOURNEY_STAGES[0]
                   Board Distinction Pillars:
                 </span>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  {stage.milestones.map((milestone, mIdx) => (
+                  {(stage.milestones || (stage as any).keyFeatures || []).map((milestone: string, mIdx: number) => (
                     <div key={mIdx} className="flex items-center gap-2 text-xs text-cream-200">
                       <CheckCircle2 className="w-3.5 h-3.5 text-gold-400 shrink-0" />
                       <span>{milestone}</span>
@@ -263,7 +263,7 @@ function PhaseCard({ stage, index, onInView }: { stage: typeof JOURNEY_STAGES[0]
                 Developmental Milestones:
               </span>
               <div className="grid grid-cols-1 gap-1">
-                {stage.milestones.map((milestone, mIdx) => (
+                {(stage.milestones || (stage as any).keyFeatures || []).map((milestone: string, mIdx: number) => (
                   <div key={mIdx} className="flex items-center gap-2 text-xs text-[#4E220F]">
                     <CheckCircle2 className="w-3.5 h-3.5 text-[#9D6638] shrink-0" />
                     <span>{milestone}</span>

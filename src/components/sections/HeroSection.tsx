@@ -40,7 +40,7 @@ export function HeroSection({ onOpenAdmissionModal }: HeroSectionProps) {
           className="object-cover object-center lg:object-right scale-100 transition-transform duration-1000 ease-out"
           sizes="100vw"
         />
-        
+
         {/* Transparent Gradient Overlays - Left dark gradient for text contrast, right open for building visibility */}
         <div className="absolute inset-0 bg-gradient-to-r from-[#4E220F] via-[#4E220F]/90 sm:via-[#4E220F]/65 to-transparent w-full sm:w-[75%]" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#4E220F] via-transparent to-black/30" />

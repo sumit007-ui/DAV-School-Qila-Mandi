@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { generateSchoolMetadata } from "@/lib/seo/metadata";
+import { generateSchoolMetadata, generateBreadcrumbJsonLd } from "@/lib/seo/metadata";
 import { getAdmissionsInfo } from "@/sanity/lib/fetch";
 import { AdmissionsClientView } from "@/components/admissions/AdmissionsClientView";
 
@@ -21,6 +21,17 @@ export const revalidate = 0;
 
 export default async function AdmissionsPage() {
   const info = await getAdmissionsInfo();
+  const breadcrumbJsonLd = generateBreadcrumbJsonLd([
+    { name: "Admissions", path: "/admissions" }
+  ]);
 
-  return <AdmissionsClientView info={info} />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      <AdmissionsClientView info={info} />
+    </>
+  );
 }

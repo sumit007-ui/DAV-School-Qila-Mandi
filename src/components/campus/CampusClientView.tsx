@@ -70,7 +70,7 @@ export function CampusClientView({ facilities }: CampusClientViewProps) {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {facilities.map((facility) => {
+            {(facilities || []).map((facility) => {
               const slot = FACILITY_SLOT_MAP[facility.slug] || FACILITY_SLOT_MAP[facility.id];
               const displayImage = slot ? getPhoto(slot, facility.image) : facility.image;
 
@@ -108,7 +108,7 @@ export function CampusClientView({ facilities }: CampusClientViewProps) {
                       Key Highlights:
                     </h4>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                      {facility.specifications.map((spec, sIdx) => (
+                      {(facility.specifications || []).map((spec: string, sIdx: number) => (
                         <div key={sIdx} className="flex items-center gap-2 text-xs text-navy-800 font-medium">
                           <Check className="w-3.5 h-3.5 text-gold-600 shrink-0" />
                           <span>{spec}</span>
