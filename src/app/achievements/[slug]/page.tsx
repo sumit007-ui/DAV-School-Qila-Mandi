@@ -14,7 +14,7 @@ interface AchievementDetailPageProps {
 
 export async function generateMetadata({ params }: AchievementDetailPageProps): Promise<Metadata> {
   const list = await getAchievements();
-  const item = list.find((a) => (a as any).slug === params.slug || a.id === params.slug);
+  const item = list.find((a: any) => a.slug === params.slug || a.id === params.slug);
 
   if (!item) {
     return { title: "Achievement Not Found | DAV Public School Qila Mandi" };
@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: AchievementDetailPageProps): 
 
 export default async function AchievementDetailPage({ params }: AchievementDetailPageProps) {
   const list = await getAchievements();
-  const item = list.find((a) => (a as any).slug === params.slug || a.id === params.slug);
+  const item = list.find((a: any) => a.slug === params.slug || a.id === params.slug);
 
   if (!item) {
     notFound();

@@ -8,7 +8,9 @@ import {
   ArrowLeft, 
   GraduationCap, 
   Newspaper, 
-  Sliders
+  Sliders,
+  Trophy,
+  Database
 } from "lucide-react";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import { SchoolSettingsView } from "@/components/admin/SchoolSettingsView";
@@ -100,6 +102,22 @@ export default function AdminSettingsPage() {
           >
             <GraduationCap className="w-3.5 h-3.5 text-gold-400" />
             <span className="hidden sm:inline">Admissions</span>
+          </Link>
+
+          <Link
+            href="/admin/toppers"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-cream-200 hover:text-white text-xs font-mono font-medium transition-colors"
+          >
+            <Trophy className="w-3.5 h-3.5 text-gold-400" />
+            <span className="hidden sm:inline">Roll of Honor</span>
+          </Link>
+
+          <Link
+            href="/admin/buckets"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-cream-200 hover:text-white text-xs font-mono font-medium transition-colors"
+          >
+            <Database className="w-3.5 h-3.5 text-cyan-400" />
+            <span className="hidden sm:inline">Buckets</span>
           </Link>
 
           <Link

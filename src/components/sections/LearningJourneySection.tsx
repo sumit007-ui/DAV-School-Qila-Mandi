@@ -17,8 +17,8 @@ const JOURNEY_STAGES = [
     classes: "Pre-Nursery, Nursery, LKG, UKG",
     age: "Ages 2.5 to 5 Years",
     tagline: "Foundational Wonder, Play-Based Inquiry & Emotional Safety",
-    description: "Our early childhood sanctuary is built around play-infused sensory discovery. Children cultivate early phonetic fluency, gross motor agility, collaborative empathy, and joy of discovery in a nurturing environment with dedicated female care attendants.",
-    image: "https://images.unsplash.com/photo-1587691592099-24045742c181?auto=format&fit=crop&q=85&w=1200",
+    description: "Our early childhood wing is built around play-infused sensory discovery. Children cultivate early phonetic fluency, gross motor agility, collaborative empathy, and joyful curiosity in a nurturing environment with dedicated female care attendants.",
+    image: "/images/pre-primary.jpg",
     milestones: ["Phonetic & Pre-Reading Mastery", "Montessori Spatial & Tactile Kits", "Joyful Music & Motor Coordination", "Safe, Caring Female Attendant Care"]
   },
   {
@@ -29,7 +29,7 @@ const JOURNEY_STAGES = [
     age: "Ages 6 to 10 Years",
     tagline: "Strong Fundamentals, Bilingual Clarity & Scientific Curiosities",
     description: "Transitioning from early wonder into structured conceptual understanding. We emphasize mathematical logic, expressive English & Punjabi articulation, environmental studies, and weekly hands-on experiments in our junior lab.",
-    image: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&q=85&w=1200",
+    image: "/images/primary-school.jpg",
     milestones: ["Conceptual Numeracy & Mental Math", "75-inch Interactive Smart Panels", "Bilingual Public Speaking & Poetry", "Weekly Computer & Science Lab Practical"]
   },
   {
@@ -40,7 +40,7 @@ const JOURNEY_STAGES = [
     age: "Ages 11 to 13 Years",
     tagline: "Independent Critical Thinking, Applied Science & Broadened Horizons",
     description: "Middle schoolers develop analytical depth, scientific experimentation in composite laboratories, inter-house debates, competitive athletics, and value-based Vedic grounding with daily moral discourses.",
-    image: "https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&q=85&w=1200",
+    image: "/images/middle-school.jpg",
     milestones: ["Hands-on Science Lab Experiments", "Computer Science & Digital Literacy", "Inter-House Championship League", "Vedic Heritage & Moral Ethics"]
   },
   {
@@ -51,7 +51,7 @@ const JOURNEY_STAGES = [
     age: "Ages 14+ Years",
     tagline: "Rigorous Subject Deep-Dive, Discipline & Future Blueprinting",
     description: "Preparing students for high-stakes academic pathways with specialized educators, rigorous periodic assessments, olympiad coaching, and leadership roles in the student council prefectorial board.",
-    image: "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&q=85&w=1200",
+    image: "/images/secondary-school.jpg",
     milestones: ["PSEB Board Aligned Question Banks", "Olympiad & NTSE Focused Modules", "Student Council & Prefectorial Board", "Individual Academic Mentorship"]
   },
   {
@@ -62,7 +62,7 @@ const JOURNEY_STAGES = [
     age: "Ages 15+ Years",
     tagline: "Academic Triumph, 100% Pass Record & Confident Leadership",
     description: "The culmination of school life at DAV Qila Mandi. Comprehensive mock boards, personalized doubt resolution, and psychological resilience coaching producing district toppers year after year in Batala.",
-    image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=85&w=1200",
+    image: "/images/ethos-learning.jpg",
     milestones: ["100% PSEB Board Pass Record", "District Rank 1 Legacy in Batala", "Dedicated 1-on-1 Faculty Cliniques", "Career Counseling & Stream Roadmaps"]
   }
 ];
@@ -88,6 +88,117 @@ function PhaseCard({ stage, index, onInView }: { stage: typeof JOURNEY_STAGES[0]
       onInView(index);
     }
   }, [isInView, index, onInView]);
+
+  if (stage.phase === "05") {
+    return (
+      <motion.div
+        ref={ref}
+        id={`phase-${stage.phase}`}
+        initial={{ opacity: 0, y: 25 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        className="bg-[#4E220F] text-white rounded-3xl overflow-hidden shadow-xl border-2 border-gold-400/40 relative group"
+      >
+        {/* Subtle Gold Accents */}
+        <div className="absolute top-0 right-0 w-72 h-72 bg-gold-500/10 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch min-h-[440px]">
+          {/* Left Content (Span 7) */}
+          <div className="lg:col-span-7 p-6 sm:p-8 lg:p-10 flex flex-col justify-between space-y-6 relative z-10">
+            <div className="space-y-4">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold-500/20 text-[#F4E4AF] text-[11px] font-mono font-semibold tracking-wider border border-gold-500/30">
+                <Award className="w-3.5 h-3.5 text-gold-400" />
+                <span>FINAL CULMINATION STAGE · PSEB BOARD BENCHMARK</span>
+              </div>
+
+              <div className="space-y-1.5">
+                <h3 className="font-editorial text-3xl sm:text-4xl text-white font-normal leading-tight">
+                  Class 10 PSEB Board Distinction
+                </h3>
+                <p className="text-sm font-semibold text-[#F4E4AF]">
+                  Proven 100% Board Pass Rate & Consistent District Toppers
+                </p>
+              </div>
+
+              <p className="text-xs sm:text-sm text-cream-200/90 leading-relaxed font-sans">
+                The pinnacle of school life at Dr. MRS Bhalla DAV School. We provide personalized academic mentorship, continuous mock board test series, 1-on-1 subject doubt clearing, and psychological confidence building that empowers every student to excel in their PSEB Class 10 Board exams.
+              </p>
+
+              {/* 3 Metric Pills */}
+              <div className="grid grid-cols-3 gap-3 pt-2">
+                <div className="p-3 rounded-xl bg-white/10 border border-white/15 text-center">
+                  <span className="block font-editorial text-2xl sm:text-3xl font-bold text-gold-300 leading-none">100%</span>
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-cream-300 mt-1 block">PSEB Pass Rate</span>
+                </div>
+                <div className="p-3 rounded-xl bg-white/10 border border-white/15 text-center">
+                  <span className="block font-editorial text-2xl sm:text-3xl font-bold text-gold-300 leading-none">95%+</span>
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-cream-300 mt-1 block">Distinctions</span>
+                </div>
+                <div className="p-3 rounded-xl bg-white/10 border border-white/15 text-center">
+                  <span className="block font-editorial text-2xl sm:text-3xl font-bold text-gold-300 leading-none">35+</span>
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-cream-300 mt-1 block">Years Legacy</span>
+                </div>
+              </div>
+
+              {/* Milestones Matrix */}
+              <div className="space-y-2 pt-2 border-t border-white/15">
+                <span className="text-[11px] font-mono uppercase tracking-wider text-gold-300 block font-semibold">
+                  Board Distinction Pillars:
+                </span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  {stage.milestones.map((milestone, mIdx) => (
+                    <div key={mIdx} className="flex items-center gap-2 text-xs text-cream-200">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-gold-400 shrink-0" />
+                      <span>{milestone}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-4 border-t border-white/15 flex flex-wrap items-center gap-3">
+              <button
+                onClick={() => openAdmissionModal("Class 10")}
+                className="px-6 py-2.5 rounded-xl bg-[#9D6638] hover:bg-[#82522B] text-white font-bold text-xs uppercase tracking-wider transition-all cursor-pointer font-sans shadow-lg active:scale-95 border border-white/15"
+              >
+                Apply for Class 10 Transition
+              </button>
+
+              <a
+                href="#academic-roll"
+                className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-[#F4E4AF] font-mono text-xs font-semibold uppercase tracking-wider transition-colors border border-white/15"
+              >
+                <span>View Board Toppers</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </a>
+            </div>
+          </div>
+
+          {/* Right Image Showcase (Span 5) */}
+          <div className="lg:col-span-5 relative min-h-[300px] lg:min-h-full overflow-hidden">
+            <Image
+              src={dynamicImage}
+              alt={stage.title}
+              fill
+              className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+              sizes="(max-width: 1024px) 100vw, 600px"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#4E220F] via-[#4E220F]/40 to-transparent" />
+
+            <div className="absolute bottom-6 left-6 right-6 p-4 rounded-xl bg-black/60 backdrop-blur-md border border-white/20 text-white space-y-1">
+              <span className="text-[10px] font-mono text-gold-300 uppercase tracking-widest block font-bold">
+                DISTINCTION ROLL
+              </span>
+              <p className="font-editorial text-lg text-white font-normal">
+                Cultivating academic courage and leadership since 1990 in Qila Mandi.
+              </p>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    );
+  }
 
   return (
     <motion.div
@@ -207,7 +318,7 @@ export function LearningJourneySection({ stages }: LearningJourneySectionProps =
             <Reveal direction="down" delay={0.1}>
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#4E220F] text-[#F7F1DE] text-[11px] font-mono font-semibold tracking-[0.16em] uppercase shadow-xs">
                 <Sparkles className="w-3.5 h-3.5 text-[#B0BA99]" />
-                <span>02 · CONTINUOUS LEARNING CONTINUUM</span>
+                <span>ACADEMIC ROADMAP · NURSERY TO CLASS 10</span>
               </div>
             </Reveal>
 

@@ -14,7 +14,7 @@ interface EventDetailPageProps {
 
 export async function generateMetadata({ params }: EventDetailPageProps): Promise<Metadata> {
   const events = await getEvents();
-  const event = events.find((e) => e.slug === params.slug || e.id === params.slug);
+  const event = events.find((e: any) => e.slug === params.slug || e.id === params.slug);
 
   if (!event) {
     return { title: "Event Not Found | DAV Public School Qila Mandi" };
@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: EventDetailPageProps): Promis
 
 export default async function EventDetailPage({ params }: EventDetailPageProps) {
   const events = await getEvents();
-  const event = events.find((e) => e.slug === params.slug || e.id === params.slug);
+  const event = events.find((e: any) => e.slug === params.slug || e.id === params.slug);
 
   if (!event) {
     notFound();

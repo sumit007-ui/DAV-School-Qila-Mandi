@@ -131,6 +131,36 @@ export async function getSiteSettings() {
 
 export async function getPrincipalMessage() {
   try {
+    const supabase = getSupabaseServerClient();
+    if (supabase) {
+      const { data, error } = await supabase
+        .from("leadership_messages")
+        .select("*")
+        .eq("role", "principal")
+        .eq("is_published", true)
+        .single();
+
+      if (!error && data) {
+        const fullMessage = Array.isArray(data.full_message) && data.full_message.length > 0 
+          ? data.full_message 
+          : [data.message_excerpt];
+        return {
+          name: data.name,
+          designation: data.designation,
+          qualifications: data.qualifications || SCHOOL_CONFIG.leadership.principal.qualifications,
+          photoUrl: data.photo_url || SCHOOL_CONFIG.leadership.principal.image,
+          image: data.photo_url || SCHOOL_CONFIG.leadership.principal.image,
+          shortMessage: data.message_excerpt,
+          messageExcerpt: data.message_excerpt,
+          fullMessage,
+        };
+      }
+    }
+  } catch (supabaseErr) {
+    // Continue to Sanity / fallback
+  }
+
+  try {
     const data = await client.fetch(PRINCIPAL_MESSAGE_QUERY, {}, { next: { revalidate: 0 } })
     if (data && data.name) {
       let fullMessage: string[] = []
@@ -189,6 +219,36 @@ export async function getPrincipalMessage() {
 }
 
 export async function getDirectorMessage() {
+  try {
+    const supabase = getSupabaseServerClient();
+    if (supabase) {
+      const { data, error } = await supabase
+        .from("leadership_messages")
+        .select("*")
+        .eq("role", "director")
+        .eq("is_published", true)
+        .single();
+
+      if (!error && data) {
+        const fullMessage = Array.isArray(data.full_message) && data.full_message.length > 0 
+          ? data.full_message 
+          : [data.message_excerpt];
+        return {
+          name: data.name,
+          designation: data.designation,
+          qualifications: data.qualifications || SCHOOL_CONFIG.leadership.director.qualifications,
+          photoUrl: data.photo_url || SCHOOL_CONFIG.leadership.director.image,
+          image: data.photo_url || SCHOOL_CONFIG.leadership.director.image,
+          shortMessage: data.message_excerpt,
+          messageExcerpt: data.message_excerpt,
+          fullMessage,
+        };
+      }
+    }
+  } catch (supabaseErr) {
+    // Continue to Sanity / fallback
+  }
+
   try {
     const data = await client.fetch(DIRECTOR_MESSAGE_QUERY, {}, { next: { revalidate: 0 } })
     if (data && data.name) {
@@ -249,6 +309,36 @@ export async function getDirectorMessage() {
 
 export async function getAcademicStages() {
   try {
+    const supabase = getSupabaseServerClient();
+    if (supabase) {
+      const { data, error } = await supabase
+        .from("academic_stages")
+        .select("*")
+        .eq("is_published", true)
+        .order("phase", { ascending: true });
+
+      if (!error && data && data.length > 0) {
+        return data.map((item: any) => ({
+          id: item.id,
+          slug: `phase-${item.phase}`,
+          phase: item.phase,
+          title: item.title,
+          classes: item.classes,
+          age: item.age,
+          tag: item.tag,
+          lead: item.lead,
+          description: item.description,
+          milestones: Array.isArray(item.milestones) ? item.milestones : [],
+          subjects: Array.isArray(item.subjects) ? item.subjects : [],
+          image: item.image_url,
+        }));
+      }
+    }
+  } catch (supabaseErr) {
+    // Continue to Sanity / fallback
+  }
+
+  try {
     const data = await client.fetch(ACADEMIC_STAGES_QUERY, {}, { next: { revalidate: 0 } })
     if (data && Array.isArray(data) && data.length > 0) {
       return data.map((item: any) => ({
@@ -271,6 +361,32 @@ export async function getAcademicStages() {
 
 export async function getFacilities() {
   try {
+    const supabase = getSupabaseServerClient();
+    if (supabase) {
+      const { data, error } = await supabase
+        .from("campus_facilities")
+        .select("*")
+        .eq("is_published", true)
+        .order("display_order", { ascending: true });
+
+      if (!error && data && data.length > 0) {
+        return data.map((item: any) => ({
+          id: item.id,
+          slug: item.slug,
+          title: item.name,
+          category: item.category,
+          headline: item.headline || item.name,
+          description: item.description,
+          specifications: Array.isArray(item.specifications) ? item.specifications : [],
+          image: item.image_url,
+        }));
+      }
+    }
+  } catch (supabaseErr) {
+    // Continue to Sanity / fallback
+  }
+
+  try {
     const data = await client.fetch(FACILITIES_QUERY, {}, { next: { revalidate: 0 } })
     if (data && Array.isArray(data) && data.length > 0) {
       return data.map((item: any) => ({
@@ -291,6 +407,32 @@ export async function getFacilities() {
 }
 
 export async function getAchievements() {
+  try {
+    const supabase = getSupabaseServerClient();
+    if (supabase) {
+      const { data, error } = await supabase
+        .from("achievements")
+        .select("*")
+        .eq("is_published", true)
+        .order("year", { ascending: false });
+
+      if (!error && data && data.length > 0) {
+        return data.map((item: any) => ({
+          id: item.id,
+          title: item.title,
+          category: item.category,
+          year: item.year,
+          studentOrTeam: item.student_name,
+          classOrGrade: item.class || '',
+          description: item.description,
+          image: item.image_url || '/images/sports-champions.jpg',
+        }));
+      }
+    }
+  } catch (supabaseErr) {
+    // Continue to Sanity / fallback
+  }
+
   try {
     const data = await client.fetch(ACHIEVEMENTS_QUERY, {}, { next: { revalidate: 0 } })
     if (data && Array.isArray(data) && data.length > 0) {
@@ -396,6 +538,38 @@ export async function getNews() {
 
 export async function getEvents() {
   try {
+    const supabase = getSupabaseServerClient();
+    if (supabase) {
+      const { data, error } = await supabase
+        .from("events")
+        .select("*")
+        .order("start_date", { ascending: true });
+
+      if (!error && data && data.length > 0) {
+        return data.map((item: any) => ({
+          id: item.id,
+          slug: item.slug,
+          title: item.title,
+          category: item.category || 'Academic',
+          startDate: new Date(item.start_date).toLocaleDateString('en-IN', {
+            day: 'numeric',
+            month: 'short',
+            year: 'numeric'
+          }),
+          time: item.time || '9:00 AM – 1:30 PM',
+          venue: item.venue || 'Main Campus Auditorium & Grounds',
+          description: item.description,
+          highlights: Array.isArray(item.highlights) ? item.highlights : ['Keynote Addresses', 'Student Exhibits', 'Parent Interaction'],
+          isUpcoming: item.is_upcoming !== undefined ? Boolean(item.is_upcoming) : true,
+          registrationOpen: Boolean(item.registration_open),
+        }));
+      }
+    }
+  } catch (supabaseErr) {
+    // Continue to Sanity / fallback
+  }
+
+  try {
     const data = await client.fetch(EVENTS_QUERY, {}, { next: { revalidate: 0 } })
     if (data && Array.isArray(data) && data.length > 0) {
       return data.map((item: any) => {
@@ -466,6 +640,31 @@ export async function getGallery() {
 
 export async function getTestimonials() {
   try {
+    const supabase = getSupabaseServerClient();
+    if (supabase) {
+      const { data, error } = await supabase
+        .from("testimonials")
+        .select("*")
+        .eq("is_published", true)
+        .order("display_order", { ascending: true });
+
+      if (!error && data && data.length > 0) {
+        return data.map((item: any) => ({
+          id: item.id,
+          quote: item.quote,
+          authorName: item.author_name,
+          relationship: item.relationship,
+          detail: item.detail || `${item.relationship || 'Community'} Member`,
+          avatar: item.avatar_url,
+          highlight: item.author_name,
+        }));
+      }
+    }
+  } catch (supabaseErr) {
+    // Continue to Sanity / fallback
+  }
+
+  try {
     const data = await client.fetch(TESTIMONIALS_QUERY, {}, { next: { revalidate: 0 } })
     if (data && Array.isArray(data) && data.length > 0) {
       return data.map((item: any) => ({
@@ -505,6 +704,27 @@ export async function getAdmissionsInfo() {
 }
 
 export async function getFAQs() {
+  try {
+    const supabase = getSupabaseServerClient();
+    if (supabase) {
+      const { data, error } = await supabase
+        .from("faqs")
+        .select("*")
+        .eq("is_published", true)
+        .order("display_order", { ascending: true });
+
+      if (!error && data && data.length > 0) {
+        return data.map((item: any) => ({
+          question: item.question,
+          answer: item.answer,
+          category: item.category || 'General',
+        }));
+      }
+    }
+  } catch (supabaseErr) {
+    // Continue to Sanity / fallback
+  }
+
   try {
     const data = await client.fetch(FAQS_QUERY, {}, { next: { revalidate: 0 } })
     if (data && Array.isArray(data) && data.length > 0) {

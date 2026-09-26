@@ -6,6 +6,7 @@ import { EditorialStatement } from "@/components/sections/EditorialStatement";
 import { StatsSection } from "@/components/sections/StatsSection";
 import { PrincipalMessageSection } from "@/components/sections/PrincipalMessageSection";
 import { LearningJourneySection } from "@/components/sections/LearningJourneySection";
+import { AcademicRollSection } from "@/components/sections/AcademicRollSection";
 import { WhyDavSection } from "@/components/sections/WhyDavSection";
 import { NewsAndEventsSection } from "@/components/sections/NewsAndEventsSection";
 import { FinalCtaSection } from "@/components/sections/FinalCtaSection";
@@ -48,7 +49,10 @@ export function HomeClientWrapper({
       {/* 05. Learning Journey - Nursery to Class 10 Progression */}
       <LearningJourneySection stages={academicStages} />
 
-      {/* 06. WHY DAV - Key Distinctions */}
+      {/* 06. Verified Class 10 Board Toppers Roll of Honor */}
+      <AcademicRollSection />
+
+      {/* 07. WHY DAV - Key Distinctions */}
       <WhyDavSection />
 
       {/* 07. News & Events Calendar */}

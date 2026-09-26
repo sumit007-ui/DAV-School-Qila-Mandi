@@ -5,18 +5,18 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { 
   LogOut, 
-  ArrowLeft, 
   GraduationCap, 
   Newspaper, 
   Sliders,
   Camera,
   Trophy,
-  Database
+  Database,
+  ExternalLink
 } from "lucide-react";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
-import { PhotosCMSView } from "@/components/admin/PhotosCMSView";
+import { StorageBucketCMSView } from "@/components/admin/StorageBucketCMSView";
 
-export default function AdminPhotosPage() {
+export default function AdminBucketsPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [userEmail, setUserEmail] = useState<string | null>(null);
@@ -64,7 +64,7 @@ export default function AdminPhotosPage() {
     return (
       <div className="min-h-screen bg-navy-950 flex flex-col items-center justify-center text-white space-y-4 font-mono text-xs">
         <div className="w-8 h-8 border-2 border-gold-400 border-t-transparent rounded-full animate-spin" />
-        <p className="text-cream-400 tracking-wider uppercase">Loading Website Photos CMS...</p>
+        <p className="text-cream-400 tracking-wider uppercase">Loading Storage Buckets CMS...</p>
       </div>
     );
   }
@@ -84,10 +84,10 @@ export default function AdminPhotosPage() {
           <div>
             <div className="flex items-center gap-2">
               <h1 className="font-serif text-lg font-bold text-white leading-tight">
-                Website Photos & Media CMS
+                Storage Buckets & Media Assets
               </h1>
               <span className="px-2 py-0.5 rounded-full bg-gold-500/20 text-gold-300 text-[10px] font-mono uppercase tracking-wider border border-gold-500/30">
-                Storage: website-photos
+                Supabase S3
               </span>
             </div>
             <p className="text-[11px] text-cream-400 font-mono">
@@ -96,45 +96,29 @@ export default function AdminPhotosPage() {
           </div>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5">
           <Link
             href="/admin/enquiries"
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-cream-200 hover:text-white text-xs font-mono font-medium transition-colors"
+            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-cream-200 hover:text-white text-xs font-mono font-medium transition-colors"
           >
             <GraduationCap className="w-3.5 h-3.5 text-gold-400" />
             <span className="hidden sm:inline">Admissions</span>
           </Link>
 
           <Link
-            href="/admin/news"
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-cream-200 hover:text-white text-xs font-mono font-medium transition-colors"
-          >
-            <Newspaper className="w-3.5 h-3.5 text-sky-400" />
-            <span className="hidden sm:inline">News CMS</span>
-          </Link>
-
-          <Link
             href="/admin/toppers"
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-cream-200 hover:text-white text-xs font-mono font-medium transition-colors"
+            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-cream-200 hover:text-white text-xs font-mono font-medium transition-colors"
           >
             <Trophy className="w-3.5 h-3.5 text-gold-400" />
             <span className="hidden sm:inline">Roll of Honor</span>
           </Link>
 
           <Link
-            href="/admin/buckets"
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-cream-200 hover:text-white text-xs font-mono font-medium transition-colors"
+            href="/admin/photos"
+            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-cream-200 hover:text-white text-xs font-mono font-medium transition-colors"
           >
-            <Database className="w-3.5 h-3.5 text-cyan-400" />
-            <span className="hidden sm:inline">Buckets</span>
-          </Link>
-
-          <Link
-            href="/admin/settings"
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-cream-200 hover:text-white text-xs font-mono font-medium transition-colors"
-          >
-            <Sliders className="w-3.5 h-3.5 text-emerald-400" />
-            <span className="hidden sm:inline">Site Settings</span>
+            <Camera className="w-3.5 h-3.5 text-sky-400" />
+            <span className="hidden sm:inline">Site Photos</span>
           </Link>
 
           <button
@@ -149,7 +133,7 @@ export default function AdminPhotosPage() {
 
       {/* Main Content */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <PhotosCMSView />
+        <StorageBucketCMSView />
       </main>
     </div>
   );

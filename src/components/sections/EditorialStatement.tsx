@@ -1,32 +1,22 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight, Sparkles, ShieldCheck, BookOpen, Monitor, Bus } from "lucide-react";
 import { SCHOOL_CONFIG } from "@/config/school";
-import { LineReveal, Reveal, ImageReveal, Marquee } from "@/components/motion";
+import { LineReveal, Reveal, ImageReveal } from "@/components/motion";
 
 export function EditorialStatement() {
   const currentYear = new Date().getFullYear();
   const yearsCount = Math.max(1, currentYear - (SCHOOL_CONFIG.establishedYear || 1990));
 
-  const marqueeWords = [
-    "WORK IS WORSHIP",
-    "तमसो मा ज्योतिर्गमय",
-    "LEARN · EXPLORE · CREATE · LEAD",
-    "DR. MRS BHALLA DAV SCHOOL",
-    `${yearsCount}+ YEARS OF ACADEMIC EXCELLENCE`,
-    "PSEB AFFILIATED (PUNJAB BOARD)",
-    "HOLISTIC VEDIC PEDAGOGY",
-  ];
-
   return (
-    <section id="editorial-statement" className="py-10 lg:py-14 bg-[#F7F1DE] text-[#4E220F] relative overflow-hidden border-b border-[#9D6638]/15 font-sans">
-      <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 space-y-6 lg:space-y-8">
+    <section id="editorial-statement" className="py-12 lg:py-16 bg-[#F7F1DE] text-[#4E220F] relative overflow-hidden border-b border-[#9D6638]/15 font-sans">
+      <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 space-y-8 lg:space-y-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-start">
           {/* Left Large Statement Column (Span 5) */}
           <div className="lg:col-span-5 space-y-4">
             <Reveal direction="down" delay={0.1}>
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#4E220F] text-[#F7F1DE] text-[11px] font-mono font-semibold tracking-[0.16em] uppercase shadow-xs">
-                01 · INSTITUTIONAL PHILOSOPHY
+                FOUNDATIONAL ETHOS · EST. 1990
               </div>
             </Reveal>
             
@@ -43,7 +33,7 @@ export function EditorialStatement() {
                   "{SCHOOL_CONFIG.motto}"
                 </p>
                 <p className="text-xs text-[#7E5F4E]">
-                  Lead us from darkness unto light — shaping intellect and character since 1990.
+                  Lead us from darkness unto light — shaping intellect, humility, and character in Batala since 1990.
                 </p>
               </div>
             </Reveal>
@@ -53,13 +43,13 @@ export function EditorialStatement() {
           <div className="lg:col-span-7 space-y-4">
             <Reveal direction="up" delay={0.15}>
               <p className="font-editorial text-xl sm:text-2xl lg:text-[26px] text-[#4E220F] leading-snug font-normal">
-                At Dr. MRS Bhalla DAV School Qila Mandi, we believe true education is not merely the transmission of syllabus facts, but the awakening of conscience, critical courage, and foundational character.
+                We believe true school education must balance rigorous academic achievement with deep cultural humility, emotional safety, and personal character.
               </p>
             </Reveal>
 
             <Reveal direction="up" delay={0.2}>
               <p className="text-[#4E220F]/90 text-sm sm:text-base leading-relaxed font-normal">
-                Established under the esteemed DAV College Managing Committee (DAVCMC), New Delhi, we weave together the timeless moral depth of Vedic wisdom with the empirical rigor of modern STEM laboratories, computer education, and sports training for children from Nursery to Class 10.
+                Operating under the esteemed DAV College Managing Committee (DAVCMC), New Delhi, our educators partner closely with parents in Batala. From foundational play and phonics in Nursery to high-percentage PSEB Class 10 distinctions, every student receives patient, individual guidance in a disciplined and affectionate environment.
               </p>
             </Reveal>
 
@@ -68,24 +58,24 @@ export function EditorialStatement() {
               <Reveal direction="up" delay={0.25}>
                 <div className="space-y-1">
                   <span className="font-mono text-xs font-semibold text-[#9D6638]">01.</span>
-                  <h4 className="font-bold text-xs uppercase tracking-wider text-[#4E220F]">Care & Values</h4>
-                  <p className="text-xs text-[#7E5F4E]">Rooted in humility, weekly Havans, and moral guidance.</p>
+                  <h4 className="font-bold text-xs uppercase tracking-wider text-[#4E220F]">Safety & Values</h4>
+                  <p className="text-xs text-[#7E5F4E]">Caring female attendants, CCTV security, and daily moral grounding.</p>
                 </div>
               </Reveal>
 
               <Reveal direction="up" delay={0.3}>
                 <div className="space-y-1">
                   <span className="font-mono text-xs font-semibold text-[#9D6638]">02.</span>
-                  <h4 className="font-bold text-xs uppercase tracking-wider text-[#4E220F]">Joyful Intellect</h4>
-                  <p className="text-xs text-[#7E5F4E]">Concept clarity, science inquiry, and Olympiad rigor.</p>
+                  <h4 className="font-bold text-xs uppercase tracking-wider text-[#4E220F]">Conceptual Clarity</h4>
+                  <p className="text-xs text-[#7E5F4E]">Interactive smart panels, science practicals, and math logic.</p>
                 </div>
               </Reveal>
 
               <Reveal direction="up" delay={0.35}>
                 <div className="space-y-1">
                   <span className="font-mono text-xs font-semibold text-[#9D6638]">03.</span>
-                  <h4 className="font-bold text-xs uppercase tracking-wider text-[#4E220F]">Confidence</h4>
-                  <p className="text-xs text-[#7E5F4E]">Public speaking, athletic resilience, and teamwork.</p>
+                  <h4 className="font-bold text-xs uppercase tracking-wider text-[#4E220F]">Confidence & Speech</h4>
+                  <p className="text-xs text-[#7E5F4E]">Bilingual English & Punjabi fluency, public speaking, and team sports.</p>
                 </div>
               </Reveal>
             </div>
@@ -114,7 +104,7 @@ export function EditorialStatement() {
             <div className="absolute inset-0 bg-gradient-to-t from-[#4E220F]/80 via-transparent to-transparent opacity-80" />
             <div className="absolute bottom-5 left-5 right-5 text-white space-y-1">
               <span className="text-[10px] font-mono uppercase tracking-widest text-[#B0BA99]">
-                SCHOLASTIC ENVIRONMENT
+                CAMPUS ENVIRONMENT
               </span>
               <p className="font-editorial text-xl sm:text-2xl font-normal">
                 Cultivating curiosity, empathy, and intellectual independence.
@@ -131,7 +121,7 @@ export function EditorialStatement() {
                 className="w-full h-full"
               />
               <div className="absolute top-3 left-3 px-2.5 py-1 rounded bg-[#4E220F]/90 backdrop-blur-xs text-[#B0BA99] text-[9px] font-mono uppercase tracking-wider">
-                STEM Inquiry & Science Labs
+                Practical Science Laboratories
               </div>
             </div>
 
@@ -148,13 +138,45 @@ export function EditorialStatement() {
           </div>
         </div>
 
-        {/* Subtle Horizontal Marquee Ribbon */}
-        <div className="pt-6 pb-2 border-t border-[#9D6638]/20">
-          <Marquee
-            items={marqueeWords}
-            speed={38}
-            itemClassName="text-sm sm:text-base lg:text-lg font-bold font-mono uppercase tracking-[0.12em] text-[#4E220F] hover:text-[#9D6638] transition-colors"
-          />
+        {/* Static Institutional Hallmarks Bar (Replacing generic Marquee) */}
+        <div className="pt-6 border-t border-[#9D6638]/20">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="p-4 rounded-xl bg-white border border-[#9D6638]/20 shadow-xs space-y-1.5 hover:border-[#9D6638]/40 transition-colors">
+              <div className="flex items-center gap-2">
+                <ShieldCheck className="w-4 h-4 text-[#9D6638]" />
+                <span className="text-[10px] font-mono font-semibold uppercase tracking-wider text-[#9D6638]">Affiliation</span>
+              </div>
+              <h4 className="font-editorial text-lg text-[#4E220F] font-semibold leading-tight">PSEB Affiliated</h4>
+              <p className="text-xs text-[#7E5F4E]">Punjab Board Code PB-20176 with consistent 100% Class 10 pass record.</p>
+            </div>
+
+            <div className="p-4 rounded-xl bg-white border border-[#9D6638]/20 shadow-xs space-y-1.5 hover:border-[#9D6638]/40 transition-colors">
+              <div className="flex items-center gap-2">
+                <BookOpen className="w-4 h-4 text-[#9D6638]" />
+                <span className="text-[10px] font-mono font-semibold uppercase tracking-wider text-[#9D6638]">Ethos & Dharma</span>
+              </div>
+              <h4 className="font-editorial text-lg text-[#4E220F] font-semibold leading-tight">Vedic Heritage</h4>
+              <p className="text-xs text-[#7E5F4E]">Daily Yajna, Gayatri Mantra, and moral discipline rooted in Arya Samaj values.</p>
+            </div>
+
+            <div className="p-4 rounded-xl bg-white border border-[#9D6638]/20 shadow-xs space-y-1.5 hover:border-[#9D6638]/40 transition-colors">
+              <div className="flex items-center gap-2">
+                <Monitor className="w-4 h-4 text-[#9D6638]" />
+                <span className="text-[10px] font-mono font-semibold uppercase tracking-wider text-[#9D6638]">Classrooms</span>
+              </div>
+              <h4 className="font-editorial text-lg text-[#4E220F] font-semibold leading-tight">Smart Digital Labs</h4>
+              <p className="text-xs text-[#7E5F4E]">Interactive 75" panels, composite science laboratory, and computer education.</p>
+            </div>
+
+            <div className="p-4 rounded-xl bg-white border border-[#9D6638]/20 shadow-xs space-y-1.5 hover:border-[#9D6638]/40 transition-colors">
+              <div className="flex items-center gap-2">
+                <Bus className="w-4 h-4 text-[#9D6638]" />
+                <span className="text-[10px] font-mono font-semibold uppercase tracking-wider text-[#9D6638]">Parent Reassurance</span>
+              </div>
+              <h4 className="font-editorial text-lg text-[#4E220F] font-semibold leading-tight">Safe Van Transport</h4>
+              <p className="text-xs text-[#7E5F4E]">CCTV monitored campus with dedicated female attendants for primary students.</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>

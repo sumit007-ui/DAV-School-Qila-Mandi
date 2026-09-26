@@ -29,12 +29,16 @@ import {
   AlertCircle,
   Newspaper,
   Sliders,
-  Camera
+  Camera,
+  Trophy,
+  Database
 } from "lucide-react";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import { NewsCMSView } from "@/components/admin/NewsCMSView";
 import { SchoolSettingsView } from "@/components/admin/SchoolSettingsView";
 import { PhotosCMSView } from "@/components/admin/PhotosCMSView";
+import { AcademicToppersCMSView } from "@/components/admin/AcademicToppersCMSView";
+import { StorageBucketCMSView } from "@/components/admin/StorageBucketCMSView";
 
 interface AdmissionEnquiry {
   id: string;
@@ -72,7 +76,7 @@ interface DeleteTarget {
 
 export default function AdminEnquiriesDashboard() {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState<"admissions" | "contacts" | "news" | "settings" | "photos">("admissions");
+  const [activeTab, setActiveTab] = useState<"admissions" | "contacts" | "news" | "settings" | "photos" | "toppers" | "buckets">("admissions");
   const [loading, setLoading] = useState(true);
   const [userEmail, setUserEmail] = useState<string | null>(null);
 
@@ -81,8 +85,8 @@ export default function AdminEnquiriesDashboard() {
     if (typeof window !== "undefined") {
       const params = new URLSearchParams(window.location.search);
       const tabParam = params.get("tab");
-      if (tabParam === "news" || tabParam === "admissions" || tabParam === "contacts" || tabParam === "settings" || tabParam === "photos") {
-        setActiveTab(tabParam as "admissions" | "contacts" | "news" | "settings" | "photos");
+      if (tabParam === "news" || tabParam === "admissions" || tabParam === "contacts" || tabParam === "settings" || tabParam === "photos" || tabParam === "toppers" || tabParam === "buckets") {
+        setActiveTab(tabParam as "admissions" | "contacts" | "news" | "settings" | "photos" | "toppers" | "buckets");
       }
     }
   }, []);
@@ -545,6 +549,32 @@ export default function AdminEnquiriesDashboard() {
                 <Camera className="w-3.5 h-3.5" />
                 <span>Photos & Media CMS</span>
               </button>
+              <button
+                onClick={() => {
+                  setActiveTab("toppers");
+                }}
+                className={`flex items-center gap-1.5 px-5 py-2.5 rounded-lg text-xs font-mono font-bold uppercase tracking-wider transition-all ${
+                  activeTab === "toppers"
+                    ? "bg-gold-500 text-navy-950 shadow-md font-extrabold"
+                    : "text-cream-300 hover:text-white"
+                }`}
+              >
+                <Trophy className="w-3.5 h-3.5" />
+                <span>Roll of Honor CMS</span>
+              </button>
+              <button
+                onClick={() => {
+                  setActiveTab("buckets");
+                }}
+                className={`flex items-center gap-1.5 px-5 py-2.5 rounded-lg text-xs font-mono font-bold uppercase tracking-wider transition-all ${
+                  activeTab === "buckets"
+                    ? "bg-gold-500 text-navy-950 shadow-md font-extrabold"
+                    : "text-cream-300 hover:text-white"
+                }`}
+              >
+                <Database className="w-3.5 h-3.5" />
+                <span>Storage Buckets</span>
+              </button>
             </div>
 
             {/* Search & Filters (only for enquiries) */}
@@ -577,13 +607,17 @@ export default function AdminEnquiriesDashboard() {
           </div>
         </div>
 
-        {/* Dynamic Content: Photos CMS, Settings View, News CMS View or Enquiries Tables */}
+        {/* Dynamic Content: Photos CMS, Settings View, News CMS View, Toppers CMS, Storage Buckets, or Enquiries Tables */}
         {activeTab === "photos" ? (
           <PhotosCMSView />
         ) : activeTab === "settings" ? (
           <SchoolSettingsView />
         ) : activeTab === "news" ? (
           <NewsCMSView />
+        ) : activeTab === "toppers" ? (
+          <AcademicToppersCMSView />
+        ) : activeTab === "buckets" ? (
+          <StorageBucketCMSView />
         ) : (
           <div className="bg-[#0B1A30] rounded-2xl border border-white/10 overflow-hidden shadow-sm">
             {activeTab === "admissions" ? (

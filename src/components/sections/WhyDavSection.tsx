@@ -201,7 +201,7 @@ export function WhyDavSection() {
                             {pillar.description}
                           </p>
 
-                          <div className="flex flex-wrap items-center gap-4 pt-2">
+                          <div className="flex flex-wrap items-center gap-3 pt-2">
                             <button
                               onClick={(e) => {
                                 e.stopPropagation();
@@ -211,6 +211,17 @@ export function WhyDavSection() {
                             >
                               Admissions Open {pillar.category}
                             </button>
+
+                            {pillar.id === "academic-excellence" && (
+                              <a
+                                href="#academic-roll"
+                                onClick={(e) => e.stopPropagation()}
+                                className="px-4 py-2 rounded bg-[#4E220F] hover:bg-[#3D1A0B] text-[#F4E4AF] font-bold text-xs uppercase tracking-wider transition-all font-sans inline-flex items-center gap-1.5"
+                              >
+                                <span>Roll of Honor Toppers</span>
+                                <ArrowRight className="w-3.5 h-3.5" />
+                              </a>
+                            )}
 
                             <span className="text-xs text-[#9D6638] font-mono flex items-center gap-1 font-semibold">
                               <CheckCircle2 className="w-3.5 h-3.5" />
