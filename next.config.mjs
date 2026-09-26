@@ -1,69 +1,39 @@
 /** @type {import('next').NextConfig} */
+
+// ── Content Security Policy ────────────────────────────────────────────────
+// Tight CSP — no Sanity CDN (removed), only Supabase + Google Fonts
 const contentSecurityPolicy = `
   default-src 'self';
-  script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.sanity.io;
+  script-src 'self' 'unsafe-inline' 'unsafe-eval';
   style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-  img-src 'self' data: blob: https://images.unsplash.com https://plus.unsplash.com https://cdn.sanity.io https://*.supabase.co;
+  img-src 'self' data: blob: https://images.unsplash.com https://plus.unsplash.com https://*.supabase.co;
   font-src 'self' data: https://fonts.gstatic.com;
-  connect-src 'self' https://*.supabase.co wss://*.supabase.co https://*.api.sanity.io https://cdn.sanity.io;
-  frame-ancestors 'self';
+  connect-src 'self' https://*.supabase.co wss://*.supabase.co;
+  media-src 'self' https://*.supabase.co;
+  frame-ancestors 'none';
   base-uri 'self';
   form-action 'self';
+  upgrade-insecure-requests;
 `.replace(/\s{2,}/g, ' ').trim()
 
 const nextConfig = {
   distDir: process.env.NEXT_DIST_DIR || '.next',
+
+  // ── Core ──────────────────────────────────────────────────────────────────
   reactStrictMode: true,
-  poweredByHeader: false,
+  poweredByHeader: false, // Hide "X-Powered-By: Next.js"
+  compress: true,          // Enable gzip/brotli on server responses
   eslint: {
     ignoreDuringBuilds: true,
   },
-  async headers() {
-    return [
-      {
-        source: '/:path*',
-        headers: [
-          {
-            key: 'Content-Security-Policy',
-            value: contentSecurityPolicy,
-          },
-          {
-            key: 'X-DNS-Prefetch-Control',
-            value: 'on',
-          },
-          {
-            key: 'Strict-Transport-Security',
-            value: 'max-age=63072000; includeSubDomains; preload',
-          },
-          {
-            key: 'X-Frame-Options',
-            value: 'SAMEORIGIN',
-          },
-          {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff',
-          },
-          {
-            key: 'Referrer-Policy',
-            value: 'strict-origin-when-cross-origin',
-          },
-          {
-            key: 'Permissions-Policy',
-            value: 'camera=(), microphone=(), geolocation=(), browsing-topics=()',
-          },
-          {
-            key: 'Cross-Origin-Opener-Policy',
-            value: 'same-origin',
-          },
-          {
-            key: 'Cross-Origin-Resource-Policy',
-            value: 'same-origin',
-          },
-        ],
-      },
-    ]
-  },
+
+  // ── Image Optimization ───────────────────────────────────────────────────
   images: {
+    // Next.js built-in image optimizer — auto WebP/AVIF serving
+    formats: ['image/avif', 'image/webp'],
+    // Aggressive caching: 30 days TTL for optimized images
+    minimumCacheTTL: 60 * 60 * 24 * 30,
+    // Allow images from Supabase & Unsplash only
     remotePatterns: [
       {
         protocol: 'https',
@@ -75,13 +45,104 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'cdn.sanity.io',
-      },
-      {
-        protocol: 'https',
         hostname: '**.supabase.co',
       },
     ],
+    // Device sizes for responsive images
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    dangerouslyAllowSVG: false, // Block SVG optimization (security)
+    contentDispositionType: 'attachment',
+  },
+
+  // ── Security & Cache Headers ─────────────────────────────────────────────
+  async headers() {
+    return [
+      // ─ All pages: strict security headers ─────────────────────────────
+      {
+        source: '/:path*',
+        headers: [
+          { key: 'Content-Security-Policy', value: contentSecurityPolicy },
+          { key: 'X-DNS-Prefetch-Control', value: 'on' },
+          { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' },
+          { key: 'X-Frame-Options', value: 'DENY' },
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+          { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=(), browsing-topics=(), interest-cohort=()' },
+          { key: 'Cross-Origin-Opener-Policy', value: 'same-origin' },
+          { key: 'Cross-Origin-Resource-Policy', value: 'same-origin' },
+          { key: 'Cross-Origin-Embedder-Policy', value: 'credentialless' },
+          { key: 'X-Permitted-Cross-Domain-Policies', value: 'none' },
+        ],
+      },
+
+      // ─ Static assets: aggressive long-term caching ─────────────────────
+      {
+        source: '/_next/static/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+        ],
+      },
+
+      // ─ Next.js image optimization output ───────────────────────────────
+      {
+        source: '/_next/image',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=2592000, stale-while-revalidate=86400' },
+          { key: 'Vary', value: 'Accept' },
+        ],
+      },
+
+      // ─ Fonts ───────────────────────────────────────────────────────────
+      {
+        source: '/fonts/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+          { key: 'Access-Control-Allow-Origin', value: '*' },
+        ],
+      },
+
+      // ─ Local images (public/images/*) ──────────────────────────────────
+      {
+        source: '/images/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' },
+        ],
+      },
+
+      // ─ Public API routes (read-only data) ──────────────────────────────
+      {
+        source: '/api/(photos|news|toppers|settings)',
+        headers: [
+          { key: 'Cache-Control', value: 'public, s-maxage=60, stale-while-revalidate=30' },
+          { key: 'Vary', value: 'Accept-Encoding' },
+        ],
+      },
+
+      // ─ Admin API routes: no caching, extra isolation ─────────────────
+      {
+        source: '/api/admin/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'no-store, no-cache, must-revalidate' },
+          { key: 'Cross-Origin-Resource-Policy', value: 'same-site' },
+        ],
+      },
+    ]
+  },
+
+  // ── Webpack performance tweaks ────────────────────────────────────────────
+  webpack(config, { dev, isServer }) {
+    // Smaller production bundles
+    if (!dev && !isServer) {
+      config.optimization = {
+        ...config.optimization,
+        splitChunks: {
+          ...config.optimization.splitChunks,
+          maxSize: 244_000,
+        },
+      }
+    }
+    return config
   },
 }
 

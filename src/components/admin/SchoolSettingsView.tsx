@@ -23,7 +23,8 @@ import {
   X,
   Type,
   Eye,
-  RotateCcw
+  RotateCcw,
+  UserCheck
 } from "lucide-react";
 import { SCHOOL_CONFIG } from "@/config/school";
 
@@ -45,6 +46,12 @@ interface SettingsState {
   heroTitleLine1: string;
   heroTitleLine2: string;
   heroDescription: string;
+  // Principal's Desk
+  principalName: string;
+  principalDesignation: string;
+  principalQualifications: string;
+  principalExcerpt: string;
+  principalFullMessage: string;
 }
 
 export function SchoolSettingsView() {
@@ -74,6 +81,11 @@ export function SchoolSettingsView() {
     heroTitleLine1: SCHOOL_CONFIG.hero.titleLine1,
     heroTitleLine2: SCHOOL_CONFIG.hero.titleLine2,
     heroDescription: SCHOOL_CONFIG.hero.description,
+    principalName: SCHOOL_CONFIG.leadership.principal.name,
+    principalDesignation: SCHOOL_CONFIG.leadership.principal.designation,
+    principalQualifications: SCHOOL_CONFIG.leadership.principal.qualifications,
+    principalExcerpt: SCHOOL_CONFIG.leadership.principal.messageExcerpt,
+    principalFullMessage: (SCHOOL_CONFIG.leadership.principal.fullMessage || []).join("\n\n"),
   });
 
   // Calculate current year preview
@@ -106,6 +118,11 @@ export function SchoolSettingsView() {
             heroTitleLine1: data.settings.heroTitleLine1 || SCHOOL_CONFIG.hero.titleLine1,
             heroTitleLine2: data.settings.heroTitleLine2 || SCHOOL_CONFIG.hero.titleLine2,
             heroDescription: data.settings.heroDescription || SCHOOL_CONFIG.hero.description,
+            principalName: data.settings.principalName || SCHOOL_CONFIG.leadership.principal.name,
+            principalDesignation: data.settings.principalDesignation || SCHOOL_CONFIG.leadership.principal.designation,
+            principalQualifications: data.settings.principalQualifications || SCHOOL_CONFIG.leadership.principal.qualifications,
+            principalExcerpt: data.settings.principalExcerpt || SCHOOL_CONFIG.leadership.principal.messageExcerpt,
+            principalFullMessage: data.settings.principalFullMessage || (SCHOOL_CONFIG.leadership.principal.fullMessage || []).join("\n\n"),
           });
         }
       }
@@ -381,6 +398,94 @@ ON CONFLICT (id) DO NOTHING;`;
                 required
               />
             </div>
+          </div>
+        </div>
+
+        {/* Card: Principal's Desk & Leadership Message */}
+        <div className="bg-[#0B1A30] rounded-2xl border border-white/10 p-6 sm:p-8 space-y-6 shadow-sm">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-white/10 pb-4 gap-2">
+            <div className="flex items-center gap-2.5">
+              <UserCheck className="w-5 h-5 text-gold-400" />
+              <div>
+                <h3 className="font-serif text-lg font-bold text-white">Principal&apos;s Desk &amp; Leadership Message</h3>
+                <p className="text-xs text-cream-400 font-mono">
+                  Principal&apos;s perspective quote on homepage and full letter modal (photo can be changed via &quot;Photos &amp; Banners&quot;)
+                </p>
+              </div>
+            </div>
+            <span className="px-2.5 py-1 rounded-full bg-gold-500/15 border border-gold-500/30 text-gold-300 text-[10px] font-mono uppercase font-bold self-start sm:self-auto">
+              Live Leadership Desk
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="space-y-2">
+              <label className="block text-xs font-mono uppercase tracking-wider text-cream-300">
+                Principal Name
+              </label>
+              <input
+                type="text"
+                value={form.principalName}
+                onChange={(e) => setForm({ ...form, principalName: e.target.value })}
+                placeholder="Mrs. Anjana Gupta"
+                className="w-full px-4 py-3 bg-navy-950 border border-white/15 rounded-xl text-sm font-sans text-white focus:outline-none focus:ring-2 focus:ring-gold-500 placeholder:text-cream-400/40"
+                required
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="block text-xs font-mono uppercase tracking-wider text-cream-300">
+                Designation
+              </label>
+              <input
+                type="text"
+                value={form.principalDesignation}
+                onChange={(e) => setForm({ ...form, principalDesignation: e.target.value })}
+                placeholder="Principal"
+                className="w-full px-4 py-3 bg-navy-950 border border-white/15 rounded-xl text-sm font-sans text-white focus:outline-none focus:ring-2 focus:ring-gold-500 placeholder:text-cream-400/40"
+                required
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="block text-xs font-mono uppercase tracking-wider text-cream-300">
+                Academic Qualifications
+              </label>
+              <input
+                type="text"
+                value={form.principalQualifications}
+                onChange={(e) => setForm({ ...form, principalQualifications: e.target.value })}
+                placeholder="M.A., B.Ed., 25+ Years in Educational Leadership"
+                className="w-full px-4 py-3 bg-navy-950 border border-white/15 rounded-xl text-sm font-sans text-white focus:outline-none focus:ring-2 focus:ring-gold-500 placeholder:text-cream-400/40"
+              />
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <label className="block text-xs font-mono uppercase tracking-wider text-cream-300">
+              Short Homepage Quote / Excerpt (Displayed prominently on home page with signature)
+            </label>
+            <textarea
+              rows={3}
+              value={form.principalExcerpt}
+              onChange={(e) => setForm({ ...form, principalExcerpt: e.target.value })}
+              placeholder="At DAV Qila Mandi, we believe true education harmonizes sharp academic acumen with deep-rooted Vedic values and moral courage."
+              className="w-full px-4 py-3 bg-navy-950 border border-white/15 rounded-xl text-sm font-sans text-white focus:outline-none focus:ring-2 focus:ring-gold-500 placeholder:text-cream-400/40 leading-relaxed"
+              required
+            />
+          </div>
+
+          <div className="space-y-2">
+            <label className="block text-xs font-mono uppercase tracking-wider text-cream-300">
+              Full Address to Parents &amp; Students (Modal Content — separate paragraphs with an empty line)
+            </label>
+            <textarea
+              rows={5}
+              value={form.principalFullMessage}
+              onChange={(e) => setForm({ ...form, principalFullMessage: e.target.value })}
+              placeholder="Full letter text paragraphs..."
+              className="w-full px-4 py-3 bg-navy-950 border border-white/15 rounded-xl text-sm font-sans text-white focus:outline-none focus:ring-2 focus:ring-gold-500 placeholder:text-cream-400/40 leading-relaxed"
+            />
           </div>
         </div>
 

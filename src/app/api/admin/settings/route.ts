@@ -16,19 +16,21 @@ export async function GET() {
       return NextResponse.json({ error: "Supabase client not available" }, { status: 500 });
     }
 
-    const { data, error } = await supabase
-      .from("school_settings")
-      .select("*")
-      .eq("id", "default")
-      .single();
+    const [settingsRes, principalRes] = await Promise.all([
+      supabase.from("school_settings").select("*").eq("id", "default").single(),
+      supabase.from("leadership_messages").select("*").eq("role", "principal").single(),
+    ]);
 
-    if (error && error.code !== "PGRST116") {
-      console.warn("[Admin Settings] Fetch error:", error.message);
-    }
+    const data = settingsRes.data;
+    const principalData = principalRes.data;
 
     const estYear = data?.established_year || defaultEstablishedYear;
     const calcYears = Math.max(1, currentYear - estYear);
     const finalYears = data?.years_override ? Number(data.years_override) : calcYears;
+
+    const fullMsgArray = Array.isArray(principalData?.full_message) && principalData.full_message.length > 0
+      ? principalData.full_message
+      : SCHOOL_CONFIG.leadership.principal.fullMessage || [];
 
     return NextResponse.json({
       success: true,
@@ -53,6 +55,12 @@ export async function GET() {
         heroTitleLine1: data?.hero_title_line1 || SCHOOL_CONFIG.hero.titleLine1,
         heroTitleLine2: data?.hero_title_line2 || SCHOOL_CONFIG.hero.titleLine2,
         heroDescription: data?.hero_description || SCHOOL_CONFIG.hero.description,
+        // Principal's Desk settings
+        principalName: principalData?.name || SCHOOL_CONFIG.leadership.principal.name,
+        principalDesignation: principalData?.designation || SCHOOL_CONFIG.leadership.principal.designation,
+        principalQualifications: principalData?.qualifications || SCHOOL_CONFIG.leadership.principal.qualifications,
+        principalExcerpt: principalData?.message_excerpt || SCHOOL_CONFIG.leadership.principal.messageExcerpt,
+        principalFullMessage: fullMsgArray.join("\n\n"),
       }
     });
   } catch (err: any) {
@@ -91,7 +99,12 @@ export async function POST(req: NextRequest) {
       heroBadgeText,
       heroTitleLine1,
       heroTitleLine2,
-      heroDescription
+      heroDescription,
+      principalName,
+      principalDesignation,
+      principalQualifications,
+      principalExcerpt,
+      principalFullMessage
     } = body;
 
     const payload: Record<string, any> = {
@@ -116,6 +129,33 @@ export async function POST(req: NextRequest) {
       hero_description: heroDescription !== undefined ? sanitizeString(heroDescription) : SCHOOL_CONFIG.hero.description,
       updated_at: new Date().toISOString()
     };
+
+    // Update Principal leadership message if provided
+    if (principalName || principalExcerpt || principalFullMessage) {
+      const rawParagraphs = typeof principalFullMessage === "string"
+        ? principalFullMessage.split("\n\n").map((p: string) => sanitizeString(p.trim())).filter(Boolean)
+        : SCHOOL_CONFIG.leadership.principal.fullMessage;
+
+      const principalPayload: Record<string, any> = {
+        role: "principal",
+        name: sanitizeString(principalName) || SCHOOL_CONFIG.leadership.principal.name,
+        designation: sanitizeString(principalDesignation) || SCHOOL_CONFIG.leadership.principal.designation,
+        qualifications: sanitizeString(principalQualifications) || SCHOOL_CONFIG.leadership.principal.qualifications,
+        photo_url: SCHOOL_CONFIG.leadership.principal.image,
+        message_excerpt: sanitizeString(principalExcerpt) || SCHOOL_CONFIG.leadership.principal.messageExcerpt,
+        full_message: rawParagraphs && rawParagraphs.length > 0 ? rawParagraphs : [SCHOOL_CONFIG.leadership.principal.messageExcerpt],
+        is_published: true,
+        updated_at: new Date().toISOString()
+      };
+
+      const principalUpsert = await supabase
+        .from("leadership_messages")
+        .upsert(principalPayload, { onConflict: "role" });
+
+      if (principalUpsert.error) {
+        console.warn("[Admin Settings] Principal leadership upsert warning:", principalUpsert.error.message);
+      }
+    }
 
     let { data, error } = await supabase
       .from("school_settings")

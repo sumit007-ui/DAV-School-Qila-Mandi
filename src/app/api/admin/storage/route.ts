@@ -89,12 +89,21 @@ export async function GET(req: NextRequest) {
   }
 }
 
-// POST: Upload file into selected bucket
+// POST: Upload file into selected bucket — with image optimization
 export async function POST(req: NextRequest) {
   try {
     const authResult = await validateAdminRequest(req);
     if (!authResult.authorized) {
       return authResult.response!;
+    }
+
+    // Rate limit: 40 uploads per 10 min per IP
+    const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+                req.headers.get("cf-connecting-ip") || "unknown";
+    const { checkRateLimit } = await import("@/lib/security/rateLimit");
+    const rateCheck = checkRateLimit(`storage-upload:${ip}`, 40, 10 * 60 * 1000);
+    if (!rateCheck.success) {
+      return NextResponse.json({ error: "Upload rate limit exceeded. Please wait." }, { status: 429 });
     }
 
     const supabase = getSupabaseServerClient();
@@ -111,28 +120,73 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "No file provided for upload" }, { status: 400 });
     }
 
-    const validTypes = ["image/jpeg", "image/png", "image/webp", "image/gif", "application/pdf"];
+    // Bucket whitelist — prevent uploading to arbitrary buckets
+    if (!KNOWN_BUCKETS.map((b) => b.id).includes(bucket)) {
+      return NextResponse.json({ error: "Invalid storage bucket." }, { status: 400 });
+    }
+
+    const validTypes = ["image/jpeg", "image/png", "image/webp", "application/pdf"];
     if (!validTypes.includes(file.type)) {
       return NextResponse.json({
-        error: "Only image files (JPEG, PNG, WEBP, GIF) and PDF documents are allowed"
+        error: "Only image files (JPEG, PNG, WEBP) and PDF documents are allowed",
       }, { status: 400 });
     }
 
-    if (file.size > 15 * 1024 * 1024) {
-      return NextResponse.json({ error: "File exceeds 15MB size limit" }, { status: 400 });
+    if (file.size > 20 * 1024 * 1024) {
+      return NextResponse.json({ error: "File exceeds 20MB size limit" }, { status: 400 });
     }
 
-    const arrayBuffer = await file.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
+    const arrayBuffer = await file.arrayBuffer() as ArrayBuffer;
+    let uploadBuffer: Buffer = Buffer.from(arrayBuffer);
+    let uploadMimeType = file.type;
+    let uploadExt: string;
+    let optimizationInfo: Record<string, string> | undefined;
 
-    const ext = file.name.split(".").pop()?.toLowerCase() || "jpg";
-    const safeExt = ["jpg", "jpeg", "png", "webp", "gif", "pdf"].includes(ext) ? ext : "jpg";
-    
+    // ── Image optimization (for all image types, not PDFs) ──────────────────
+    if (file.type.startsWith("image/")) {
+      // Magic byte validation first
+      const { validateMagicBytes, optimizeImage, formatFileSize } = await import("@/lib/imageOptimize");
+      if (!validateMagicBytes(uploadBuffer, file.type)) {
+        return NextResponse.json(
+          { error: "File content does not match declared type. Upload rejected." },
+          { status: 400 }
+        );
+      }
+
+      try {
+        const result = await optimizeImage(uploadBuffer, {
+          maxWidth: 2048,
+          maxHeight: 2048,
+          quality: 83,
+          format: "webp",
+          stripMetadata: true,
+        });
+        const savedPct = Math.round((1 - result.optimizedSize / result.originalSize) * 100);
+        optimizationInfo = {
+          originalSize: formatFileSize(result.originalSize),
+          optimizedSize: formatFileSize(result.optimizedSize),
+          savedPercent: `${savedPct}%`,
+          dimensions: `${result.width}×${result.height}px`,
+        };
+        uploadBuffer = result.buffer as Buffer;
+        uploadMimeType = result.mimeType;
+        uploadExt = result.extension;
+      } catch {
+        // Fallback: upload original if optimization fails
+        uploadExt = file.name.split(".").pop()?.toLowerCase() || "jpg";
+      }
+    } else {
+      // PDF
+      uploadExt = "pdf";
+      uploadMimeType = "application/pdf";
+    }
+
     // Sanitize filename
-    const baseName = customName 
+    const safeExt = uploadExt || "webp";
+    const baseName = customName
       ? customName.replace(/[^a-zA-Z0-9_-]/g, "_")
       : file.name.replace(/\.[^/.]+$/, "").replace(/[^a-zA-Z0-9_-]/g, "_");
-      
+
     const filename = `${baseName}_${Date.now()}.${safeExt}`;
 
     // Ensure bucket exists
@@ -144,9 +198,10 @@ export async function POST(req: NextRequest) {
 
     const uploadRes = await supabase.storage
       .from(bucket)
-      .upload(filename, buffer, {
-        contentType: file.type,
-        upsert: true
+      .upload(filename, uploadBuffer, {
+        contentType: uploadMimeType,
+        upsert: true,
+        cacheControl: "3600",
       });
 
     if (uploadRes.error) {
@@ -160,16 +215,16 @@ export async function POST(req: NextRequest) {
 
     const publicUrl = publicData.publicUrl;
 
-    // Optional: Log to media_assets table if it exists
+    // Log to media_assets table
     try {
       await supabase.from("media_assets").insert({
         filename,
         storage_bucket: bucket,
         storage_path: filename,
         public_url: publicUrl,
-        mime_type: file.type,
-        file_size: file.size,
-        title: baseName
+        mime_type: uploadMimeType,
+        file_size: uploadBuffer.length,
+        title: baseName,
       });
     } catch {
       // Table may not yet be initialized
@@ -180,8 +235,9 @@ export async function POST(req: NextRequest) {
       bucket,
       filename,
       publicUrl,
-      size: file.size,
-      mimetype: file.type
+      size: uploadBuffer.length,
+      mimetype: uploadMimeType,
+      ...(optimizationInfo ? { optimization: optimizationInfo } : {}),
     });
   } catch (err: any) {
     console.error("[Storage POST Exception]:", err);
