@@ -6,7 +6,7 @@ export const ACADEMIC_TOPPERS: AcademicTopper[] = [
     score: "98.6%",
     streamOrGrade: "Class X PSEB Board • District Rank 1",
     year: "2024–25",
-    testimonial: "The rigorous concept clarity sessions and continuous mock series by our teachers at DAV Qilla Mandi gave me total confidence for the board examinations."
+    testimonial: "The rigorous concept clarity sessions and continuous mock series by our teachers at DAV Qila Mandi gave me total confidence for the board examinations."
   },
   {
     name: "Arjan Singh Bedi",
@@ -32,7 +32,7 @@ export const ACHIEVEMENTS: Achievement[] = [
     year: "2025",
     studentOrTeam: "Class X PSEB Batch 2024-25",
     classOrGrade: "Class X",
-    description: "Dr. MRS Bhalla DAV School Qilla Mandi set a district benchmark with 100% first divisions and district top positions in PSEB Class 10 Board Examinations.",
+    description: "Dr. MRS Bhalla DAV School Qila Mandi set a district benchmark with 100% first divisions and district top positions in PSEB Class 10 Board Examinations.",
     badge: "District Rank 1",
     image: "/images/ethos-learning.jpg"
   },
@@ -52,7 +52,7 @@ export const ACHIEVEMENTS: Achievement[] = [
     title: "Overall Champions at Inter-DAV National Athletic Meet",
     category: "Sports",
     year: "2024",
-    studentOrTeam: "DAV Qilla Mandi Athletic Contingent",
+    studentOrTeam: "DAV Qila Mandi Athletic Contingent",
     classOrGrade: "Under-17 Team",
     description: "Our athletics team bagged 8 Gold, 5 Silver, and 4 Bronze medals at the National Inter-DAV Games, clinching the overall rolling trophy.",
     badge: "National Champions",

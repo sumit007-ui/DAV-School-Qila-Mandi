@@ -13,7 +13,7 @@ export default function TermsPage() {
             Terms of Use
           </h1>
           <p className="text-xs text-navy-500 font-mono">
-            DAV Public School Qilla Mandi • DAVCMC New Delhi
+            DAV Public School Qila Mandi • DAVCMC New Delhi
           </p>
         </div>
 
@@ -21,14 +21,14 @@ export default function TermsPage() {
           <section className="space-y-2">
             <h2 className="font-serif text-lg font-bold text-navy-950">1. Acceptance of Terms</h2>
             <p>
-              By accessing and navigating the official digital portal of DAV Public School Qilla Mandi, you agree to comply with these terms, school administrative rules, and applicable PSEB/State guidelines.
+              By accessing and navigating the official digital portal of DAV Public School Qila Mandi, you agree to comply with these terms, school administrative rules, and applicable PSEB/State guidelines.
             </p>
           </section>
 
           <section className="space-y-2">
             <h2 className="font-serif text-lg font-bold text-navy-950">2. Intellectual Property & Brand Assets</h2>
             <p>
-              All photographs, logos, emblems, curriculum summaries, and institutional text published on this website are the intellectual property of DAV Public School Qilla Mandi and DAVCMC. Unauthorized duplication or commercial reproduction without written consent is prohibited.
+              All photographs, logos, emblems, curriculum summaries, and institutional text published on this website are the intellectual property of DAV Public School Qila Mandi and DAVCMC. Unauthorized duplication or commercial reproduction without written consent is prohibited.
             </p>
           </section>
 

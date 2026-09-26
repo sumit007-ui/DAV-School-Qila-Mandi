@@ -253,7 +253,7 @@ export function AdmissionModal({ isOpen, onClose, defaultGrade = "Nursery" }: Ad
                   </label>
                   <input
                     type="text"
-                    placeholder="e.g. Qilla Mandi, Batala"
+                    placeholder="e.g. Qila Mandi, Batala"
                     value={formData.cityOrArea || ""}
                     onChange={(e) => handleChange("cityOrArea", e.target.value)}
                     className="w-full px-3.5 py-2 rounded-xl text-sm border border-[#4E220F]/20 focus:border-[#9D6638] focus:outline-none transition-colors text-[#4E220F]"

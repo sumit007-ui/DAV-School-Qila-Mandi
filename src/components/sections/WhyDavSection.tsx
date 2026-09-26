@@ -26,12 +26,12 @@ const PILLARS = [
     index: "02",
     title: "Vedic Values & Moral Fortitude",
     category: "HERITAGE",
-    subtitle: "DAVCMC Tradition & Daily Ethical Grounding",
-    description: "Under DAVCMC New Delhi, we weave timeless Vedic principles, morning Hawans, and social empathy into daily life, cultivating humble, disciplined, and morally courageous scholars.",
+    subtitle: "DAVCMC Tradition & Weekly Ethical Grounding",
+    description: "Under DAVCMC New Delhi, we weave timeless Vedic principles, weekly Hawan ceremonies, and social empathy into school life, cultivating humble, disciplined, and morally courageous scholars.",
     image: "/images/vedic-values.jpg",
     icon: HeartHandshake,
     badge: "Vedic Heritage",
-    metrics: "Daily Hawan · Character Pedagogy"
+    metrics: "Weekly Hawan · Character Pedagogy"
   },
   {
     id: "computer-technology",
@@ -48,14 +48,14 @@ const PILLARS = [
   {
     id: "sports-conditioning",
     index: "04",
-    title: "Athletics, Turf Nets & Martial Arts",
+    title: "Athletics, Cricket & Karate",
     category: "ATHLETICS",
-    subtitle: "Championship Arenas & Certified NIS Trainers",
-    description: "Dedicated cricket turf nets, FIBA-grade basketball courts, speed skating rink, and NIS-certified coaches training champions for district, state, and national tournaments.",
+    subtitle: "Championship Arenas, Cricket Turf & Karate Dojo",
+    description: "Dedicated cricket turf nets, karate training dojo, basketball courts, and certified NIS coaches training champions for district, state, and national tournaments.",
     image: "/images/sports-champions.jpg",
     icon: Trophy,
     badge: "State & National Medals",
-    metrics: "Cricket Turf · Taekwondo Dojo"
+    metrics: "Cricket & Karate"
   },
   {
     id: "arts-expression",
@@ -155,20 +155,15 @@ export function WhyDavSection() {
                     </p>
                   </div>
 
-                  {/* Right Badge & Arrow (Span 3) */}
-                  <div className="lg:col-span-3 flex items-center justify-between lg:justify-end gap-4">
-                    <span className={`text-[11px] font-mono px-3 py-1 rounded-full border transition-all ${
+                  {/* Right Badge (Span 3) */}
+                  <div className="lg:col-span-3 flex items-center justify-between lg:justify-end">
+                    <span className={`text-[11px] font-mono px-3.5 py-1.5 rounded-full border transition-all ${
                       isHovered 
                         ? "bg-[#4E220F] text-[#F7F1DE] border-[#4E220F]" 
                         : "bg-[#F7F1DE] text-[#4E220F] border-[#9D6638]/30 font-semibold"
                     }`}>
                       {pillar.badge}
                     </span>
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${
-                      isHovered ? "bg-[#9D6638] text-white rotate-0" : "bg-[#9D6638]/10 text-[#9D6638] -rotate-45"
-                    }`}>
-                      <ArrowRight className="w-4 h-4" />
-                    </div>
                   </div>
                 </div>
 

@@ -5,6 +5,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { Users, ArrowRight, Trophy, Music, Palette, Cpu, Compass } from "lucide-react";
 import { LineReveal, Reveal } from "@/components/motion";
+import { useWebsitePhotos } from "@/lib/hooks/useWebsitePhotos";
+
+const CARD_SLOT_MAP: Record<string, string> = {
+  "computer-lab-guild": "facility_computer_lab",
+  "sports-athletics": "facility_sports",
+  "cultural-arts": "facility_cultural",
+  "eco-club": "facility_yajnashala",
+};
 
 const CAMPUS_LIFE_CARDS = [
   {
@@ -64,6 +72,7 @@ function ShieldCheckIcon(props: any) {
 }
 
 export function StudentLifeSection() {
+  const { getPhoto } = useWebsitePhotos();
   const marqueeItems = [...CAMPUS_LIFE_CARDS, ...CAMPUS_LIFE_CARDS, ...CAMPUS_LIFE_CARDS];
 
   return (
@@ -110,6 +119,9 @@ export function StudentLifeSection() {
         >
           {marqueeItems.map((item, idx) => {
             const Icon = item.icon;
+            const slot = CARD_SLOT_MAP[item.id];
+            const displayImage = slot ? getPhoto(slot, item.image) : item.image;
+
             return (
               <div
                 key={`${item.id}-${idx}`}
@@ -118,7 +130,7 @@ export function StudentLifeSection() {
               >
                 {/* Photographic Layer */}
                 <Image
-                  src={item.image}
+                  src={displayImage}
                   alt={item.title}
                   fill
                   className="object-cover object-center group-hover:scale-108 transition-transform duration-700 ease-out"

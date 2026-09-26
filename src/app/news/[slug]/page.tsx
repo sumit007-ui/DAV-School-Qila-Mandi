@@ -14,14 +14,14 @@ interface NewsDetailPageProps {
 
 export async function generateMetadata({ params }: NewsDetailPageProps): Promise<Metadata> {
   const newsList = await getNews();
-  const story = newsList.find((s) => s.slug === params.slug || s.id === params.slug);
+  const story = newsList.find((s: any) => s.slug === params.slug || s.id === params.slug);
 
   if (!story) {
-    return { title: "Story Not Found | DAV Public School Qilla Mandi" };
+    return { title: "Story Not Found | DAV Public School Qila Mandi" };
   }
 
   return {
-    title: `${story.title} | DAV Public School Qilla Mandi`,
+    title: `${story.title} | DAV Public School Qila Mandi`,
     description: story.excerpt,
     openGraph: {
       title: story.title,
@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: NewsDetailPageProps): Promise
 
 export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
   const newsList = await getNews();
-  const story = newsList.find((s) => s.slug === params.slug || s.id === params.slug);
+  const story = newsList.find((s: any) => s.slug === params.slug || s.id === params.slug);
 
   if (!story) {
     notFound();

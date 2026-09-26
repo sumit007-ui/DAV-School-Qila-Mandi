@@ -14,7 +14,12 @@ export function BrandLogo({
   logoSize?: number;
 }) {
   const isDark = variant === "dark";
-  const name = schoolName || SCHOOL_CONFIG.name;
+  let rawName = schoolName || SCHOOL_CONFIG.name;
+  if (/^dav\s+high\s+school$/i.test(rawName.trim()) || rawName.trim() === "DAV School" || !/bhalla/i.test(rawName)) {
+    rawName = "Dr. MRS Bhalla DAV School";
+  }
+  // If the school name already ends with Qilla Mandi / Qila Mandi, trim it so it seamlessly pairs with the subName
+  const name = rawName.replace(/\s+Q[iI]lla\s+Mandi$/i, "").replace(/\s+Qila\s+Mandi$/i, "").trim() || rawName;
 
   return (
     <Link

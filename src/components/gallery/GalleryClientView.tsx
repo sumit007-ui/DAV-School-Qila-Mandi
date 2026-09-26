@@ -54,7 +54,7 @@ export function GalleryClientView({ items }: GalleryClientViewProps) {
         <div className="absolute inset-0 z-0">
           <Image
             src="https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&q=80&w=1920"
-            alt="DAV Public School Qilla Mandi Gallery"
+            alt="DAV Public School Qila Mandi Gallery"
             fill
             className="object-cover object-center scale-105"
             sizes="100vw"

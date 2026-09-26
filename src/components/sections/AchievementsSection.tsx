@@ -198,7 +198,7 @@ export function AchievementsSection({ achievements: propAchievements }: Achievem
                 <div className="p-5 pt-3 border-t border-[#9D6638]/15 flex items-center justify-between text-xs bg-[#F7F1DE]/40">
                   <span className="text-[#4E220F]/60 font-mono text-[11px] flex items-center gap-1.5">
                     <CheckCircle2 className="w-3.5 h-3.5 text-[#9D6638]" />
-                    DAV Qilla Mandi Legacy
+                    DAV Qila Mandi Legacy
                   </span>
                   <Award className="w-4 h-4 text-[#9D6638] group-hover:rotate-12 transition-transform" />
                 </div>

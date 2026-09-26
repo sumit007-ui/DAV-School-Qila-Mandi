@@ -47,7 +47,7 @@ const DEFAULT_ACTIVITIES = [
     id: "vedic-yajnashala",
     title: "Vedic Yajnashala & Ethical Leadership",
     category: "Vedic Values & Seva",
-    description: "Daily morning Havan, Vedic chanting, Dharam Shiksha discourses, character formation, and community service guided by Maharshi Dayanand ideals.",
+    description: "Weekly Havan ceremonies, Vedic chanting, Dharam Shiksha discourses, character formation, and community service guided by Maharshi Dayanand ideals.",
     image: "/images/yajnashala-havan.jpg",
     icon: Flame,
   },

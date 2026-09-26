@@ -107,7 +107,7 @@ export const CAMPUS_FACILITIES: CampusFacility[] = [
     specifications: [
       "120+ high-resolution HD CCTV cameras covering all indoor & outdoor zones",
       "RFID student attendance notifications delivered to parents",
-      "Fleet of GPS & CCTV-fitted school buses covering Batala, Qilla Mandi and rural perimeters",
+      "Fleet of GPS & CCTV-fitted school buses covering Batala, Qila Mandi and rural perimeters",
       "Full-time resident medical nurse and on-call paediatrician"
     ],
     image: "/images/independence-day.jpg",

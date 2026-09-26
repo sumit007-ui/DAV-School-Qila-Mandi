@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { 
   Phone, 
@@ -10,7 +11,8 @@ import {
   Sparkles,
   Download,
   Facebook,
-  Instagram
+  Instagram,
+  Youtube
 } from "lucide-react";
 import { SCHOOL_CONFIG } from "@/config/school";
 import { useAppModals } from "@/components/layout/ClientAppWrapper";
@@ -29,6 +31,10 @@ interface FooterProps {
     whatsappNumber?: string;
     officeHours?: string;
     shortDescription?: string;
+    receptionPhone?: string;
+    officePhone?: string;
+    youtubeUrl?: string;
+    [key: string]: any;
   };
 }
 
@@ -42,10 +48,36 @@ export function Footer({
 
   const schoolName = siteSettings?.schoolName || SCHOOL_CONFIG.name;
   const schoolPhone = siteSettings?.phone || SCHOOL_CONFIG.contact.primaryPhone;
-  const schoolEmail = siteSettings?.email || SCHOOL_CONFIG.contact.email;
   const schoolAddress = siteSettings?.address || `${SCHOOL_CONFIG.address.street}, ${SCHOOL_CONFIG.address.area}, ${SCHOOL_CONFIG.address.city}, Punjab ${SCHOOL_CONFIG.address.pincode}`;
-  const schoolHours = siteSettings?.officeHours || SCHOOL_CONFIG.contact.officeHours;
   const schoolDesc = siteSettings?.shortDescription || "Under DAV College Managing Committee (DAVCMC), New Delhi. Dedicated to fusing timeless Vedic ethics with modern scientific rigor and sports excellence for children from Nursery to Class 10.";
+
+  // Dynamic live settings
+  const [hours, setHours] = useState<string>(siteSettings?.officeHours || SCHOOL_CONFIG.contact.officeHours);
+  const [receptionPhone, setReceptionPhone] = useState<string>(siteSettings?.receptionPhone || SCHOOL_CONFIG.contact.receptionPhone);
+  const [officePhone, setOfficePhone] = useState<string>(siteSettings?.officePhone || SCHOOL_CONFIG.contact.officePhone);
+  const [email, setEmail] = useState<string>(siteSettings?.email || SCHOOL_CONFIG.contact.email);
+  const [youtube, setYoutube] = useState<string>(siteSettings?.youtubeUrl || SCHOOL_CONFIG.links.youtube);
+
+  useEffect(() => {
+    let isMounted = true;
+    const loadSettings = async () => {
+      try {
+        const res = await fetch("/api/settings");
+        if (res.ok) {
+          const data = await res.json();
+          if (data.success && data.settings && isMounted) {
+            if (data.settings.officeHours) setHours(data.settings.officeHours);
+            if (data.settings.receptionPhone) setReceptionPhone(data.settings.receptionPhone);
+            if (data.settings.officePhone) setOfficePhone(data.settings.officePhone);
+            if (data.settings.email) setEmail(data.settings.email);
+            if (data.settings.youtubeUrl) setYoutube(data.settings.youtubeUrl);
+          }
+        }
+      } catch (e) {}
+    };
+    loadSettings();
+    return () => { isMounted = false; };
+  }, []);
 
   return (
     <footer className="bg-[#4E220F] text-white relative overflow-hidden border-t border-white/10 font-sans">
@@ -118,6 +150,16 @@ export function Footer({
                   <Instagram className="w-3.5 h-3.5" />
                   <span>Instagram</span>
                 </a>
+                <a
+                  href={youtube}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-[#FF0000] text-white transition-all text-xs font-mono border border-white/10 shadow-xs"
+                  aria-label="Official YouTube Channel"
+                >
+                  <Youtube className="w-3.5 h-3.5" />
+                  <span>YouTube</span>
+                </a>
               </div>
             </div>
           </div>
@@ -168,13 +210,13 @@ export function Footer({
                 </Link>
               </li>
               <li>
-                <Link href="/campus" className="hover:text-white transition-colors">
-                  Campus & Laboratories
+                <Link href="/news" className="hover:text-white transition-colors">
+                  School News & Notices
                 </Link>
               </li>
               <li>
                 <Link href="/student-life" className="hover:text-white transition-colors">
-                  House System & Robotics
+                  House System & Student Life
                 </Link>
               </li>
               <li>
@@ -206,30 +248,31 @@ export function Footer({
                 <span>{schoolAddress}</span>
               </div>
 
-              <div className="space-y-1">
+              <div className="space-y-1.5">
                 <div className="flex items-center gap-2">
                   <Phone className="w-3.5 h-3.5 text-[#B0BA99] shrink-0" />
-                  <a href={`tel:${SCHOOL_CONFIG.contact.receptionPhone}`} className="hover:text-white transition-colors font-mono">
-                    {SCHOOL_CONFIG.contact.receptionPhone} <span className="text-white/50 text-[10px] font-sans">(Reception)</span>
+                  <a href={`tel:${receptionPhone}`} className="hover:text-white transition-colors font-mono">
+                    {receptionPhone} <span className="text-white/50 text-[10px] font-sans">(Reception)</span>
                   </a>
                 </div>
-                <div className="flex items-center gap-2 pl-5.5">
-                  <a href={`tel:${SCHOOL_CONFIG.contact.officePhone}`} className="hover:text-white transition-colors font-mono">
-                    {SCHOOL_CONFIG.contact.officePhone} <span className="text-white/50 text-[10px] font-sans">(Office)</span>
+                <div className="flex items-center gap-2">
+                  <Phone className="w-3.5 h-3.5 text-[#B0BA99] shrink-0" />
+                  <a href={`tel:${officePhone}`} className="hover:text-white transition-colors font-mono">
+                    {officePhone} <span className="text-white/50 text-[10px] font-sans">(Office)</span>
                   </a>
                 </div>
               </div>
 
               <div className="flex items-center gap-2">
                 <Mail className="w-3.5 h-3.5 text-[#B0BA99] shrink-0" />
-                <a href={`mailto:${schoolEmail}`} className="hover:text-white transition-colors font-mono">
-                  {schoolEmail}
+                <a href={`mailto:${email}`} className="hover:text-white transition-colors font-mono">
+                  {email}
                 </a>
               </div>
 
               <div className="flex items-center gap-2">
                 <Clock className="w-3.5 h-3.5 text-[#B0BA99] shrink-0" />
-                <span className="font-mono">{schoolHours}</span>
+                <span className="font-mono">{hours}</span>
               </div>
             </div>
           </div>
@@ -239,7 +282,7 @@ export function Footer({
       {/* Bottom Copyright Strip */}
       <div className="border-t border-white/10 py-5 relative z-10 text-xs text-white/50 font-mono">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p>© {currentYear} {schoolName}, {SCHOOL_CONFIG.subName}. All rights reserved.</p>
+          <p>© {currentYear} {schoolName.toLowerCase().includes(SCHOOL_CONFIG.subName.toLowerCase()) ? schoolName : `${schoolName}, ${SCHOOL_CONFIG.subName}`}. All rights reserved.</p>
 
           <div className="flex flex-wrap items-center gap-5">
             <a
@@ -261,6 +304,16 @@ export function Footer({
             >
               <Instagram className="w-3.5 h-3.5" />
               <span>Instagram</span>
+            </a>
+            <a
+              href={youtube}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-[#FF4D4D] transition-colors flex items-center gap-1.5"
+              aria-label="YouTube"
+            >
+              <Youtube className="w-3.5 h-3.5" />
+              <span>YouTube</span>
             </a>
             <span className="text-white/20">|</span>
             <Link href="/privacy" className="hover:text-white transition-colors">

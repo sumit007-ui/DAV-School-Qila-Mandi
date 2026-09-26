@@ -17,11 +17,11 @@ export async function generateMetadata({ params }: AchievementDetailPageProps): 
   const item = list.find((a) => (a as any).slug === params.slug || a.id === params.slug);
 
   if (!item) {
-    return { title: "Achievement Not Found | DAV Public School Qilla Mandi" };
+    return { title: "Achievement Not Found | DAV Public School Qila Mandi" };
   }
 
   return {
-    title: `${item.title} | DAV Public School Qilla Mandi`,
+    title: `${item.title} | DAV Public School Qila Mandi`,
     description: item.description,
   };
 }

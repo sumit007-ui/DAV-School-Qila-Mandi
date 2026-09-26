@@ -26,15 +26,69 @@ import { ACADEMIC_PROGRAMS } from '@/lib/data/academics'
 import { TESTIMONIALS } from '@/lib/data/testimonials'
 import { ADMISSION_STEPS, ADMISSION_FAQS } from '@/lib/data/admissions'
 import { SCHOOL_CONFIG } from '@/config/school'
+import { getSupabaseServerClient } from '@/lib/supabase/server'
 
 export async function getSiteSettings() {
+  const currentYear = new Date().getFullYear();
+  const defaultEstablishedYear = SCHOOL_CONFIG.establishedYear || 1990;
+  const autoCalculatedYears = Math.max(1, currentYear - defaultEstablishedYear);
+
+  try {
+    const supabase = getSupabaseServerClient();
+    if (supabase) {
+      const { data, error } = await supabase
+        .from("school_settings")
+        .select("*")
+        .eq("id", "default")
+        .single();
+
+      if (!error && data) {
+        const estYear = data.established_year || defaultEstablishedYear;
+        const calcYears = Math.max(1, currentYear - estYear);
+        const finalYears = data.years_override ? Number(data.years_override) : calcYears;
+
+        return {
+          schoolName: data.school_name || SCHOOL_CONFIG.name,
+          subName: data.sub_name || SCHOOL_CONFIG.subName,
+          establishedYear: estYear,
+          yearsOverride: data.years_override ?? null,
+          yearsCount: finalYears,
+          shortDescription: SCHOOL_CONFIG.tagline,
+          phone: data.primary_phone || data.reception_phone || SCHOOL_CONFIG.contact.primaryPhone,
+          receptionPhone: data.reception_phone || SCHOOL_CONFIG.contact.receptionPhone,
+          officePhone: data.office_phone || SCHOOL_CONFIG.contact.officePhone,
+          email: data.email || SCHOOL_CONFIG.contact.email,
+          address: data.address || `${SCHOOL_CONFIG.address.street}, ${SCHOOL_CONFIG.address.area}, ${SCHOOL_CONFIG.address.city}, ${SCHOOL_CONFIG.address.district} - ${SCHOOL_CONFIG.address.pincode}`,
+          googleMapsUrl: data.google_maps_url || SCHOOL_CONFIG.address.googleMapsUrl,
+          whatsappNumber: SCHOOL_CONFIG.contact.whatsapp,
+          officeHours: data.office_hours || SCHOOL_CONFIG.contact.officeHours,
+          socialLinks: [
+            { platform: 'facebook', url: data.facebook_url || SCHOOL_CONFIG.links.facebook },
+            { platform: 'instagram', url: data.instagram_url || SCHOOL_CONFIG.links.instagram },
+            { platform: 'youtube', url: data.youtube_url || SCHOOL_CONFIG.links.youtube },
+          ],
+        };
+      }
+    }
+  } catch (supabaseErr) {
+    // Continue to Sanity / fallback
+  }
+
   try {
     const data = await client.fetch(SITE_SETTINGS_QUERY, {}, { next: { revalidate: 0 } })
     if (data && data.schoolName) {
       return {
-        schoolName: data.schoolName || SCHOOL_CONFIG.name,
+        schoolName: data.schoolName && !/^dav\s+high\s+school$/i.test(data.schoolName.trim()) && /bhalla/i.test(data.schoolName)
+          ? data.schoolName 
+          : SCHOOL_CONFIG.name,
+        subName: SCHOOL_CONFIG.subName,
+        establishedYear: defaultEstablishedYear,
+        yearsOverride: null,
+        yearsCount: autoCalculatedYears,
         shortDescription: data.shortDescription || SCHOOL_CONFIG.tagline,
         phone: data.phone || SCHOOL_CONFIG.contact.primaryPhone,
+        receptionPhone: SCHOOL_CONFIG.contact.receptionPhone,
+        officePhone: SCHOOL_CONFIG.contact.officePhone,
         email: data.email || SCHOOL_CONFIG.contact.email,
         address: data.address || `${SCHOOL_CONFIG.address.street}, ${SCHOOL_CONFIG.address.area}, ${SCHOOL_CONFIG.address.city}, ${SCHOOL_CONFIG.address.district} - ${SCHOOL_CONFIG.address.pincode}`,
         googleMapsUrl: data.googleMapsUrl || SCHOOL_CONFIG.address.googleMapsUrl,
@@ -54,8 +108,14 @@ export async function getSiteSettings() {
   }
   return {
     schoolName: SCHOOL_CONFIG.name,
+    subName: SCHOOL_CONFIG.subName,
+    establishedYear: defaultEstablishedYear,
+    yearsOverride: null,
+    yearsCount: autoCalculatedYears,
     shortDescription: SCHOOL_CONFIG.tagline,
     phone: SCHOOL_CONFIG.contact.primaryPhone,
+    receptionPhone: SCHOOL_CONFIG.contact.receptionPhone,
+    officePhone: SCHOOL_CONFIG.contact.officePhone,
     email: SCHOOL_CONFIG.contact.email,
     address: `${SCHOOL_CONFIG.address.street}, ${SCHOOL_CONFIG.address.area}, ${SCHOOL_CONFIG.address.city}, ${SCHOOL_CONFIG.address.district} - ${SCHOOL_CONFIG.address.pincode} (${SCHOOL_CONFIG.address.state})`,
     googleMapsUrl: SCHOOL_CONFIG.address.googleMapsUrl,
@@ -253,6 +313,42 @@ export async function getAchievements() {
 
 export async function getNews() {
   try {
+    const supabase = getSupabaseServerClient();
+    if (supabase) {
+      const { data: dbNews, error } = await supabase
+        .from("news")
+        .select("*")
+        .eq("status", "published")
+        .order("created_at", { ascending: false });
+
+      if (!error && dbNews && dbNews.length > 0) {
+        return dbNews.map((item: any) => ({
+          id: item.id,
+          slug: item.slug || item.id,
+          title: item.title,
+          category: item.category || 'Academic',
+          date: item.date || new Date(item.created_at).toLocaleDateString('en-IN', {
+            day: 'numeric',
+            month: 'short',
+            year: 'numeric'
+          }),
+          readTime: item.read_time || '3 min read',
+          excerpt: item.excerpt || '',
+          content: Array.isArray(item.content) ? item.content : [item.content || item.excerpt || ''],
+          author: {
+            name: item.author_name || 'Editorial Board',
+            role: item.author_role || 'DAV Qila Mandi Batala',
+          },
+          image: item.image || 'https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&q=80&w=1200',
+          featured: Boolean(item.featured),
+        }));
+      }
+    }
+  } catch (supabaseErr) {
+    // Graceful fallback if table is not yet migrated
+  }
+
+  try {
     const data = await client.fetch(NEWS_QUERY, {}, { next: { revalidate: 0 } })
     if (data && Array.isArray(data) && data.length > 0) {
       return data.map((item: any) => {
@@ -285,7 +381,7 @@ export async function getNews() {
           content: contentLines.length > 0 ? contentLines : [item.excerpt || ''],
           author: {
             name: item.author?.name || 'Editorial Board',
-            role: item.author?.role || 'DAV Qilla Mandi',
+            role: item.author?.role || 'DAV Qila Mandi',
           },
           image: item.featuredImageUrl || 'https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&q=80&w=1200',
           featured: Boolean(item.isFeatured),

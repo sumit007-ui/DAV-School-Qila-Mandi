@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Sparkles, X, ArrowRight, Award } from "lucide-react";
 import { SCHOOL_CONFIG } from "@/config/school";
 import { Reveal } from "@/components/motion";
+import { useWebsitePhotos } from "@/lib/hooks/useWebsitePhotos";
 
 interface PrincipalMessageSectionProps {
   principal?: {
@@ -21,14 +22,18 @@ interface PrincipalMessageSectionProps {
 
 export function PrincipalMessageSection({ principal: propPrincipal }: PrincipalMessageSectionProps = {}) {
   const [modalOpen, setModalOpen] = useState(false);
+  const { getPhoto } = useWebsitePhotos();
   const fallback = SCHOOL_CONFIG.leadership.principal;
+  const initialImage = propPrincipal?.photoUrl || propPrincipal?.image || fallback.image;
+  const dynamicImage = getPhoto("home_principal", initialImage);
+
   const principal = {
     name: propPrincipal?.name || fallback.name,
     designation: propPrincipal?.designation || fallback.designation,
     qualifications: propPrincipal?.qualifications || fallback.qualifications,
     messageExcerpt: propPrincipal?.shortMessage || propPrincipal?.messageExcerpt || fallback.messageExcerpt,
     fullMessage: (propPrincipal?.fullMessage && propPrincipal.fullMessage.length > 0) ? propPrincipal.fullMessage : fallback.fullMessage,
-    image: propPrincipal?.photoUrl || propPrincipal?.image || fallback.image,
+    image: dynamicImage,
   };
 
   return (

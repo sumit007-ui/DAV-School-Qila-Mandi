@@ -26,9 +26,15 @@ import {
   Trash2,
   AlertTriangle,
   Loader2,
-  AlertCircle
+  AlertCircle,
+  Newspaper,
+  Sliders,
+  Camera
 } from "lucide-react";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
+import { NewsCMSView } from "@/components/admin/NewsCMSView";
+import { SchoolSettingsView } from "@/components/admin/SchoolSettingsView";
+import { PhotosCMSView } from "@/components/admin/PhotosCMSView";
 
 interface AdmissionEnquiry {
   id: string;
@@ -66,9 +72,20 @@ interface DeleteTarget {
 
 export default function AdminEnquiriesDashboard() {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState<"admissions" | "contacts">("admissions");
+  const [activeTab, setActiveTab] = useState<"admissions" | "contacts" | "news" | "settings" | "photos">("admissions");
   const [loading, setLoading] = useState(true);
   const [userEmail, setUserEmail] = useState<string | null>(null);
+
+  // Sync tab with URL search parameter if present
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const tabParam = params.get("tab");
+      if (tabParam === "news" || tabParam === "admissions" || tabParam === "contacts" || tabParam === "settings" || tabParam === "photos") {
+        setActiveTab(tabParam as "admissions" | "contacts" | "news" | "settings" | "photos");
+      }
+    }
+  }, []);
 
   // Data states
   const [admissions, setAdmissions] = useState<AdmissionEnquiry[]>([]);
@@ -381,7 +398,7 @@ export default function AdminEnquiriesDashboard() {
               Enquiries & Applications Dashboard
             </h1>
             <p className="text-[11px] text-cream-400 font-mono">
-              DAV Public School Qilla Mandi • Admin: <span className="text-gold-400">{userEmail}</span>
+              DAV Public School Qila Mandi • Admin: <span className="text-gold-400">{userEmail}</span>
             </p>
           </div>
         </div>
@@ -462,7 +479,7 @@ export default function AdminEnquiriesDashboard() {
         <div className="bg-[#0B1A30] p-4 sm:p-6 rounded-2xl border border-white/10 shadow-sm space-y-4">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             {/* Tabs */}
-            <div className="flex items-center gap-2 bg-navy-950 p-1.5 rounded-xl border border-white/10">
+            <div className="flex items-center gap-2 bg-navy-950 p-1.5 rounded-xl border border-white/10 flex-wrap">
               <button
                 onClick={() => {
                   setActiveTab("admissions");
@@ -489,39 +506,87 @@ export default function AdminEnquiriesDashboard() {
               >
                 Contact Inquiries ({contacts.length})
               </button>
-            </div>
-
-            {/* Search & Filters */}
-            <div className="flex flex-wrap items-center gap-3">
-              <div className="relative flex-1 sm:w-64">
-                <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-cream-400" />
-                <input
-                  type="text"
-                  placeholder="Search by name, phone, ref..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 bg-navy-950 border border-white/15 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-gold-500 placeholder:text-cream-400/40"
-                />
-              </div>
-
-              <select
-                value={statusFilter}
-                onChange={(e) => setStatusFilter(e.target.value)}
-                className="px-3.5 py-2.5 bg-navy-950 border border-white/15 rounded-xl text-xs font-mono font-semibold text-white focus:outline-none focus:ring-2 focus:ring-gold-500"
+              <button
+                onClick={() => {
+                  setActiveTab("news");
+                }}
+                className={`flex items-center gap-1.5 px-5 py-2.5 rounded-lg text-xs font-mono font-bold uppercase tracking-wider transition-all ${
+                  activeTab === "news"
+                    ? "bg-gold-500 text-navy-950 shadow-md font-extrabold"
+                    : "text-cream-300 hover:text-white"
+                }`}
               >
-                <option value="all">All Statuses</option>
-                <option value="pending">Pending</option>
-                <option value="contacted">Contacted</option>
-                <option value="admitted">Admitted</option>
-                <option value="archived">Archived</option>
-              </select>
+                <Newspaper className="w-3.5 h-3.5" />
+                <span>News & Notices CMS</span>
+              </button>
+              <button
+                onClick={() => {
+                  setActiveTab("settings");
+                }}
+                className={`flex items-center gap-1.5 px-5 py-2.5 rounded-lg text-xs font-mono font-bold uppercase tracking-wider transition-all ${
+                  activeTab === "settings"
+                    ? "bg-gold-500 text-navy-950 shadow-md font-extrabold"
+                    : "text-cream-300 hover:text-white"
+                }`}
+              >
+                <Sliders className="w-3.5 h-3.5" />
+                <span>Site Settings</span>
+              </button>
+              <button
+                onClick={() => {
+                  setActiveTab("photos");
+                }}
+                className={`flex items-center gap-1.5 px-5 py-2.5 rounded-lg text-xs font-mono font-bold uppercase tracking-wider transition-all ${
+                  activeTab === "photos"
+                    ? "bg-gold-500 text-navy-950 shadow-md font-extrabold"
+                    : "text-cream-300 hover:text-white"
+                }`}
+              >
+                <Camera className="w-3.5 h-3.5" />
+                <span>Photos & Media CMS</span>
+              </button>
             </div>
+
+            {/* Search & Filters (only for enquiries) */}
+            {(activeTab === "admissions" || activeTab === "contacts") && (
+              <div className="flex flex-wrap items-center gap-3">
+                <div className="relative flex-1 sm:w-64">
+                  <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-cream-400" />
+                  <input
+                    type="text"
+                    placeholder="Search by name, phone, ref..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full pl-10 pr-4 py-2.5 bg-navy-950 border border-white/15 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-gold-500 placeholder:text-cream-400/40"
+                  />
+                </div>
+
+                <select
+                  value={statusFilter}
+                  onChange={(e) => setStatusFilter(e.target.value)}
+                  className="px-3.5 py-2.5 bg-navy-950 border border-white/15 rounded-xl text-xs font-mono font-semibold text-white focus:outline-none focus:ring-2 focus:ring-gold-500"
+                >
+                  <option value="all">All Statuses</option>
+                  <option value="pending">Pending</option>
+                  <option value="contacted">Contacted</option>
+                  <option value="admitted">Admitted</option>
+                  <option value="archived">Archived</option>
+                </select>
+              </div>
+            )}
           </div>
         </div>
 
-        {/* Data Table */}
-        <div className="bg-[#0B1A30] rounded-2xl border border-white/10 overflow-hidden shadow-sm">
-          {activeTab === "admissions" ? (
+        {/* Dynamic Content: Photos CMS, Settings View, News CMS View or Enquiries Tables */}
+        {activeTab === "photos" ? (
+          <PhotosCMSView />
+        ) : activeTab === "settings" ? (
+          <SchoolSettingsView />
+        ) : activeTab === "news" ? (
+          <NewsCMSView />
+        ) : (
+          <div className="bg-[#0B1A30] rounded-2xl border border-white/10 overflow-hidden shadow-sm">
+            {activeTab === "admissions" ? (
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs font-sans">
                 <thead className="bg-navy-950 border-b border-white/10 text-cream-400 uppercase font-mono tracking-wider text-[10px]">
@@ -713,6 +778,7 @@ export default function AdminEnquiriesDashboard() {
             </div>
           )}
         </div>
+        )}
       </main>
 
       {/* Professional Delete Confirmation Modal */}

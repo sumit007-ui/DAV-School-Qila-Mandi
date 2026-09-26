@@ -12,7 +12,7 @@ export const metadata: Metadata = generateSchoolMetadata({
     "DAV Batala News",
     "DAV Batala Circulars",
     "School Events Batala",
-    "DAV Qilla Mandi Notices",
+    "DAV Qila Mandi Notices",
   ],
 });
 

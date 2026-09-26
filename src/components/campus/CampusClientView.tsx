@@ -5,6 +5,16 @@ import Link from "next/link";
 import { Sparkles, Building2, ShieldCheck, Check, ArrowRight } from "lucide-react";
 import { CampusFacility } from "@/types";
 import { useAppModals } from "@/components/layout/ClientAppWrapper";
+import { useWebsitePhotos } from "@/lib/hooks/useWebsitePhotos";
+
+const FACILITY_SLOT_MAP: Record<string, string> = {
+  "smart-classrooms": "home_hero",
+  "science-laboratories": "facility_science_lab",
+  "computer-lab": "facility_computer_lab",
+  "knowledge-resource-center": "facility_library",
+  "sports-complex": "facility_sports",
+  "performing-arts-auditorium": "facility_yajnashala",
+};
 
 interface CampusClientViewProps {
   facilities: CampusFacility[];
@@ -12,6 +22,8 @@ interface CampusClientViewProps {
 
 export function CampusClientView({ facilities }: CampusClientViewProps) {
   const { openAdmissionModal } = useAppModals();
+  const { getPhoto } = useWebsitePhotos();
+  const headerBannerImg = getPhoto("about_campus", "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&q=80&w=1920");
 
   return (
     <div className="w-full">
@@ -19,8 +31,8 @@ export function CampusClientView({ facilities }: CampusClientViewProps) {
       <section className="relative py-20 lg:py-28 bg-navy-950 text-white overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&q=80&w=1920"
-            alt="DAV Public School Qilla Mandi Campus Architecture"
+            src={headerBannerImg}
+            alt="DAV Public School Qila Mandi Campus Architecture"
             fill
             className="object-cover object-center scale-105"
             sizes="100vw"
@@ -58,7 +70,11 @@ export function CampusClientView({ facilities }: CampusClientViewProps) {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {facilities.map((facility) => (
+            {facilities.map((facility) => {
+              const slot = FACILITY_SLOT_MAP[facility.slug] || FACILITY_SLOT_MAP[facility.id];
+              const displayImage = slot ? getPhoto(slot, facility.image) : facility.image;
+
+              return (
               <div
                 key={facility.id}
                 id={facility.slug}
@@ -66,7 +82,7 @@ export function CampusClientView({ facilities }: CampusClientViewProps) {
               >
                 <div className="relative aspect-[16/10] overflow-hidden bg-cream-200">
                   <Image
-                    src={facility.image}
+                    src={displayImage}
                     alt={facility.title}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
@@ -102,7 +118,8 @@ export function CampusClientView({ facilities }: CampusClientViewProps) {
                   </div>
                 </div>
               </div>
-            ))}
+            );
+          })}
           </div>
         </div>
       </section>

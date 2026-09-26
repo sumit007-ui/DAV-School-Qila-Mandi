@@ -7,6 +7,7 @@ import { ArrowRight, CheckCircle2, ChevronRight, Sparkles, BookOpen, Award, Comp
 import { motion, useInView } from "framer-motion";
 import { useAppModals } from "@/components/layout/ClientAppWrapper";
 import { LineReveal, Reveal } from "@/components/motion";
+import { useWebsitePhotos } from "@/lib/hooks/useWebsitePhotos";
 
 const JOURNEY_STAGES = [
   {
@@ -37,10 +38,10 @@ const JOURNEY_STAGES = [
     title: "Middle School",
     classes: "Classes 6 to 8",
     age: "Ages 11 to 13 Years",
-    tagline: "Independent Critical Thinking, Robotics & Broadened Horizons",
+    tagline: "Independent Critical Thinking, Applied Science & Broadened Horizons",
     description: "Middle schoolers develop analytical depth, scientific experimentation in composite laboratories, inter-house debates, competitive athletics, and value-based Vedic grounding with daily moral discourses.",
     image: "https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&q=85&w=1200",
-    milestones: ["Hands-on Science Lab Experiments", "Robotics, IoT & Python Coding", "Inter-House Championship League", "Vedic Heritage & Moral Ethics"]
+    milestones: ["Hands-on Science Lab Experiments", "Computer Science & Digital Literacy", "Inter-House Championship League", "Vedic Heritage & Moral Ethics"]
   },
   {
     phase: "04",
@@ -60,16 +61,27 @@ const JOURNEY_STAGES = [
     classes: "Class 10 Milestone",
     age: "Ages 15+ Years",
     tagline: "Academic Triumph, 100% Pass Record & Confident Leadership",
-    description: "The culmination of school life at DAV Qilla Mandi. Comprehensive mock boards, personalized doubt resolution, and psychological resilience coaching producing district toppers year after year in Batala.",
+    description: "The culmination of school life at DAV Qila Mandi. Comprehensive mock boards, personalized doubt resolution, and psychological resilience coaching producing district toppers year after year in Batala.",
     image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=85&w=1200",
     milestones: ["100% PSEB Board Pass Record", "District Rank 1 Legacy in Batala", "Dedicated 1-on-1 Faculty Cliniques", "Career Counseling & Stream Roadmaps"]
   }
 ];
 
+const STAGE_SLOT_KEYS: Record<string, string> = {
+  "01": "journey_early_years",
+  "02": "journey_primary",
+  "03": "journey_middle",
+  "04": "journey_secondary",
+  "05": "journey_board"
+};
+
 function PhaseCard({ stage, index, onInView }: { stage: typeof JOURNEY_STAGES[0]; index: number; onInView: (idx: number) => void }) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { margin: "-30% 0px -30% 0px" });
   const { openAdmissionModal } = useAppModals();
+  const { getPhoto } = useWebsitePhotos();
+  const slotKey = STAGE_SLOT_KEYS[stage.phase] || "";
+  const dynamicImage = getPhoto(slotKey, stage.image);
 
   useEffect(() => {
     if (isInView) {
@@ -91,7 +103,7 @@ function PhaseCard({ stage, index, onInView }: { stage: typeof JOURNEY_STAGES[0]
         {/* Left Image (Span 7) */}
         <div className="lg:col-span-7 relative min-h-[280px] lg:min-h-[440px] overflow-hidden bg-[#4E220F]">
           <Image
-            src={stage.image}
+            src={dynamicImage}
             alt={stage.title}
             fill
             className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
@@ -110,13 +122,13 @@ function PhaseCard({ stage, index, onInView }: { stage: typeof JOURNEY_STAGES[0]
         </div>
 
         {/* Right Info (Span 5) */}
-        <div className="lg:col-span-5 p-6 sm:p-8 flex flex-col justify-between space-y-4 bg-white">
-          <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-mono uppercase tracking-[0.16em] text-[#9D6638] font-bold">
+        <div className="lg:col-span-5 p-6 sm:p-8 lg:p-9 pt-8 sm:pt-10 flex flex-col justify-between space-y-5 bg-white">
+          <div className="space-y-4 pt-1 sm:pt-2">
+            <div className="flex flex-wrap sm:flex-nowrap items-center justify-between gap-2.5">
+              <span className="text-[11px] sm:text-xs font-mono uppercase tracking-[0.1em] text-[#9D6638] font-bold">
                 STAGE {stage.phase} OF 05 · {stage.tag}
               </span>
-              <span className="text-[11px] font-mono text-[#7E5F4E] bg-[#F7F1DE] px-2 py-0.5 rounded font-medium">
+              <span className="text-[11px] font-mono text-[#7E5F4E] bg-[#F7F1DE] px-2.5 py-0.5 rounded font-medium shrink-0">
                 {stage.age}
               </span>
             </div>
@@ -190,8 +202,8 @@ export function LearningJourneySection({ stages }: LearningJourneySectionProps =
     <section id="learning-journey" className="py-14 lg:py-20 bg-[#F7F1DE] text-[#4E220F] border-b border-[#9D6638]/15 relative font-sans">
       <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 space-y-10">
         {/* Header Strip */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[#9D6638]/20 pb-6">
-          <div className="space-y-2 max-w-3xl">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[#9D6638]/20 pb-8 sm:pb-10">
+          <div className="space-y-3.5 sm:space-y-4 max-w-3xl">
             <Reveal direction="down" delay={0.1}>
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#4E220F] text-[#F7F1DE] text-[11px] font-mono font-semibold tracking-[0.16em] uppercase shadow-xs">
                 <Sparkles className="w-3.5 h-3.5 text-[#B0BA99]" />
@@ -202,7 +214,8 @@ export function LearningJourneySection({ stages }: LearningJourneySectionProps =
             <LineReveal as="h2" className="font-editorial text-3xl sm:text-5xl lg:text-6xl text-[#4E220F] font-semibold tracking-tight leading-[1.05]">
               {"A Journey That Grows With Every Step."}
             </LineReveal>
-            <p className="text-xs sm:text-sm text-[#7E5F4E] max-w-2xl font-normal leading-relaxed">
+
+            <p className="text-xs sm:text-sm md:text-base text-[#7E5F4E] max-w-2xl font-normal leading-relaxed pt-1">
               Scroll down to explore the 5 developmental phases from early kindergarten play to Class 10 PSEB Board distinction.
             </p>
           </div>

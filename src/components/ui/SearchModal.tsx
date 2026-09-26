@@ -99,9 +99,9 @@ const SITE_PAGES: SearchPageItem[] = [
     id: "contact-page",
     title: "Contact Us & Location Helpdesk",
     category: "Contact",
-    description: "Qilla Mandi Batala campus address, phone numbers, email, inquiry desk, and visiting hours.",
+    description: "Qila Mandi Batala campus address, phone numbers, email, inquiry desk, and visiting hours.",
     href: "/contact",
-    keywords: ["contact", "contact us", "phone", "email", "address", "location", "batala", "qilla mandi", "helpdesk"],
+    keywords: ["contact", "contact us", "phone", "email", "address", "location", "batala", "qila mandi", "helpdesk"],
   },
   {
     id: "gallery-page",

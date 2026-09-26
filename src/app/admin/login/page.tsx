@@ -74,7 +74,7 @@ export default function AdminLoginPage() {
         >
           <Image
             src="/images/logo.png"
-            alt="DAV Public School Qilla Mandi Logo"
+            alt="DAV Public School Qila Mandi Logo"
             width={64}
             height={64}
             className="w-14 h-14 object-contain filter drop-shadow group-hover:scale-105 transition-transform"
@@ -86,7 +86,7 @@ export default function AdminLoginPage() {
           Admin Portal Login
         </h2>
         <p className="text-xs sm:text-sm text-cream-300 font-mono">
-          DAV Public School Qilla Mandi • Enquiries Management
+          DAV Public School Qila Mandi • Enquiries Management
         </p>
       </div>
 

@@ -20,7 +20,7 @@ export function AcademicsClientView({ programs }: AcademicsClientViewProps) {
         <div className="absolute inset-0 z-0">
           <Image
             src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&q=80&w=1920"
-            alt="DAV Public School Qilla Mandi Academics"
+            alt="DAV Public School Qila Mandi Academics"
             fill
             className="object-cover object-center scale-105"
             sizes="100vw"

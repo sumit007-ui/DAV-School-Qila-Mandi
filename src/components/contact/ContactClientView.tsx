@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Sparkles, MapPin, Phone, Mail, Clock, Send, CheckCircle2, ShieldCheck, Facebook, Instagram } from "lucide-react";
+import { Sparkles, MapPin, Phone, Mail, Clock, Send, CheckCircle2, ShieldCheck, Facebook, Instagram, Youtube } from "lucide-react";
 import { SCHOOL_CONFIG } from "@/config/school";
 import { contactFormSchema, ContactFormData } from "@/lib/validation/contact";
 
@@ -191,7 +191,7 @@ export function ContactClientView({ siteSettings, faqs = [] }: ContactClientView
                 </div>
 
                 <div className="pt-4 border-t border-cream-200 space-y-3">
-                  <div className="grid grid-cols-2 gap-2.5">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
                     <a
                       href={SCHOOL_CONFIG.links.facebook}
                       target="_blank"
@@ -209,6 +209,15 @@ export function ContactClientView({ siteSettings, faqs = [] }: ContactClientView
                     >
                       <Instagram className="w-4 h-4" />
                       <span>Instagram</span>
+                    </a>
+                    <a
+                      href={SCHOOL_CONFIG.links.youtube}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="py-2.5 px-3 rounded-xl bg-[#FF0000] hover:bg-[#CC0000] text-white font-bold text-xs flex items-center justify-center gap-2 transition-colors shadow-xs"
+                    >
+                      <Youtube className="w-4 h-4" />
+                      <span>YouTube</span>
                     </a>
                   </div>
                 </div>

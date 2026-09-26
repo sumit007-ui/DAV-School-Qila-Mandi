@@ -1,11 +1,13 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Sparkles, ArrowRight, ShieldCheck, Heart, Compass, BookOpen, Users, Award } from "lucide-react";
 import { motion } from "framer-motion";
 import { SCHOOL_CONFIG } from "@/config/school";
 import { useAppModals } from "@/components/layout/ClientAppWrapper";
+import { useWebsitePhotos } from "@/lib/hooks/useWebsitePhotos";
 
 interface LeadershipProfile {
   name: string;
@@ -24,12 +26,45 @@ interface AboutClientViewProps {
 
 export function AboutClientView({ principal, siteSettings }: AboutClientViewProps) {
   const { openAdmissionModal } = useAppModals();
-  const schoolName = siteSettings?.schoolName || SCHOOL_CONFIG.name;
+  const currentYear = new Date().getFullYear();
+  const initialEst = siteSettings?.establishedYear || SCHOOL_CONFIG.establishedYear || 1990;
+  const initialYears = siteSettings?.yearsCount || Math.max(1, currentYear - initialEst);
+
+  const [estYear, setEstYear] = useState<number>(initialEst);
+  const [yearsCount, setYearsCount] = useState<number>(initialYears);
+  const [schoolName, setSchoolName] = useState<string>(siteSettings?.schoolName || SCHOOL_CONFIG.name);
+  const { getPhoto } = useWebsitePhotos();
+
+  const heritageHeaderImg = getPhoto("about_heritage", "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&q=80&w=1920");
+  const campusGroundsImg = getPhoto("about_campus", "https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&q=80&w=1000");
+  const principalPortraitImg = getPhoto("home_principal", principal.photoUrl || principal.image || SCHOOL_CONFIG.leadership.principal.image);
+
+  // Client-side hydration from /api/settings
+  useEffect(() => {
+    let isMounted = true;
+    const loadDynamicSettings = async () => {
+      try {
+        const res = await fetch("/api/settings");
+        if (res.ok) {
+          const data = await res.json();
+          if (data.success && data.settings && isMounted) {
+            if (data.settings.establishedYear) setEstYear(data.settings.establishedYear);
+            if (data.settings.yearsCount) setYearsCount(data.settings.yearsCount);
+            if (data.settings.schoolName) setSchoolName(data.settings.schoolName);
+          }
+        }
+      } catch (e) {
+        // Fallback silently
+      }
+    };
+    loadDynamicSettings();
+    return () => { isMounted = false; };
+  }, []);
 
   const coreValues = [
     {
       title: "Vedic Wisdom & Ethical Integrity",
-      description: "Rooted in the eternal philosophy of Maharshi Dayanand Saraswati, promoting truthfulness, discipline, daily Havans, and universal brotherhood (Vasudhaiva Kutumbakam)."
+      description: "Rooted in the eternal philosophy of Maharshi Dayanand Saraswati, promoting truthfulness, discipline, weekly Havans, and universal brotherhood (Vasudhaiva Kutumbakam)."
     },
     {
       title: "Scientific Temper & Empirical Rigor",
@@ -55,7 +90,7 @@ export function AboutClientView({ principal, siteSettings }: AboutClientViewProp
       <section className="relative py-20 lg:py-28 bg-navy-950 text-white overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&q=80&w=1920"
+            src={heritageHeaderImg}
             alt={`${schoolName} Heritage`}
             fill
             className="object-cover object-center scale-105"
@@ -76,7 +111,7 @@ export function AboutClientView({ principal, siteSettings }: AboutClientViewProp
           </h1>
 
           <p className="text-cream-200 text-base sm:text-xl font-light max-w-2xl">
-            {schoolName}, Qilla Mandi, Batala. Affiliated to Punjab School Education Board (PSEB Mohali). Dedicated to cultivating enlightened, value-driven global citizens.
+            {schoolName}, Qila Mandi, Batala. Affiliated to Punjab School Education Board (PSEB Mohali). Dedicated to cultivating enlightened, value-driven global citizens.
           </p>
         </div>
       </section>
@@ -91,12 +126,12 @@ export function AboutClientView({ principal, siteSettings }: AboutClientViewProp
               </span>
 
               <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-navy-950 font-normal leading-tight">
-                Over 50 Years of Educational Luminescence in Batala
+                {yearsCount} Years of Educational Excellence in Batala (Est. {estYear})
               </h2>
 
               <div className="space-y-4 text-navy-700 text-sm sm:text-base leading-relaxed">
                 <p>
-                  {schoolName} was established to provide the youth of Batala and surrounding regions an institution combining the pristine ideals of Vedic civilization with world-class PSEB modern education.
+                  Established in {estYear}, {schoolName} was founded to provide the youth of Batala and surrounding regions an institution combining the pristine ideals of Vedic civilization with world-class PSEB modern education.
                 </p>
                 <p>
                   Operated directly under the prestigious <strong>DAV College Managing Committee (DAVCMC)</strong>—the largest non-governmental educational organization in India—the school has grown into a benchmark educational landmark.
@@ -116,7 +151,7 @@ export function AboutClientView({ principal, siteSettings }: AboutClientViewProp
             <div className="lg:col-span-6 relative">
               <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl border border-cream-300">
                 <Image
-                  src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&q=80&w=1000"
+                  src={campusGroundsImg}
                   alt={`${schoolName} Campus Grounds`}
                   fill
                   className="object-cover"
@@ -215,7 +250,7 @@ export function AboutClientView({ principal, siteSettings }: AboutClientViewProp
             <div className="lg:col-span-4 relative flex justify-center lg:justify-start">
               <div className="relative w-full max-w-[320px] sm:max-w-[360px] aspect-[3/4] rounded-2xl overflow-hidden shadow-xl border border-[#9D6638]/20 group bg-[#4E220F]">
                 <Image
-                  src={principal.photoUrl || principal.image || SCHOOL_CONFIG.leadership.principal.image}
+                  src={principalPortraitImg}
                   alt={principal.name}
                   fill
                   className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"

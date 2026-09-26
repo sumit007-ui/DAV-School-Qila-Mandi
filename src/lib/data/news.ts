@@ -10,13 +10,13 @@ export const NEWS_STORIES: NewsStory[] = [
     readTime: "3 min read",
     excerpt: "Registration commences for Nursery, Kindergarten, Primary and Senior Secondary streams with scholarship testing for meritorious applicants.",
     content: [
-      "Dr. MRS Bhalla DAV School Qilla Mandi announces the commencement of admission procedures for the upcoming academic session 2026-2027.",
+      "Dr. MRS Bhalla DAV School Qila Mandi announces the commencement of admission procedures for the upcoming academic session 2026-2027.",
       "Parents seeking holistic, value-based education integrated with modern STEM infrastructure and sports facilities are invited to submit enquiries online or collect registration forms from the administrative reception.",
       "Special merit scholarships will be awarded to students scoring top marks in previous academic terms."
     ],
     author: {
       name: "Admissions Office",
-      role: "Dr. MRS Bhalla DAV School Qilla Mandi"
+      role: "Dr. MRS Bhalla DAV School Qila Mandi"
     },
     image: "/images/school-building.png",
     featured: true

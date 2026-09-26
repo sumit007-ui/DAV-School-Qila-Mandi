@@ -4,12 +4,16 @@ import Image from "next/image";
 import { ArrowRight, ArrowDown, Compass, ShieldCheck, Users, MapPin, Award } from "lucide-react";
 import { SCHOOL_CONFIG } from "@/config/school";
 import { LineReveal, Reveal } from "@/components/motion";
+import { useWebsitePhotos } from "@/lib/hooks/useWebsitePhotos";
 
 interface HeroSectionProps {
   onOpenAdmissionModal?: () => void;
 }
 
 export function HeroSection({ onOpenAdmissionModal }: HeroSectionProps) {
+  const { getPhoto } = useWebsitePhotos();
+  const heroBgImage = getPhoto("home_hero", "/images/school-building.png");
+
   const scrollToExplore = () => {
     const el = document.getElementById("editorial-statement");
     if (el) {
@@ -22,7 +26,7 @@ export function HeroSection({ onOpenAdmissionModal }: HeroSectionProps) {
       {/* Full Background School Building Image */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <Image
-          src="/images/school-building.png"
+          src={heroBgImage}
           alt="DR. M.R.S. BHALLA D.A.V. SCHOOL Qila Mandi Batala Building"
           fill
           priority
@@ -40,17 +44,17 @@ export function HeroSection({ onOpenAdmissionModal }: HeroSectionProps) {
         <div className="max-w-2xl sm:max-w-3xl space-y-6 sm:space-y-7">
           {/* Eyebrow Pill with Official Crest Logo */}
           <div className="animate-fade-in">
-            <div className="inline-flex items-center gap-2.5 sm:gap-3 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full bg-black/40 border border-white/20 backdrop-blur-md text-white text-[10px] sm:text-xs font-mono tracking-[0.12em] uppercase shadow-lg max-w-full">
-              <div className="relative w-5 h-5 sm:w-6 sm:h-6 shrink-0">
+            <div className="inline-flex items-center gap-2 xs:gap-2.5 sm:gap-3 px-2.5 xs:px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-black/40 border border-white/20 backdrop-blur-md text-white shadow-lg max-w-full">
+              <div className="relative w-4 h-4 xs:w-5 xs:h-5 sm:w-5 sm:h-5 shrink-0">
                 <Image
                   src="/images/logo.png"
                   alt="Dr. M.R.S. Bhalla D.A.V. School Crest"
-                  width={24}
-                  height={24}
+                  width={20}
+                  height={20}
                   className="object-contain filter drop-shadow-sm"
                 />
               </div>
-              <span className="font-semibold text-white tracking-wider sm:tracking-widest truncate">
+              <span className="font-sans font-semibold text-[9.5px] xs:text-[11px] sm:text-xs text-white uppercase tracking-normal xs:tracking-wide sm:tracking-wider whitespace-nowrap overflow-hidden text-ellipsis sm:overflow-visible">
                 Welcome to Dr. M.R.S. Bhalla D.A.V. School
               </span>
             </div>
@@ -97,7 +101,7 @@ export function HeroSection({ onOpenAdmissionModal }: HeroSectionProps) {
           <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-3 sm:gap-6 w-full sm:w-auto">
             <div className="flex items-center gap-1.5">
               <MapPin className="w-3.5 h-3.5 text-gold-400 shrink-0" />
-              <span className="tracking-wide">QILA MANDI, BATALA</span>
+              <span className="tracking-wide">{SCHOOL_CONFIG.subName.toUpperCase()}</span>
             </div>
             <div className="flex items-center gap-1.5">
               <ShieldCheck className="w-3.5 h-3.5 text-gold-400 shrink-0" />

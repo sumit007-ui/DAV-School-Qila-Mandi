@@ -16,17 +16,17 @@ export function Marquee({
   speed = 28,
   className = "",
   itemClassName = "",
-  separator = "•",
+  separator = "",
 }: MarqueeProps) {
   const shouldReduceMotion = useReducedMotion();
 
   if (shouldReduceMotion) {
     return (
-      <div className={`overflow-x-auto whitespace-nowrap flex items-center gap-8 ${className}`}>
+      <div className={`overflow-x-auto whitespace-nowrap flex items-center gap-6 sm:gap-8 ${className}`}>
         {items.map((item, idx) => (
-          <span key={idx} className={`inline-flex items-center gap-4 ${itemClassName}`}>
+          <span key={idx} className={`inline-flex items-center ${itemClassName}`}>
             <span>{item}</span>
-            <span className="opacity-40">{separator}</span>
+            {separator ? <span className="opacity-40 ml-3">{separator}</span> : null}
           </span>
         ))}
       </div>
@@ -42,12 +42,12 @@ export function Marquee({
           ease: "linear",
           duration: speed,
         }}
-        className="flex shrink-0 items-center gap-8"
+        className="flex shrink-0 items-center gap-6 sm:gap-8"
       >
         {[...items, ...items, ...items, ...items].map((item, idx) => (
-          <span key={idx} className={`inline-flex items-center gap-6 ${itemClassName}`}>
+          <span key={idx} className={`inline-flex items-center ${itemClassName}`}>
             <span>{item}</span>
-            <span className="opacity-40 text-[0.8em]">{separator}</span>
+            {separator ? <span className="opacity-40 text-[0.8em] ml-3">{separator}</span> : null}
           </span>
         ))}
       </motion.div>

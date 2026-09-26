@@ -17,11 +17,11 @@ export async function generateMetadata({ params }: EventDetailPageProps): Promis
   const event = events.find((e) => e.slug === params.slug || e.id === params.slug);
 
   if (!event) {
-    return { title: "Event Not Found | DAV Public School Qilla Mandi" };
+    return { title: "Event Not Found | DAV Public School Qila Mandi" };
   }
 
   return {
-    title: `${event.title} | DAV Public School Qilla Mandi`,
+    title: `${event.title} | DAV Public School Qila Mandi`,
     description: event.description,
   };
 }

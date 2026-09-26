@@ -5,12 +5,15 @@ import { SCHOOL_CONFIG } from "@/config/school";
 import { LineReveal, Reveal, ImageReveal, Marquee } from "@/components/motion";
 
 export function EditorialStatement() {
+  const currentYear = new Date().getFullYear();
+  const yearsCount = Math.max(1, currentYear - (SCHOOL_CONFIG.establishedYear || 1990));
+
   const marqueeWords = [
     "WORK IS WORSHIP",
     "तमसो मा ज्योतिर्गमय",
     "LEARN · EXPLORE · CREATE · LEAD",
     "DR. MRS BHALLA DAV SCHOOL",
-    "35+ YEARS OF ACADEMIC EXCELLENCE",
+    `${yearsCount}+ YEARS OF ACADEMIC EXCELLENCE`,
     "PSEB AFFILIATED (PUNJAB BOARD)",
     "HOLISTIC VEDIC PEDAGOGY",
   ];
@@ -50,13 +53,13 @@ export function EditorialStatement() {
           <div className="lg:col-span-7 space-y-4">
             <Reveal direction="up" delay={0.15}>
               <p className="font-editorial text-xl sm:text-2xl lg:text-[26px] text-[#4E220F] leading-snug font-normal">
-                At Dr. MRS Bhalla DAV School Qilla Mandi, we believe true education is not merely the transmission of syllabus facts, but the awakening of conscience, critical courage, and foundational character.
+                At Dr. MRS Bhalla DAV School Qila Mandi, we believe true education is not merely the transmission of syllabus facts, but the awakening of conscience, critical courage, and foundational character.
               </p>
             </Reveal>
 
             <Reveal direction="up" delay={0.2}>
               <p className="text-[#4E220F]/90 text-sm sm:text-base leading-relaxed font-normal">
-                Established under the esteemed DAV College Managing Committee (DAVCMC), New Delhi, we weave together the timeless moral depth of Vedic wisdom with the empirical rigor of modern STEM laboratories, Atal Robotics, and international sports arenas for children from Nursery to Class 10.
+                Established under the esteemed DAV College Managing Committee (DAVCMC), New Delhi, we weave together the timeless moral depth of Vedic wisdom with the empirical rigor of modern STEM laboratories, computer education, and sports training for children from Nursery to Class 10.
               </p>
             </Reveal>
 
@@ -66,7 +69,7 @@ export function EditorialStatement() {
                 <div className="space-y-1">
                   <span className="font-mono text-xs font-semibold text-[#9D6638]">01.</span>
                   <h4 className="font-bold text-xs uppercase tracking-wider text-[#4E220F]">Care & Values</h4>
-                  <p className="text-xs text-[#7E5F4E]">Rooted in humility, daily Havans, and moral guidance.</p>
+                  <p className="text-xs text-[#7E5F4E]">Rooted in humility, weekly Havans, and moral guidance.</p>
                 </div>
               </Reveal>
 
@@ -150,8 +153,7 @@ export function EditorialStatement() {
           <Marquee
             items={marqueeWords}
             speed={38}
-            separator="•"
-            itemClassName="text-sm sm:text-base lg:text-lg font-bold font-mono uppercase tracking-[0.16em] text-[#4E220F] hover:text-[#9D6638] transition-colors"
+            itemClassName="text-sm sm:text-base lg:text-lg font-bold font-mono uppercase tracking-[0.12em] text-[#4E220F] hover:text-[#9D6638] transition-colors"
           />
         </div>
       </div>

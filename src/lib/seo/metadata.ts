@@ -30,7 +30,7 @@ export function generateSchoolMetadata({
       "Dr. MRS Bhalla DAV School",
       "Dr. MRS Bhalla DAV School Batala",
       "DAV School Batala",
-      "DAV Qilla Mandi Batala",
+      "DAV Qila Mandi Batala",
       "drmrsbhalladavschool.com",
       "Best School in Batala",
       "PSEB School Batala Punjab",
@@ -109,7 +109,7 @@ export function generateWebSiteJsonLd() {
     "name": `${SCHOOL_CONFIG.name}`,
     "alternateName": [
       `${SCHOOL_CONFIG.name}, ${SCHOOL_CONFIG.subName}`,
-      "Dr. MRS Bhalla DAV School Qilla Mandi",
+      "Dr. MRS Bhalla DAV School Qila Mandi",
       "DAV School Batala",
       "DAV High School Batala"
     ],
@@ -129,8 +129,8 @@ export function generateEducationalOrgJsonLd() {
     "name": `${SCHOOL_CONFIG.name} ${SCHOOL_CONFIG.subName}`,
     "alternateName": [
       "Dr. MRS Bhalla DAV School",
-      "Dr. MRS Bhalla DAV School Qilla Mandi, Batala",
-      "DAV High School Qilla Mandi Batala"
+      "Dr. MRS Bhalla DAV School Qila Mandi, Batala",
+      "DAV High School Qila Mandi Batala"
     ],
     "description": SCHOOL_CONFIG.tagline,
     "url": BASE_URL,

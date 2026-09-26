@@ -13,7 +13,8 @@ import {
   Sparkles,
   ChevronRight,
   Facebook,
-  Instagram
+  Instagram,
+  Youtube
 } from "lucide-react";
 import { BrandLogo } from "@/components/ui/BrandLogo";
 import { SCHOOL_CONFIG } from "@/config/school";
@@ -78,13 +79,12 @@ export function Navbar({ onOpenSearch, onOpenAdmissionModal, siteSettings }: Nav
   const navLinks = [
     { label: "About", href: "/about", number: "01" },
     { label: "Academics", href: "/academics", number: "02" },
-    { label: "Campus", href: "/campus", number: "03" },
-    { label: "Student Life", href: "/student-life", number: "04" },
-    { label: "Achievements", href: "/achievements", number: "05" },
-    { label: "Admissions", href: "/admissions", number: "06" },
-    { label: "Stories & News", href: "/news", number: "07" },
-    { label: "Gallery", href: "/gallery", number: "08" },
-    { label: "Contact", href: "/contact", number: "09" },
+    { label: "Student Life", href: "/student-life", number: "03" },
+    { label: "Achievements", href: "/achievements", number: "04" },
+    { label: "Admissions", href: "/admissions", number: "05" },
+    { label: "News & Events", href: "/news", number: "06" },
+    { label: "Gallery", href: "/gallery", number: "07" },
+    { label: "Contact", href: "/contact", number: "08" },
   ];
 
   return (
@@ -250,13 +250,16 @@ export function Navbar({ onOpenSearch, onOpenAdmissionModal, siteSettings }: Nav
                   <MapPin className="w-4 h-4 text-[#B0BA99] shrink-0 mt-0.5" />
                   <span>{schoolAddress}</span>
                 </div>
-                <div className="flex items-start gap-2.5">
-                  <Phone className="w-4 h-4 text-[#B0BA99] shrink-0 mt-0.5" />
-                  <div className="font-mono text-xs space-y-0.5">
+                <div className="space-y-2 font-mono text-xs">
+                  <div className="flex items-center gap-2.5">
+                    <Phone className="w-3.5 h-3.5 text-[#B0BA99] shrink-0" />
                     <div>
                       <a href={`tel:${SCHOOL_CONFIG.contact.receptionPhone}`} className="hover:underline">{SCHOOL_CONFIG.contact.receptionPhone}</a>
                       <span className="text-white/50 font-sans text-[10px] ml-1">(Reception)</span>
                     </div>
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <Phone className="w-3.5 h-3.5 text-[#B0BA99] shrink-0" />
                     <div>
                       <a href={`tel:${SCHOOL_CONFIG.contact.officePhone}`} className="hover:underline">{SCHOOL_CONFIG.contact.officePhone}</a>
                       <span className="text-white/50 font-sans text-[10px] ml-1">(Office)</span>
@@ -283,6 +286,15 @@ export function Navbar({ onOpenSearch, onOpenAdmissionModal, siteSettings }: Nav
                     <Instagram className="w-3.5 h-3.5" />
                     <span>Instagram</span>
                   </a>
+                  <a
+                    href={SCHOOL_CONFIG.links.youtube}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-[#FF0000] text-white text-xs font-mono transition-colors"
+                  >
+                    <Youtube className="w-3.5 h-3.5" />
+                    <span>YouTube</span>
+                  </a>
                 </div>
               </div>
             </div>
@@ -291,7 +303,7 @@ export function Navbar({ onOpenSearch, onOpenAdmissionModal, siteSettings }: Nav
           {/* Bottom Legal / Motto */}
           <div className="flex flex-wrap items-center justify-between gap-4 pt-6 border-t border-white/10 text-xs font-sans text-white/60">
             <div>
-              © {new Date().getFullYear()} {schoolName}, {SCHOOL_CONFIG.subName}. Managed by DAVCMC, New Delhi.
+              © {new Date().getFullYear()} {schoolName.toLowerCase().includes(SCHOOL_CONFIG.subName.toLowerCase()) ? schoolName : `${schoolName}, ${SCHOOL_CONFIG.subName}`}. Managed by DAVCMC, New Delhi.
             </div>
             <div className="text-[#B0BA99] italic font-editorial text-base">
               {SCHOOL_CONFIG.motto}

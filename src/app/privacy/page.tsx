@@ -12,7 +12,7 @@ export default function PrivacyPage() {
             Privacy Policy
           </h1>
           <p className="text-xs text-navy-500 font-mono">
-            Last Updated: August 2026 • DAV Public School Qilla Mandi
+            Last Updated: August 2026 • DAV Public School Qila Mandi
           </p>
         </div>
 
@@ -20,7 +20,7 @@ export default function PrivacyPage() {
           <section className="space-y-2">
             <h2 className="font-serif text-lg font-bold text-navy-950">1. Commitment to Student and Parental Privacy</h2>
             <p>
-              DAV Public School Qilla Mandi, Batala is committed to protecting the privacy and confidential personal data of our prospective and enrolled students, parents, alumni, and website visitors.
+              DAV Public School Qila Mandi, Batala is committed to protecting the privacy and confidential personal data of our prospective and enrolled students, parents, alumni, and website visitors.
             </p>
           </section>
 

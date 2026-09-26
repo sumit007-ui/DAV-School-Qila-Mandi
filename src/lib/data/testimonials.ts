@@ -3,7 +3,7 @@ import { Testimonial } from "@/types";
 export const TESTIMONIALS: Testimonial[] = [
   {
     id: "t1",
-    quote: "Enrolling our daughter in DAV Public School Qilla Mandi was the finest decision we made. The blend of Vedic discipline, respectful culture, and advanced robotics labs has given her immense confidence and curiosity.",
+    quote: "Enrolling our daughter in DAV Public School Qila Mandi was the finest decision we made. The blend of Vedic discipline, respectful culture, and advanced robotics labs has given her immense confidence and curiosity.",
     authorName: "Dr. Sandeep K. Mahajan",
     relationship: "Parent",
     detail: "Parent of Ananya (Class IX) & Arjun (Class V)",
@@ -11,7 +11,7 @@ export const TESTIMONIALS: Testimonial[] = [
   },
   {
     id: "t2",
-    quote: "The conceptual foundation I built during my Class XI-XII Non-Medical years at DAV Qilla Mandi propelled me to clear JEE Advanced with AIR 284. The faculty’s personal mentorship after regular school hours made all the difference.",
+    quote: "The conceptual foundation I built during my Class XI-XII Non-Medical years at DAV Qila Mandi propelled me to clear JEE Advanced with AIR 284. The faculty’s personal mentorship after regular school hours made all the difference.",
     authorName: "Er. Raghav Dogra",
     relationship: "Alumnus",
     detail: "B.Tech Computer Science, IIT Delhi (Batch of 2022)",
@@ -19,7 +19,7 @@ export const TESTIMONIALS: Testimonial[] = [
   },
   {
     id: "t3",
-    quote: "What sets DAV Qilla Mandi apart is that every child is heard. Whether it is stage debates, national sports meets, or board preparation, our teachers stand beside us as pillars of encouragement.",
+    quote: "What sets DAV Qila Mandi apart is that every child is heard. Whether it is stage debates, national sports meets, or board preparation, our teachers stand beside us as pillars of encouragement.",
     authorName: "Harleen Kaur",
     relationship: "Student",
     detail: "Head Girl (Class XII, Commerce Stream)",

@@ -17,11 +17,11 @@ export async function generateMetadata({ params }: GalleryDetailPageProps): Prom
   const item = items.find((g) => g.id === params.slug || (g as any).slug === params.slug);
 
   if (!item) {
-    return { title: "Photograph Not Found | DAV Public School Qilla Mandi" };
+    return { title: "Photograph Not Found | DAV Public School Qila Mandi" };
   }
 
   return {
-    title: `${item.title} | DAV Public School Qilla Mandi`,
+    title: `${item.title} | DAV Public School Qila Mandi`,
     description: item.caption || item.title,
   };
 }
