@@ -16,19 +16,19 @@ export function MobileFloatingBar({ onOpenAdmissionModal }: { onOpenAdmissionMod
         setIsVisible(false);
       }
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   if (!isVisible) return null;
 
   return (
-    <aside aria-label="Quick School Actions" className="fixed bottom-0 left-0 right-0 z-50 bg-[#4E220F]/95 backdrop-blur-xl border-t border-white/10 p-2 sm:hidden shadow-2xl font-sans pb-[max(8px,env(safe-area-inset-bottom))]">
+    <aside aria-label="Quick School Actions" className="fixed bottom-0 left-0 right-0 z-50 bg-[#4E220F]/95 backdrop-blur-xl border-t border-white/10 p-2 sm:hidden shadow-2xl font-sans pb-[max(8px,env(safe-area-inset-bottom))] select-none">
       <div className="grid grid-cols-4 gap-2 text-center text-[10px] font-mono font-medium text-white/80">
         {/* Reception Call */}
         <a
           href={`tel:${SCHOOL_CONFIG.contact.receptionPhone}`}
-          className="flex flex-col items-center justify-center gap-1 py-1.5 px-1 rounded-xl bg-white/5 hover:bg-white/15 active:scale-95 text-white transition-all min-h-[46px] border border-white/10"
+          className="flex flex-col items-center justify-center gap-1 py-1.5 px-1 rounded-xl bg-white/5 hover:bg-white/15 active:bg-white/20 active:scale-95 text-white transition-all min-h-[48px] border border-white/10 touch-manipulation [-webkit-tap-highlight-color:transparent]"
         >
           <Phone className="w-4 h-4 text-[#B0BA99]" />
           <span>Reception</span>
@@ -37,7 +37,7 @@ export function MobileFloatingBar({ onOpenAdmissionModal }: { onOpenAdmissionMod
         {/* Office Call */}
         <a
           href={`tel:${SCHOOL_CONFIG.contact.officePhone}`}
-          className="flex flex-col items-center justify-center gap-1 py-1.5 px-1 rounded-xl bg-[#9D6638]/60 border border-[#9D6638] text-[#B0BA99] active:scale-95 transition-all min-h-[46px]"
+          className="flex flex-col items-center justify-center gap-1 py-1.5 px-1 rounded-xl bg-[#9D6638]/60 border border-[#9D6638] text-[#B0BA99] active:bg-[#9D6638]/80 active:scale-95 transition-all min-h-[48px] touch-manipulation [-webkit-tap-highlight-color:transparent]"
         >
           <Phone className="w-4 h-4 text-[#B0BA99]" />
           <span>Office</span>
@@ -48,7 +48,7 @@ export function MobileFloatingBar({ onOpenAdmissionModal }: { onOpenAdmissionMod
           href={SCHOOL_CONFIG.address.googleMapsUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex flex-col items-center justify-center gap-1 py-1.5 px-1 rounded-xl bg-white/5 hover:bg-white/15 active:scale-95 text-white transition-all min-h-[46px] border border-white/10"
+          className="flex flex-col items-center justify-center gap-1 py-1.5 px-1 rounded-xl bg-white/5 hover:bg-white/15 active:bg-white/20 active:scale-95 text-white transition-all min-h-[48px] border border-white/10 touch-manipulation [-webkit-tap-highlight-color:transparent]"
         >
           <MapPin className="w-4 h-4 text-[#B0BA99]" />
           <span>Location</span>
@@ -57,7 +57,7 @@ export function MobileFloatingBar({ onOpenAdmissionModal }: { onOpenAdmissionMod
         {/* Apply Now Primary CTA */}
         <button
           onClick={onOpenAdmissionModal}
-          className="flex flex-col items-center justify-center gap-1 py-1.5 px-1 rounded-xl bg-[#9D6638] text-white font-bold active:scale-95 transition-all min-h-[46px] shadow-sm cursor-pointer"
+          className="flex flex-col items-center justify-center gap-1 py-1.5 px-1 rounded-xl bg-[#9D6638] text-white font-bold active:bg-[#82522B] active:scale-95 transition-all min-h-[48px] shadow-sm cursor-pointer touch-manipulation [-webkit-tap-highlight-color:transparent]"
         >
           <Sparkles className="w-4 h-4 text-white" />
           <span>Apply</span>

@@ -24,12 +24,12 @@ export function WhatsAppFloatingButton() {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed bottom-20 right-4 sm:bottom-8 sm:right-6 z-[9999] flex flex-col items-end gap-3">
+    <div className="fixed bottom-20 right-4 sm:bottom-8 sm:right-6 z-30 flex flex-col items-end gap-3 select-none">
       {/* Expandable Card */}
       <div
         className={`transition-all duration-300 ease-out origin-bottom-right ${
           isOpen
-            ? "opacity-100 scale-100 translate-y-0"
+            ? "opacity-100 scale-100 translate-y-0 pointer-events-auto"
             : "opacity-0 scale-90 translate-y-4 pointer-events-none"
         }`}
       >
@@ -50,10 +50,10 @@ export function WhatsAppFloatingButton() {
             </div>
             <button
               onClick={() => setIsOpen(false)}
-              className="w-6 h-6 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition-colors cursor-pointer"
+              className="w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 active:scale-95 flex items-center justify-center transition-colors cursor-pointer touch-manipulation [-webkit-tap-highlight-color:transparent]"
               aria-label="Close WhatsApp chat"
             >
-              <X className="w-3.5 h-3.5 text-white" />
+              <X className="w-4 h-4 text-white" />
             </button>
           </div>
 
@@ -78,7 +78,7 @@ export function WhatsAppFloatingButton() {
               href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-between w-full px-4 py-3 rounded-xl bg-[#25D366] hover:bg-[#1EBE57] text-white text-xs font-bold transition-colors group"
+              className="flex items-center justify-between w-full min-h-[46px] px-4 py-3 rounded-xl bg-[#25D366] hover:bg-[#1EBE57] active:scale-[0.98] text-white text-xs font-bold transition-all group touch-manipulation [-webkit-tap-highlight-color:transparent]"
               onClick={() => {
                 setIsOpen(false);
                 trackWhatsAppClick("floating_button");
@@ -90,7 +90,7 @@ export function WhatsAppFloatingButton() {
             </a>
             <a
               href={`tel:${SCHOOL_CONFIG.contact.receptionPhone}`}
-              className="flex items-center justify-between w-full px-4 py-3 rounded-xl bg-[#F7F1DE] hover:bg-[#EFE4C8] text-[#4E220F] text-xs font-bold transition-colors border border-[#9D6638]/20 group"
+              className="flex items-center justify-between w-full min-h-[46px] px-4 py-3 rounded-xl bg-[#F7F1DE] hover:bg-[#EFE4C8] active:scale-[0.98] text-[#4E220F] text-xs font-bold transition-all border border-[#9D6638]/20 group touch-manipulation [-webkit-tap-highlight-color:transparent]"
               onClick={() => {
                 setIsOpen(false);
                 trackPhoneClick("floating_button");
@@ -107,7 +107,7 @@ export function WhatsAppFloatingButton() {
       <button
         onClick={() => setIsOpen((v) => !v)}
         aria-label="Chat on WhatsApp"
-        className={`relative w-14 h-14 rounded-full bg-[#25D366] hover:bg-[#1EBE57] shadow-xl hover:shadow-2xl transition-all duration-200 flex items-center justify-center cursor-pointer active:scale-95 ${
+        className={`relative w-14 h-14 rounded-full bg-[#25D366] hover:bg-[#1EBE57] active:scale-90 shadow-xl hover:shadow-2xl transition-all duration-200 flex items-center justify-center cursor-pointer touch-manipulation [-webkit-tap-highlight-color:transparent] ${
           isOpen ? "rotate-0" : "hover:scale-110"
         }`}
       >

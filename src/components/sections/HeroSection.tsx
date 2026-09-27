@@ -85,7 +85,7 @@ export function HeroSection({ onOpenAdmissionModal }: HeroSectionProps) {
           <div className="flex flex-wrap items-center gap-3.5 sm:gap-4 pt-2">
             <button
               onClick={scrollToExplore}
-              className="px-6 sm:px-7 py-3 rounded-xl bg-[#9D6638] hover:bg-[#82522B] text-white font-bold text-xs uppercase tracking-[0.14em] transition-all duration-300 shadow-xl hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2.5 cursor-pointer font-sans border border-white/15"
+              className="px-6 sm:px-7 py-3 rounded-xl bg-[#9D6638] hover:bg-[#82522B] active:bg-[#82522B] text-white font-bold text-xs uppercase tracking-[0.14em] transition-all duration-300 shadow-xl hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2.5 cursor-pointer font-sans border border-white/15 min-h-[44px] touch-manipulation [-webkit-tap-highlight-color:transparent]"
             >
               <Compass className="w-4 h-4 text-white" />
               <span>Explore Our School</span>
@@ -93,7 +93,7 @@ export function HeroSection({ onOpenAdmissionModal }: HeroSectionProps) {
 
             <button
               onClick={onOpenAdmissionModal}
-              className="px-6 sm:px-7 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs uppercase tracking-[0.14em] backdrop-blur-md border border-white/25 transition-all duration-300 shadow-md active:scale-95 flex items-center justify-center gap-2 cursor-pointer font-sans"
+              className="px-6 sm:px-7 py-3 rounded-xl bg-white/10 hover:bg-white/20 active:bg-white/25 text-white font-bold text-xs uppercase tracking-[0.14em] backdrop-blur-md border border-white/25 transition-all duration-300 shadow-md active:scale-95 flex items-center justify-center gap-2 cursor-pointer font-sans min-h-[44px] touch-manipulation [-webkit-tap-highlight-color:transparent]"
             >
               <span>Admissions 2026-27</span>
               <ArrowRight className="w-4 h-4 text-white" />

@@ -1,282 +1,275 @@
-# DAV Public School, Qilla Mandi — Web Platform
+# System Design Document (SDD) & Enterprise Specification
+## Dr. MRS Bhalla DAV Public School — Digital Platform & Administrative Management Suite
 
-## 1. Executive Overview
-
-This repository houses the official web portal and administrative management platform for DAV Public School, Qilla Mandi (Batala, Punjab). The application is engineered as an enterprise-grade digital experience serving prospective students, parents, faculty, and administrative staff.
-
-The system combines a server-rendered, SEO-optimized public portal with a secure administrative dashboard for admission lead ingestion, contact dispatching, and content management via a headless CMS architecture.
+> **Document Version:** 2.0.0 (Production Ready)  
+> **System Classification:** Institutional Enterprise Web Platform & Lead Intelligence Suite  
+> **Engineering Partner:** [DEVNXY™](https://devnxy.in/) — High-Performance Web & App Development Agency  
+> **Managing Authority:** DAV College Managing Committee (DAVCMC), New Delhi  
+> **Institutional Branch:** Dr. MRS Bhalla DAV Public School, Qila Mandi, Batala, Punjab  
 
 ---
 
-## 2. System Architecture & Component Design
+## 1. Executive Summary & System Objectives
 
-The platform employs a decoupled modern web architecture utilizing Next.js 14 (App Router) as the compute engine, Supabase PostgreSQL for relational data persistence and authentication, and Sanity.io for structured headless content delivery.
+This System Design Document (SDD) outlines the end-to-end technical architecture, component design, database schemas, API contracts, security models, mobile viewport specs, and deployment protocols for the official web application and administrative management system of **Dr. MRS Bhalla DAV Public School, Qila Mandi, Batala**.
+
+### Primary System Objectives:
+1. **High-Performance Public Portal:** Deliver a server-rendered, SEO-optimized digital experience across Desktop and Mobile browsers (iOS Safari & Android Chrome).
+2. **Zero-Data-Loss Admission Ingestion:** Provide an immediate lead registration pipeline (`/api/admissions/enquiry`) with rate-limiting, validation, and automated reference tracking (`DAVQM-2026-XXXX`).
+3. **Administrative Lead & Content Suite:** Provide a secure administrative dashboard (`/admin`) for lead management, CSV exports, site settings overrides, photo bucket management, and news circular publishing.
+4. **Mobile UX & Safe-Area Compliance:** Guarantee pixel-perfect rendering across notched iPhones (Dynamic Island) and Android smartphones with dynamic viewport height (`100dvh`) and 44px+ touch targets.
+
+---
+
+## 2. High-Level Architecture (HLD)
+
+The platform is built on a 4-tier decoupled web architecture leveraging **Next.js 14 App Router** for compute and rendering, **Supabase PostgreSQL** for relational persistence and storage, and **Sanity.io** for headless content management.
 
 ```mermaid
 graph TD
-    subgraph Client Tier
-        Browser[Public Browser / Mobile Clients]
-        AdminClient[Admin Portal Dashboard]
+    subgraph Tier 1: Client & Presentation Tier
+        MobileSafari[iOS Safari Clients / Notched iPhones]
+        MobileChrome[Android Chrome / Touch Viewports]
+        DesktopBrowsers[Desktop Clients / Chrome, Safari, Firefox, Edge]
+        AdminDashboard[Administrative Suite /admin]
     end
 
-    subgraph Edge & Security Tier
-        CF[Cloudflare Edge / DNS / WAF]
-        VercelCDN[Vercel Global Edge Network]
+    subgraph Tier 2: Edge & Security Gateway
+        EdgeWAF[Cloudflare DNS / Edge Network]
+        VercelCDN[Vercel Global Edge Serverless Engine]
+        RateLimiter[IP Rate Limiter - Token Bucket 5 req/10m]
+        ZodValidator[Zod Payload Validator & XSS Sanitizer]
     end
 
-    subgraph Application Tier
-        NextServer[Next.js 14 App Router Server]
-        API_Admissions[API: /api/admissions/enquiry]
-        API_Contact[API: /api/contact]
-        API_Delete[API: /api/admin/enquiries/delete]
-        Studio[Sanity Studio Route: /studio]
+    subgraph Tier 3: Compute & API Layer
+        NextAppRouter[Next.js 14 App Router Server Components]
+        API_Admissions[API: POST /api/admissions/enquiry]
+        API_Contact[API: POST /api/contact]
+        API_Settings[API: GET/POST /api/settings & /api/admin/settings]
+        API_AdminEnquiries[API: GET/DELETE /api/admin/enquiries]
+        API_Photos[API: POST /api/admin/photos]
+        StudioCMS[Sanity Studio Route /studio]
     end
 
-    subgraph Content Tier
-        SanityCloud[Sanity Content Lake CMS]
-        LocalFallback[Local Fallback Data Stores]
+    subgraph Tier 4: Persistence, Storage & Auth Tier
+        SupabaseAuth[Supabase GoTrue JWT Auth]
+        SupabaseDB[(Supabase PostgreSQL Relational DB)]
+        SupabaseStorage[Supabase Storage Buckets - Campus Assets]
+        SanityLake[Sanity Content Lake CMS]
     end
 
-    subgraph Data & Auth Tier
-        SupabaseAuth[Supabase Auth Engine]
-        SupabaseDB[(PostgreSQL Database)]
-        RLS[Row Level Security Policies]
-    end
+    MobileSafari -->|HTTPS TLS 1.3| EdgeWAF
+    MobileChrome -->|HTTPS TLS 1.3| EdgeWAF
+    DesktopBrowsers -->|HTTPS TLS 1.3| EdgeWAF
+    AdminDashboard -->|HTTPS TLS 1.3| EdgeWAF
 
-    Browser -->|HTTPS / TLS 1.3| CF
-    AdminClient -->|HTTPS / TLS 1.3| CF
-    CF --> VercelCDN
-    VercelCDN --> NextServer
+    EdgeWAF --> VercelCDN
+    VercelCDN --> NextAppRouter
 
-    NextServer --> API_Admissions
-    NextServer --> API_Contact
-    NextServer --> API_Delete
-    NextServer --> Studio
+    NextAppRouter --> RateLimiter
+    RateLimiter --> ZodValidator
+    ZodValidator --> API_Admissions
+    ZodValidator --> API_Contact
+    NextAppRouter --> API_Settings
+    NextAppRouter --> API_AdminEnquiries
+    NextAppRouter --> API_Photos
+    NextAppRouter --> StudioCMS
 
-    API_Admissions -->|Service Role / Key| SupabaseDB
-    API_Contact -->|Service Role / Key| SupabaseDB
-    API_Delete -->|Auth Token Validation| SupabaseDB
-    AdminClient -->|Sign In / Session| SupabaseAuth
-
-    NextServer -->|GROQ Queries| SanityCloud
-    SanityCloud -.->|On Network Failure| LocalFallback
-    SupabaseDB --- RLS
+    API_Admissions -->|Service Role Key| SupabaseDB
+    API_Contact -->|Service Role Key| SupabaseDB
+    API_AdminEnquiries -->|Auth Session Cookie| SupabaseDB
+    API_Photos -->|Storage Bucket API| SupabaseStorage
+    AdminDashboard -->|HTTP-only Session| SupabaseAuth
+    NextAppRouter -.->|GROQ Headless Queries| SanityLake
 ```
 
 ---
 
-## 3. Technology Stack
+## 3. Low-Level Component Design (LLD)
 
-### Core Framework & Runtime
-- **Runtime**: Node.js >= 18.17.0
-- **Framework**: Next.js 14.2 (App Router, Server Components, Route Handlers)
-- **Language**: TypeScript 5.x (Strict type validation throughout)
+### 3.1 Component Hierarchy & Layering
 
-### User Interface & Design System
-- **Styling**: Tailwind CSS 3.4 with custom institutional design tokens (Navy, Gold, Cream)
-- **Component Primitives**: Lucide React Icons
-- **Animation Engine**: Framer Motion 11.x (Micro-interactions, scroll triggers)
-- **Effects**: Canvas Confetti (Admission submission celebration)
+```
+RootLayout (src/app/layout.tsx)
+ ├── AnalyticsProvider (GA4 Event Tracker)
+ ├── ScrollProgress (Motion Bar)
+ ├── ClientAppWrapper (Context Provider & Modal Orchestrator)
+ │    ├── Navbar (Fixed Header z-[70] + Fullscreen Mobile Overlay z-[60])
+ │    ├── Main Content Page Node (flex-1)
+ │    ├── Footer (Institutional Sitemap & DEVNXY Attribution)
+ │    ├── MobileFloatingBar (Fixed Bottom Bar z-50, sm:hidden)
+ │    ├── WhatsAppFloatingButton (FAB z-30, Expandable Chat Card)
+ │    ├── SearchModal (Global Search z-50, Cmd+K Trigger)
+ │    └── AdmissionModal (Enquiry Modal z-50, Confetti Feedback)
+```
 
-### Data Persistence & Backend Infrastructure
-- **Relational Database**: Supabase PostgreSQL
-- **Identity & Authentication**: Supabase GoTrue Auth
-- **Data Validation**: Zod Schema Parsing & Sanitization
-- **Headless CMS**: Sanity Studio v3 (`next-sanity`, `@sanity/client`)
+### 3.2 Mobile Viewport & Touch Engine
+- **Dynamic Viewport Height (`100dvh`)**: Prevents layout clipping when mobile browser address bars auto-expand/collapse.
+- **Safe Area Inset Handling**: Padding configured via `env(safe-area-inset-top)` and `env(safe-area-inset-bottom)` for notched iPhones and Dynamic Island.
+- **Dual Scroll Locking**: Sets `overflow: hidden` on both `document.documentElement` and `document.body` along with `overscroll-behavior: contain` to prevent background bleed on iOS Safari.
+- **Touch Targets**: Enforces 44px–50px minimum hit areas with `-webkit-tap-highlight-color: transparent` and `touch-action: manipulation`.
 
 ---
 
-## 4. Security Architecture & Governance
+## 4. Database Schema Specification (Supabase PostgreSQL)
 
-The platform adheres to zero-trust design principles to ensure institutional and parent data remains strictly confidential.
+```mermaid
+erDiagram
+    admission_enquiries {
+        UUID id PK
+        VARCHAR reference_id FK
+        VARCHAR parent_name
+        VARCHAR student_name
+        VARCHAR applying_for_class
+        VARCHAR phone
+        VARCHAR email
+        VARCHAR city_or_area
+        VARCHAR preferred_contact_method
+        TEXT message
+        VARCHAR status
+        VARCHAR source
+        TIMESTAMPTZ created_at
+    }
+
+    contact_inquiries {
+        UUID id PK
+        VARCHAR name
+        VARCHAR phone
+        VARCHAR email
+        VARCHAR category
+        TEXT message
+        VARCHAR status
+        VARCHAR source
+        TIMESTAMPTZ created_at
+    }
+
+    site_settings {
+        UUID id PK
+        VARCHAR setting_key UK
+        TEXT setting_value
+        TIMESTAMPTZ updated_at
+    }
+
+    academic_toppers {
+        UUID id PK
+        VARCHAR student_name
+        VARCHAR percentage
+        VARCHAR class_name
+        VARCHAR exam_year
+        TEXT photo_url
+        TIMESTAMPTZ created_at
+    }
+
+    news_stories {
+        UUID id PK
+        VARCHAR title
+        VARCHAR slug UK
+        VARCHAR category
+        TEXT excerpt
+        TEXT content
+        TIMESTAMPTZ published_at
+    }
+
+    admission_enquiries ||--o{ site_settings : references
+```
+
+### Table Definitions & Constraints
+
+#### 1. `admission_enquiries`
+```sql
+CREATE TABLE public.admission_enquiries (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  reference_id VARCHAR(50) UNIQUE DEFAULT ('DAVQM-' || extract(year from now()) || '-' || floor(random() * 9000 + 1000)::text),
+  parent_name VARCHAR(255) NOT NULL,
+  student_name VARCHAR(255) NOT NULL,
+  applying_for_class VARCHAR(50) NOT NULL,
+  phone VARCHAR(20) NOT NULL,
+  email VARCHAR(255),
+  city_or_area VARCHAR(255),
+  preferred_contact_method VARCHAR(50) DEFAULT 'WhatsApp',
+  message TEXT,
+  status VARCHAR(50) DEFAULT 'new',
+  source VARCHAR(100) DEFAULT 'website_admission_form',
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Indexing for fast search and admin lookup
+CREATE INDEX idx_admission_reference ON public.admission_enquiries (reference_id);
+CREATE INDEX idx_admission_status ON public.admission_enquiries (status);
+```
+
+#### 2. `contact_inquiries`
+```sql
+CREATE TABLE public.contact_inquiries (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name VARCHAR(255) NOT NULL,
+  phone VARCHAR(20),
+  email VARCHAR(255),
+  category VARCHAR(100) DEFAULT 'General Enquiry',
+  message TEXT NOT NULL,
+  status VARCHAR(50) DEFAULT 'new',
+  source VARCHAR(100) DEFAULT 'website_contact_form',
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX idx_contact_status ON public.contact_inquiries (status);
+```
+
+---
+
+## 5. End-to-End Data Flow Sequence
 
 ```mermaid
 sequenceDiagram
     autonumber
-    actor User as Prospective Parent / Visitor
-    participant Browser as Web Client
-    participant NextAPI as Next.js API Layer
+    actor User as Parent / Visitor (Mobile/Desktop)
+    participant Modal as Admission Modal / Form
     participant Zod as Zod Schema Validator
+    participant API as POST /api/admissions/enquiry
+    participant RateLimit as IP Rate Limiter
     participant DB as Supabase PostgreSQL
+    participant Admin as Admin Dashboard (/admin/enquiries)
 
-    User->>Browser: Submits Admission Form
-    Browser->>NextAPI: POST /api/admissions/enquiry (JSON Payload)
-    NextAPI->>Zod: Validate & Sanitize Input
-    alt Validation Failure
-        Zod-->>NextAPI: Return Structured Error Map
-        NextAPI-->>Browser: 400 Bad Request
-    else Validation Success
-        Zod-->>NextAPI: Sanitized Data
-        NextAPI->>DB: Insert Record (Status: pending)
-        DB-->>NextAPI: DB Acknowledgement
-        NextAPI-->>Browser: 200 OK + Reference ID (e.g., DAVQM-2026-8941)
+    User->>Modal: Submits Admission Details
+    Modal->>Zod: Client Validation (safeParse)
+    alt Client Validation Error
+        Zod-->>Modal: Inline Field Error Messages
+    else Client Validation Success
+        Modal->>API: Dispatch JSON Request Payload
+        API->>RateLimit: Check IP Token Bucket (5 req / 10 min)
+        alt Rate Limit Exceeded
+            RateLimit-->>Modal: HTTP 429 Too Many Requests
+        else Rate Limit OK
+            API->>Zod: Server Zod Validation & Sanitization
+            API->>DB: INSERT INTO admission_enquiries
+            DB-->>API: Row Created + reference_id
+            API-->>Modal: HTTP 200 + { referenceId: "DAVQM-2026-8941" }
+            Modal->>User: Display Success Screen + Canvas Confetti + GA4 Event
+            Admin->>DB: Query /admin/enquiries (Read / Filter / Delete)
+        end
     end
 ```
 
-### Security Measures Implemented:
-1. **Zero Credential Exposure**: No API secrets, service keys, or project identifiers exist in tracked source code. All connections resolve dynamically via `process.env`.
-2. **HTTP Security Headers**: Configured in `next.config.mjs`:
-   - `Strict-Transport-Security`: Enforces 2-year HTTPS preload across all subdomains.
-   - `X-Frame-Options: SAMEORIGIN`: Mitigates clickjacking attacks.
-   - `X-Content-Type-Options: nosniff`: Prevents MIME-type sniffing vulnerabilities.
-   - `X-XSS-Protection: 1; mode=block`: Activates browser XSS filters.
-   - `Referrer-Policy: origin-when-cross-origin`: Restricts referrer leakage.
-   - `poweredByHeader: false`: Strips `X-Powered-By: Next.js` fingerprint header.
-3. **Database Row Level Security (RLS)**: Public callers are restricted to write-only (`INSERT`) actions on enquiry tables. Read (`SELECT`), update (`UPDATE`), and delete (`DELETE`) permissions require an authenticated administrator session.
-
 ---
 
-## 5. Database Schema & Architecture
+## 6. Technology Stack Specification
 
-The database runs on Supabase PostgreSQL. Database migrations are documented in `/supabase/migrations/`.
-
-### Table: `admission_enquiries`
-| Column Name | Data Type | Constraints | Description |
-| :--- | :--- | :--- | :--- |
-| `id` | `UUID` | Primary Key, Default `gen_random_uuid()` | Unique record identifier |
-| `reference_id` | `VARCHAR(50)` | Nullable, Indexed | Unique tracking ID (e.g. DAVQM-2026-1024) |
-| `student_name` | `VARCHAR(255)` | NOT NULL | Full name of student |
-| `applying_for_class` | `VARCHAR(50)` | NOT NULL | Grade applied for (Nursery to Class 10) |
-| `parent_name` | `VARCHAR(255)` | NOT NULL | Father/Mother/Guardian name |
-| `phone` | `VARCHAR(20)` | NOT NULL | Primary contact phone number |
-| `email` | `VARCHAR(255)` | Nullable | Email address for correspondence |
-| `city_or_area` | `VARCHAR(255)` | Nullable | Residential locality / town |
-| `academic_year` | `VARCHAR(20)` | Nullable | Target academic session (2026-2027) |
-| `preferred_contact_method` | `VARCHAR(50)` | Default `'WhatsApp'` | Preferred communication channel |
-| `message` | `TEXT` | Nullable | Additional notes or queries from parent |
-| `status` | `VARCHAR(50)` | Default `'new'` | Lifecycle state: `pending`, `contacted`, `admitted`, `archived` |
-| `source` | `VARCHAR(100)` | Default `'website_admission_form'` | Ingestion source tracking |
-| `created_at` | `TIMESTAMPTZ` | Default `NOW()` | Timestamp of form submission |
-
-### Table: `contact_enquiries`
-| Column Name | Data Type | Constraints | Description |
-| :--- | :--- | :--- | :--- |
-| `id` | `UUID` | Primary Key, Default `gen_random_uuid()` | Unique message identifier |
-| `name` | `VARCHAR(255)` | NOT NULL | Full name of sender |
-| `phone` | `VARCHAR(20)` | Nullable | Sender telephone number |
-| `email` | `VARCHAR(255)` | Nullable | Sender email address |
-| `subject` | `VARCHAR(255)` | Nullable | Subject classification |
-| `category` | `VARCHAR(100)` | Default `'General Enquiry'` | Message category |
-| `message` | `TEXT` | NOT NULL | Message body |
-| `status` | `VARCHAR(50)` | Default `'new'` | Lifecycle state: `pending`, `responded`, `archived` |
-| `source` | `VARCHAR(100)` | Default `'website_contact_form'` | Source marker |
-| `created_at` | `TIMESTAMPTZ` | Default `NOW()` | Timestamp of dispatch |
-
----
-
-## 6. Headless CMS Content Schemas (Sanity Studio)
-
-Content schemas are registered in `src/sanity/schemaTypes/index.ts` and managed via Sanity Studio (`/studio` or `https://<project-id>.sanity.studio`):
-
-| Schema Type | Purpose | Primary Fields |
+| Tier / Subsystem | Technology | Specification / Purpose |
 | :--- | :--- | :--- |
-| `siteSettings` | Institutional Meta & Global Config | `schoolName`, `logo`, `favicon`, `phone`, `email`, `address`, `googleMapsUrl`, `socialLinks`, `officeHours` |
-| `principalMessage` | Principal Desk Communique | `name`, `designation`, `photo`, `shortMessage`, `message`, `isPublished` |
-| `news` | News, Circulars & Notices | `title`, `slug`, `category`, `excerpt`, `content`, `author`, `publishedAt`, `featuredImage`, `isFeatured` |
-| `event` | Academic & Cultural Calendar | `title`, `slug`, `category`, `description`, `startDate`, `endDate`, `location`, `registrationUrl`, `featuredImage` |
-| `achievement` | Board Results, Sports & Awards | `title`, `slug`, `category`, `year`, `date`, `studentName`, `class`, `description`, `featuredImage` |
-| `galleryAlbum` | Campus & Event Photographic Archives | `title`, `slug`, `category`, `description`, `eventDate`, `coverImage`, `images[]` |
-| `facility` | Campus Infrastructure Showcases | `name`, `slug`, `category`, `description`, `specifications[]`, `featuredImage`, `order` |
-| `testimonial` | Parent & Alumni Feedback | `name`, `role`, `detail`, `quote`, `photo`, `isFeatured`, `order` |
-| `faq` | Admissions & Institutional FAQs | `question`, `answer`, `category`, `order` |
+| **Compute Framework** | Next.js 14.2 (App Router) | Server Components, Route Handlers, Prerendering |
+| **Runtime Language** | TypeScript 5.x | Strict Type Safety across 100% of repository |
+| **Design System** | Tailwind CSS 3.4 + Vanilla CSS | Custom Institutional Color Palette & 4-Font Typography |
+| **Typography System** | Google Fonts | `Cormorant Garamond`, `Manrope`, `DM Mono`, `Playfair Display` |
+| **Database** | Supabase PostgreSQL | Relational storage, indexing, RLS security |
+| **Storage Buckets** | Supabase Storage | Campus & Gallery image asset management |
+| **Authentication** | Supabase Auth (GoTrue) | Encrypted HTTP-only admin session cookies |
+| **Validation & Security**| Zod + XSS Sanitizer | Schema parsing & HTML entity escaping |
+| **Rate Limiter** | Token Bucket Algorithm | IP-based request limiting on public APIs |
+| **Analytics Engine** | GA4 / Firebase Analytics | Event tracking for CTA clicks & lead funnels |
 
 ---
 
-## 7. Installation & Local Development
-
-### Prerequisites
-- Node.js version 18.17.0 or higher
-- npm version 9.x or higher
-- Git version control
-
-### 1. Clone Repository
-```bash
-git clone https://github.com/sumit007-ui/DAV-School-Qila-Mandi.git
-cd DAV-School-Qila-Mandi
-```
-
-### 2. Install Dependencies
-```bash
-npm install
-```
-
-### 3. Setup Environment Variables
-Create a local `.env.local` file by copying the template:
-```bash
-cp .env.example .env.local
-```
-
-Populate `.env.local` with your credentials:
-```env
-# Sanity CMS Configuration
-NEXT_PUBLIC_SANITY_PROJECT_ID=your-sanity-project-id
-NEXT_PUBLIC_SANITY_DATASET=production
-NEXT_PUBLIC_SANITY_API_VERSION=2024-08-31
-
-# Supabase Database Configuration
-NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
-NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=your-supabase-publishable-key
-SUPABASE_SERVICE_ROLE_KEY=your-supabase-service-role-key
-
-# Optional Notification Services
-RESEND_API_KEY=
-```
-
-### 4. Execute Development Server
-```bash
-npm run dev
-```
-Access the application locally at `http://localhost:3000`.
-
-### 5. Validate Production Build
-```bash
-npm run build
-```
-
----
-
-## 8. Deployment Manual
-
-### Deployment to Vercel (Recommended)
-1. Navigate to [Vercel Dashboard](https://vercel.com/new).
-2. Select **Import Git Repository** and choose `sumit007-ui/DAV-School-Qila-Mandi`.
-3. Verify Framework Preset is set to **Next.js**.
-4. Configure **Environment Variables** in the Vercel project settings matching `.env.example`.
-5. Click **Deploy**. Vercel will compile static routes and provision serverless execution automatically.
-
-### Database Setup on Supabase
-1. Create a project on [Supabase](https://supabase.com).
-2. Open the **SQL Editor** in your Supabase dashboard.
-3. Execute the SQL scripts in order:
-   - `supabase/migrations/001_create_enquiries_tables.sql`
-   - `supabase/migrations/002_admin_enquiries_policy.sql`
-   - `supabase/migrations/003_admin_delete_policy.sql`
-4. Create an Administrator account in Supabase Dashboard under **Authentication ➔ Users ➔ Add User**.
-
----
-
-## 9. Administrative Operations Manual
-
-### Admin Authentication
-- Login URL: `/admin/login`
-- Enter the email and password provisioned in Supabase Authentication.
-- Upon successful authentication, the system securely redirects to `/admin/enquiries`.
-
-### Managing Enquiries & Data Records
-- **Tab Switching**: Toggle between *Admission Enquiries* and *Contact Inquiries*.
-- **Search & Filtering**: Search in real-time by student name, parent name, telephone, reference ID, or class. Filter records by status (`pending`, `contacted`, `admitted`, `archived`).
-- **Status Updating**: Modify status directly from the dropdown selector in any table row. Changes persist to Supabase immediately.
-- **Detailed Dossier Inspection**: Click the Eye icon on any record to view comprehensive parental inquiries, timestamps, and address information.
-- **Permanent Record Deletion**:
-  1. Click the Trash icon on any table row or within the detail modal.
-  2. A dedicated glassmorphic confirmation modal will appear with the record summary.
-  3. Confirm deletion. The record will be permanently purged from Supabase, and the UI will update optimistically with a confirmation toast.
-- **CSV Data Export**: Click **Export CSV** in the top navigation bar to generate an offline spreadsheet of filtered enquiry records.
-
----
-
-## 10. Repository Directory Structure
+## 7. Directory & Module Architecture
 
 ```
 DAV-School-Qila-Mandi/
@@ -286,61 +279,82 @@ DAV-School-Qila-Mandi/
 │   │   ├── academics/               # Curriculum & Academic Stages
 │   │   ├── achievements/            # Board Results, Sports & Awards
 │   │   ├── admin/
-│   │   │   ├── enquiries/           # Administrative Enquiries Dashboard
+│   │   │   ├── enquiries/           # Lead Intelligence & Dashboard
 │   │   │   └── login/               # Secure Admin Authentication
-│   │   ├── admissions/              # Admission Procedure, Eligibility & Fees
+│   │   ├── admissions/              # Admission Procedure & Fee Structure
 │   │   ├── api/
-│   │   │   ├── admin/enquiries/delete/ # Admin Deletion Route Handler
-│   │   │   ├── admissions/enquiry/  # Admission Form Ingestion Handler
-│   │   │   └── contact/             # Contact Form Dispatch Handler
-│   │   ├── campus/                  # Infrastructure, Labs & Sports Complex
-│   │   ├── contact/                 # Contact Information & Inquiry Form
-│   │   ├── events/                  # School Events & Annual Calendar
-│   │   ├── gallery/                 # Photographic Campus & Event Archives
-│   │   ├── mandatory-disclosure/    # CBSE Mandatory Disclosures & Affiliation
-│   │   ├── news/                    # Press Releases, Circulars & Bulletins
-│   │   ├── privacy/                 # Privacy Policy
-│   │   ├── student-life/            # Clubs, Houses & Extracurriculars
+│   │   │   ├── admin/enquiries/     # Admin Lead Management API
+│   │   │   ├── admissions/enquiry/  # Admission Form Ingestion API
+│   │   │   ├── contact/             # Contact Helpdesk Ingestion API
+│   │   │   ├── news/                # News & Circulars API
+│   │   │   ├── photos/              # Campus Photos API
+│   │   │   └── settings/            # Site Overrides API
+│   │   ├── campus/                  # Infrastructure, Computer & Science Labs
+│   │   ├── contact/                 # Helpdesk Form & Campus Location
+│   │   ├── gallery/                 # Photographic Campus Archives
+│   │   ├── mandatory-disclosure/    # PSEB Board Mandatory Disclosures
+│   │   ├── news/                    # Bulletins, Circulars & Events
+│   │   ├── student-life/            # House System, Athletics & Clubs
 │   │   ├── studio/[[...tool]]/      # Embedded Sanity Studio CMS
-│   │   ├── terms/                   # Terms & Conditions
-│   │   ├── globals.css              # Global Typography & Token Definitions
-│   │   ├── layout.tsx               # Root Layout & Metadata Setup
-│   │   ├── not-found.tsx            # Custom 404 Error Experience
-│   │   ├── page.tsx                 # Public Institutional Homepage
-│   │   ├── robots.ts                # Dynamic Search Engine Robots Rules
-│   │   └── sitemap.ts               # Dynamic XML Sitemap Generator
-│   ├── components/                  # Modular Presentation & Interactive Components
+│   │   ├── globals.css              # Typography & CSS Variable Definitions
+│   │   ├── layout.tsx               # Root Layout & Metadata
+│   │   └── page.tsx                 # Public Institutional Homepage
+│   ├── components/
+│   │   ├── forms/                   # Admission & Contact Forms
+│   │   ├── layout/                  # Client Wrapper & Providers
+│   │   ├── navigation/              # Navbar, Footer, MobileFloatingBar
+│   │   ├── sections/                # Institutional Homepage Sections
+│   │   └── ui/                      # WhatsApp FAB, Search Modal, Brand Logo
 │   ├── config/                      # Institutional Configuration Defaults
-│   ├── lib/
-│   │   ├── data/                    # Fallback Datasets (News, Events, Achievements)
-│   │   ├── seo/                     # JSON-LD Structured Schema & Meta Generators
-│   │   ├── supabase/                # Browser & Server Database Clients
-│   │   └── validation/              # Zod Ingestion Schemas
-│   ├── sanity/                      # CMS Client, Schema Types & GROQ Queries
-│   └── types/                       # Shared TypeScript Type Declarations
+│   └── lib/
+│       ├── data/                    # Fallback Data Stores
+│       ├── security/                # Rate Limiter & XSS Sanitizer
+│       ├── supabase/                # Server & Browser DB Clients
+│       └── validation/              # Zod Ingestion Schemas
 ├── supabase/
-│   └── migrations/                  # SQL Table Definitions & RLS Policies
-├── .env.example                     # Environment Template
-├── .gitignore                       # Production Secret & Cache Exclusion Rules
-├── next.config.mjs                  # Next.js Build Configuration & HTTP Headers
-├── package.json                     # Dependency Manifest
-├── sanity.cli.ts                    # Sanity CLI Configuration
-├── sanity.config.ts                 # Sanity Studio Root Configuration
-├── tailwind.config.ts               # Custom Color Tokens & Layout Utilities
-└── tsconfig.json                    # TypeScript Strict Configuration
+│   └── migrations/                  # SQL Schema Definitions & Indexes
+├── README.md                        # System Design Document (SDD)
+└── next.config.mjs                  # Build Config & Security Headers
 ```
 
 ---
 
-## 11. Quality Assurance & Verification
+## 8. Development & Production Operations
 
-- **Type Verification**: `npm run build` runs `tsc --noEmit` and validates 100% strict type safety.
-- **Static Route Generation**: 26 core application routes statically compiled and optimized.
-- **Fault-Tolerant Data Layer**: All external API interactions implement resilient fallbacks ensuring zero runtime page crashes in offline or unconfigured CMS environments.
+### 1. Installation & Environment Setup
+```bash
+git clone https://github.com/sumit007-ui/DAV-School-Qila-Mandi.git
+cd DAV-School-Qila-Mandi
+npm install
+```
+
+### 2. Configure Environment Variables (`.env.local`)
+```env
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
+SUPABASE_SERVICE_ROLE_KEY=your-supabase-service-role-key
+```
+
+### 3. Local Execution & Build Verification
+```bash
+# Start local dev server
+npm run dev
+
+# Compile production build (Verifies all 35 static routes)
+npm run build
+```
 
 ---
 
-## 12. License & Intellectual Property
+## 9. Development & Agency Attribution
 
-Copyright 2026 DAV Public School, Qilla Mandi (Batala, Punjab). All rights reserved.
-Developed for institutional operations under the guidance of DAV College Managing Committee (DAVCMC), New Delhi.
+Engineered, Designed & Optimized by **DEVNXY™**  
+*High-Performance Web & App Development Agency*  
+Website: [https://devnxy.in/](https://devnxy.in/)
+
+---
+
+## 10. License & Copyright
+
+Copyright © 2026 Dr. MRS Bhalla DAV Public School, Qila Mandi (Batala, Punjab). All rights reserved.  
+Managed by DAV College Managing Committee (DAVCMC), New Delhi.
