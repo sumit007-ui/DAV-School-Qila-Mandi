@@ -817,8 +817,8 @@ export default function AdminEnquiriesDashboard() {
 
       {/* Professional Delete Confirmation Modal */}
       {deleteTarget && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy-950/85 backdrop-blur-md animate-in fade-in duration-200">
-          <div className="bg-[#0B1A30] w-full max-w-md rounded-3xl border border-rose-500/30 p-6 sm:p-8 space-y-6 shadow-[0_0_60px_rgba(244,63,94,0.18)]">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-navy-950/85 backdrop-blur-md animate-in fade-in duration-200 overflow-y-auto">
+          <div className="bg-[#0B1A30] w-full max-w-md rounded-3xl border border-rose-500/30 p-6 sm:p-8 space-y-6 shadow-[0_0_60px_rgba(244,63,94,0.18)] max-h-[calc(100vh-2rem)] flex flex-col my-auto">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-2xl bg-rose-500/15 border border-rose-500/30 flex items-center justify-center text-rose-400 shrink-0">
                 <Trash2 className="w-6 h-6" />
@@ -885,8 +885,8 @@ export default function AdminEnquiriesDashboard() {
 
       {/* Admission Enquiry Detail Modal */}
       {selectedAdmission && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy-950/80 backdrop-blur-md animate-in fade-in duration-200">
-          <div className="bg-[#0B1A30] w-full max-w-xl rounded-3xl border border-white/15 p-6 sm:p-8 space-y-6 shadow-2xl">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 md:p-6 bg-navy-950/80 backdrop-blur-md animate-in fade-in duration-200 overflow-y-auto">
+          <div className="bg-[#0B1A30] w-full max-w-xl rounded-3xl border border-white/15 p-6 sm:p-8 space-y-6 shadow-2xl max-h-[calc(100vh-2rem)] sm:max-h-[85vh] flex flex-col overflow-y-auto my-auto">
             <div className="flex items-center justify-between border-b border-white/10 pb-4">
               <div>
                 <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-gold-400 block">
@@ -975,8 +975,8 @@ export default function AdminEnquiriesDashboard() {
 
       {/* Contact Inquiry Detail Modal */}
       {selectedContact && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy-950/80 backdrop-blur-md animate-in fade-in duration-200">
-          <div className="bg-[#0B1A30] w-full max-w-xl rounded-3xl border border-white/15 p-6 sm:p-8 space-y-6 shadow-2xl">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 md:p-6 bg-navy-950/80 backdrop-blur-md animate-in fade-in duration-200 overflow-y-auto">
+          <div className="bg-[#0B1A30] w-full max-w-xl rounded-3xl border border-white/15 p-6 sm:p-8 space-y-6 shadow-2xl max-h-[calc(100vh-2rem)] sm:max-h-[85vh] flex flex-col overflow-y-auto my-auto">
             <div className="flex items-center justify-between border-b border-white/10 pb-4">
               <div>
                 <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-gold-400 block">

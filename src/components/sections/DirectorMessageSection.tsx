@@ -129,15 +129,15 @@ export function DirectorMessageSection({ director: propDirector }: DirectorMessa
 
       {/* Full Message Modal */}
       {modalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-[#4E220F]/80 backdrop-blur-md animate-fade-in font-sans">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 md:p-6 bg-[#4E220F]/80 backdrop-blur-md animate-fade-in font-sans overflow-y-auto">
           <div
-            className="w-full max-w-2xl bg-white rounded-2xl shadow-2xl border border-white/20 overflow-hidden flex flex-col max-h-[85vh]"
+            className="w-full max-w-2xl bg-white rounded-2xl shadow-2xl border border-white/20 overflow-hidden flex flex-col max-h-[calc(100vh-2rem)] sm:max-h-[85vh] my-auto"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="p-6 bg-[#4E220F] text-white relative border-b border-white/10">
+            <div className="p-5 sm:p-6 bg-[#4E220F] text-white relative border-b border-white/10 shrink-0">
               <button
                 onClick={() => setModalOpen(false)}
-                className="absolute top-5 right-5 p-1 rounded-lg text-gold-300 hover:text-white hover:bg-white/10 transition-colors"
+                className="absolute top-4 right-4 sm:top-5 sm:right-5 p-1 rounded-lg text-gold-300 hover:text-white hover:bg-white/10 transition-colors"
                 aria-label="Close dialog"
               >
                 <X className="w-5 h-5" />

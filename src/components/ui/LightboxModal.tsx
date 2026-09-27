@@ -26,14 +26,14 @@ export function LightboxModal({ item, onClose, onPrev, onNext }: LightboxModalPr
   if (!item) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-8 bg-[#4E220F]/95 backdrop-blur-xl animate-fade-in font-sans">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 md:p-8 bg-[#4E220F]/95 backdrop-blur-xl animate-fade-in font-sans overflow-y-auto">
       {/* Close button */}
       <button
         onClick={onClose}
-        className="absolute top-6 right-6 z-50 p-2.5 rounded-full bg-[#9D6638]/80 text-[#F7F1DE] hover:bg-[#F7F1DE] hover:text-[#4E220F] border border-white/10 transition-colors"
+        className="absolute top-4 right-4 sm:top-6 sm:right-6 z-50 p-2.5 rounded-full bg-[#9D6638]/80 text-[#F7F1DE] hover:bg-[#F7F1DE] hover:text-[#4E220F] border border-white/10 transition-colors shadow-lg"
         aria-label="Close Lightbox"
       >
-        <X className="w-6 h-6" />
+        <X className="w-5 h-5 sm:w-6 sm:h-6" />
       </button>
 
       {/* Nav buttons */}
@@ -43,10 +43,10 @@ export function LightboxModal({ item, onClose, onPrev, onNext }: LightboxModalPr
             e.stopPropagation();
             onPrev();
           }}
-          className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 z-50 p-3 rounded-full bg-[#9D6638]/80 text-[#F7F1DE] hover:bg-[#F7F1DE] hover:text-[#4E220F] border border-white/10 transition-all shadow-xl"
+          className="absolute left-3 sm:left-8 top-1/2 -translate-y-1/2 z-50 p-2.5 sm:p-3 rounded-full bg-[#9D6638]/80 text-[#F7F1DE] hover:bg-[#F7F1DE] hover:text-[#4E220F] border border-white/10 transition-all shadow-xl"
           aria-label="Previous image"
         >
-          <ChevronLeft className="w-6 h-6" />
+          <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
         </button>
       )}
 
@@ -56,16 +56,16 @@ export function LightboxModal({ item, onClose, onPrev, onNext }: LightboxModalPr
             e.stopPropagation();
             onNext();
           }}
-          className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 z-50 p-3 rounded-full bg-[#9D6638]/80 text-[#F7F1DE] hover:bg-[#F7F1DE] hover:text-[#4E220F] border border-white/10 transition-all shadow-xl"
+          className="absolute right-3 sm:right-8 top-1/2 -translate-y-1/2 z-50 p-2.5 sm:p-3 rounded-full bg-[#9D6638]/80 text-[#F7F1DE] hover:bg-[#F7F1DE] hover:text-[#4E220F] border border-white/10 transition-all shadow-xl"
           aria-label="Next image"
         >
-          <ChevronRight className="w-6 h-6" />
+          <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
         </button>
       )}
 
       {/* Main Image and Caption Card */}
       <div
-        className="max-w-5xl w-full max-h-[90vh] flex flex-col bg-[#4E220F] rounded-2xl overflow-hidden border border-white/10 shadow-2xl"
+        className="max-w-5xl w-full max-h-[calc(100vh-2rem)] sm:max-h-[90vh] flex flex-col bg-[#4E220F] rounded-2xl overflow-hidden border border-white/10 shadow-2xl my-auto"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="relative w-full h-[55vh] sm:h-[68vh] bg-black">

@@ -625,8 +625,8 @@ export function AcademicToppersCMSView() {
 
       {/* Delete Confirmation Modal */}
       {deleteTarget && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy-950/85 backdrop-blur-md animate-in fade-in duration-200">
-          <div className="bg-[#0B1A30] w-full max-w-md rounded-3xl border border-rose-500/30 p-6 sm:p-8 space-y-6 shadow-2xl">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-navy-950/85 backdrop-blur-md animate-in fade-in duration-200 overflow-y-auto">
+          <div className="bg-[#0B1A30] w-full max-w-md rounded-3xl border border-rose-500/30 p-6 sm:p-8 space-y-6 shadow-2xl max-h-[calc(100vh-2rem)] my-auto">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-rose-500/15 border border-rose-500/30 flex items-center justify-center text-rose-400">
                 <Trash2 className="w-5 h-5" />

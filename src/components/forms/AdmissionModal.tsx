@@ -118,35 +118,35 @@ export function AdmissionModal({ isOpen, onClose, defaultGrade = "Nursery" }: Ad
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-[#4E220F]/80 backdrop-blur-md animate-fade-in overflow-y-auto font-sans">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 md:p-6 bg-[#4E220F]/80 backdrop-blur-md animate-fade-in overflow-y-auto font-sans">
       <div
-        className="w-full max-w-xl bg-white rounded-2xl shadow-2xl border border-white/20 overflow-hidden flex flex-col my-8"
+        className="w-full max-w-xl bg-white rounded-2xl shadow-2xl border border-white/20 overflow-hidden flex flex-col max-h-[calc(100vh-2rem)] sm:max-h-[calc(100vh-3rem)] my-auto"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Modal Header */}
-        <div className="p-5 sm:p-6 bg-[#4E220F] text-white relative border-b border-white/10">
+        <div className="p-5 sm:p-6 bg-[#4E220F] text-white relative border-b border-white/10 shrink-0">
           <button
             onClick={onClose}
-            className="absolute top-5 right-5 p-1.5 rounded-lg text-[#F7F1DE]/80 hover:text-white hover:bg-white/10 transition-colors"
+            className="absolute top-4 right-4 sm:top-5 sm:right-5 p-1.5 rounded-lg text-[#F7F1DE]/80 hover:text-white hover:bg-white/10 transition-colors z-10"
             aria-label="Close modal"
           >
             <X className="w-5 h-5" />
           </button>
 
-          <div className="flex items-center gap-2 text-[#B0BA99] text-xs font-mono font-bold uppercase tracking-widest mb-1.5">
-            <Sparkles className="w-3.5 h-3.5 text-[#B0BA99]" />
-            <span>Admissions Enquiry Session {SCHOOL_CONFIG.admissionsSession}</span>
+          <div className="flex items-center gap-2 text-[#B0BA99] text-xs font-mono font-bold uppercase tracking-widest mb-1.5 pr-8">
+            <Sparkles className="w-3.5 h-3.5 text-[#B0BA99] shrink-0" />
+            <span className="truncate">Admissions Enquiry Session {SCHOOL_CONFIG.admissionsSession}</span>
           </div>
-          <h3 className="font-serif text-xl sm:text-2xl font-bold text-white">
+          <h3 className="font-serif text-xl sm:text-2xl font-bold text-white pr-8">
             Begin Your Child's Journey at DAV
           </h3>
-          <p className="text-xs text-[#F7F1DE]/80 mt-1 font-normal">
+          <p className="text-xs text-[#F7F1DE]/80 mt-1 font-normal pr-8">
             Submit your details below. Our admissions counsel will contact you within 24 hours.
           </p>
         </div>
 
         {/* Modal Body */}
-        <div className="p-6 overflow-y-auto max-h-[75vh]">
+        <div className="p-4 sm:p-6 overflow-y-auto flex-1">
           {isSubmitted ? (
             <div className="py-6 text-center space-y-5 animate-fade-in">
               <div className="w-16 h-16 bg-[#F7F1DE] text-[#4E220F] rounded-full flex items-center justify-center mx-auto shadow-inner border border-[#9D6638]/30">

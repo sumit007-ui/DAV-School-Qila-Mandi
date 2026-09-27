@@ -214,15 +214,15 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-start justify-center p-4 sm:p-6 md:p-20 bg-[#4E220F]/80 backdrop-blur-md animate-fade-in font-sans"
+      className="fixed inset-0 z-50 flex items-start justify-center p-3 sm:p-4 md:p-12 bg-[#4E220F]/80 backdrop-blur-md animate-fade-in font-sans overflow-y-auto"
       onClick={onClose}
     >
       <div
-        className="w-full max-w-2xl bg-white rounded-2xl shadow-2xl border border-white/20 overflow-hidden flex flex-col max-h-[85vh]"
+        className="w-full max-w-2xl bg-white rounded-2xl shadow-2xl border border-white/20 overflow-hidden flex flex-col max-h-[calc(100vh-1.5rem)] sm:max-h-[85vh] my-auto"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Search Input Bar */}
-        <div className="p-4 border-b border-[#4E220F]/10 flex items-center gap-3 bg-[#F7F1DE]">
+        <div className="p-3.5 sm:p-4 border-b border-[#4E220F]/10 flex items-center gap-3 bg-[#F7F1DE] shrink-0">
           <Search className="w-5 h-5 text-[#9D6638] shrink-0" />
           <input
             type="text"

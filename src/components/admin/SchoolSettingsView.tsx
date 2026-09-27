@@ -740,9 +740,9 @@ ON CONFLICT (id) DO NOTHING;`;
 
       {/* SQL Migration Modal */}
       {isSqlModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy-950/80 backdrop-blur-md animate-in fade-in">
-          <div className="bg-[#0B1A30] w-full max-w-3xl rounded-2xl border border-white/15 p-6 sm:p-8 space-y-5 shadow-2xl max-h-[90vh] flex flex-col">
-            <div className="flex items-center justify-between border-b border-white/10 pb-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 md:p-6 bg-navy-950/80 backdrop-blur-md animate-in fade-in overflow-y-auto">
+          <div className="bg-[#0B1A30] w-full max-w-3xl rounded-2xl border border-white/15 p-6 sm:p-8 space-y-5 shadow-2xl max-h-[calc(100vh-2rem)] sm:max-h-[90vh] flex flex-col my-auto">
+            <div className="flex items-center justify-between border-b border-white/10 pb-4 shrink-0">
               <div className="flex items-center gap-2.5">
                 <FileCode className="w-5 h-5 text-gold-400" />
                 <div>
