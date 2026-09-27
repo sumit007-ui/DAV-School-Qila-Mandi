@@ -24,7 +24,7 @@ export function WhatsAppFloatingButton() {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed bottom-6 right-5 z-[9999] flex flex-col items-end gap-3 sm:bottom-8 sm:right-6">
+    <div className="fixed bottom-20 right-4 sm:bottom-8 sm:right-6 z-[9999] flex flex-col items-end gap-3">
       {/* Expandable Card */}
       <div
         className={`transition-all duration-300 ease-out origin-bottom-right ${
@@ -33,7 +33,7 @@ export function WhatsAppFloatingButton() {
             : "opacity-0 scale-90 translate-y-4 pointer-events-none"
         }`}
       >
-        <div className="bg-white rounded-2xl shadow-2xl border border-gray-100 w-72 overflow-hidden">
+        <div className="bg-white rounded-2xl shadow-2xl border border-gray-100 w-[calc(100vw-2.5rem)] max-w-xs sm:w-72 overflow-hidden">
           {/* Card Header */}
           <div className="bg-[#25D366] px-4 py-3 flex items-center justify-between">
             <div className="flex items-center gap-2.5">
@@ -44,7 +44,7 @@ export function WhatsAppFloatingButton() {
                 </svg>
               </div>
               <div>
-                <p className="text-white text-xs font-bold font-sans">DAV School, Batala</p>
+                <p className="text-white text-xs font-bold font-sans">DAV School, Qila Mandi</p>
                 <p className="text-white/80 text-[10px] font-mono">Typically replies instantly</p>
               </div>
             </div>
@@ -107,7 +107,7 @@ export function WhatsAppFloatingButton() {
       <button
         onClick={() => setIsOpen((v) => !v)}
         aria-label="Chat on WhatsApp"
-        className={`relative w-14 h-14 rounded-full bg-[#25D366] hover:bg-[#1EBE57] shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center cursor-pointer active:scale-95 ${
+        className={`relative w-14 h-14 rounded-full bg-[#25D366] hover:bg-[#1EBE57] shadow-xl hover:shadow-2xl transition-all duration-200 flex items-center justify-center cursor-pointer active:scale-95 ${
           isOpen ? "rotate-0" : "hover:scale-110"
         }`}
       >

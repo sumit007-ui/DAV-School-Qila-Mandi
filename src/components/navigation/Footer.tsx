@@ -330,22 +330,22 @@ export function Footer({
       </div>
 
       {/* DEVNXY Developer Credit Strip */}
-      <div className="border-t border-white/5 py-3 relative z-10 bg-[#3A1808]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-center">
-          <p className="text-[10px] text-white/35 font-mono tracking-wider flex items-center gap-1.5">
-            <span>Designed &amp; Developed by</span>
+      <div className="border-t border-white/10 py-4 pb-20 sm:pb-4 relative z-10 bg-[#2E1306]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 text-center">
+          <div className="flex items-center gap-1.5 flex-wrap justify-center">
+            <span className="text-white/70 text-xs font-mono font-medium">Designed &amp; Developed by</span>
             <a
               href="https://devnxy.in/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[#C9A96E] hover:text-[#F4E4AF] transition-colors duration-200 font-semibold tracking-widest uppercase"
+              className="text-[#E6C687] hover:text-[#FFF0C8] transition-colors duration-200 font-bold tracking-widest text-xs uppercase underline decoration-[#E6C687]/40 underline-offset-4"
               aria-label="DEVNXY - High-Performance Web & App Development Agency"
             >
               DEVNXY™
             </a>
-            <span className="text-white/20 mx-0.5">·</span>
-            <span>High-Performance Web &amp; App Development Agency</span>
-          </p>
+          </div>
+          <span className="hidden sm:inline text-white/30">·</span>
+          <span className="text-white/60 text-[11px] font-mono">High-Performance Web &amp; App Development Agency</span>
         </div>
       </div>
     </footer>
