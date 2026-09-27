@@ -131,7 +131,7 @@ export function PrincipalMessageSection({ principal: propPrincipal }: PrincipalM
 
       {/* Full Message Modal */}
       {modalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 md:p-6 bg-[#4E220F]/80 backdrop-blur-md animate-fade-in font-sans overflow-y-auto">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-4 md:p-6 bg-[#4E220F]/80 backdrop-blur-md animate-fade-in font-sans overflow-y-auto">
           <div
             className="w-full max-w-2xl bg-white rounded-2xl shadow-2xl border border-white/20 overflow-hidden flex flex-col max-h-[calc(100vh-2rem)] sm:max-h-[85vh] my-auto"
             onClick={(e) => e.stopPropagation()}

@@ -542,7 +542,7 @@ CREATE POLICY "Admins can delete news images" ON storage.objects FOR DELETE TO s
 
       {/* CREATE / EDIT ARTICLE MODAL */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 md:p-6 bg-black/80 backdrop-blur-sm animate-fade-in overflow-y-auto">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-4 md:p-6 bg-black/80 backdrop-blur-sm animate-fade-in overflow-y-auto">
           <div className="bg-[#0B1A30] border border-white/20 rounded-2xl w-full max-w-2xl max-h-[calc(100vh-2rem)] sm:max-h-[90vh] flex flex-col overflow-hidden shadow-2xl text-white my-auto">
             <div className="p-5 sm:p-6 border-b border-white/10 flex items-center justify-between shrink-0 bg-[#0B1A30]">
               <h3 className="font-serif text-xl font-bold text-white flex items-center gap-2">
@@ -791,7 +791,7 @@ CREATE POLICY "Admins can delete news images" ON storage.objects FOR DELETE TO s
 
       {/* DELETE CONFIRMATION MODAL */}
       {deleteTarget && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-sm animate-fade-in overflow-y-auto">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-sm animate-fade-in overflow-y-auto">
           <div className="bg-[#0B1A30] border border-white/20 rounded-2xl w-full max-w-md p-6 space-y-4 text-white shadow-2xl max-h-[calc(100vh-2rem)] my-auto">
             <div className="flex items-center gap-3 text-rose-400">
               <Trash2 className="w-6 h-6" />
@@ -826,7 +826,7 @@ CREATE POLICY "Admins can delete news images" ON storage.objects FOR DELETE TO s
 
       {/* SQL MIGRATION MODAL */}
       {showSqlModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 md:p-6 bg-black/80 backdrop-blur-sm animate-fade-in overflow-y-auto">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-4 md:p-6 bg-black/80 backdrop-blur-sm animate-fade-in overflow-y-auto">
           <div className="bg-[#0B1A30] border border-white/20 rounded-2xl w-full max-w-2xl max-h-[calc(100vh-2rem)] sm:max-h-[85vh] flex flex-col p-6 space-y-4 text-white shadow-2xl my-auto">
             <div className="flex items-center justify-between border-b border-white/10 pb-3 shrink-0">
               <div className="flex items-center gap-2 text-gold-400 font-mono text-xs font-bold uppercase tracking-wider">

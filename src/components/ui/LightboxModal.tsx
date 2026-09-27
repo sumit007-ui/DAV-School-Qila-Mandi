@@ -26,7 +26,7 @@ export function LightboxModal({ item, onClose, onPrev, onNext }: LightboxModalPr
   if (!item) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 md:p-8 bg-[#4E220F]/95 backdrop-blur-xl animate-fade-in font-sans overflow-y-auto">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6 md:p-8 bg-[#4E220F]/95 backdrop-blur-xl animate-fade-in font-sans overflow-y-auto">
       {/* Close button */}
       <button
         onClick={onClose}

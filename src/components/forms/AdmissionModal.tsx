@@ -118,29 +118,29 @@ export function AdmissionModal({ isOpen, onClose, defaultGrade = "Nursery" }: Ad
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 md:p-6 bg-[#4E220F]/80 backdrop-blur-md animate-fade-in overflow-y-auto font-sans">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-4 md:p-6 bg-[#4E220F]/85 backdrop-blur-md animate-fade-in overflow-y-auto font-sans">
       <div
-        className="w-full max-w-xl bg-white rounded-2xl shadow-2xl border border-white/20 overflow-hidden flex flex-col max-h-[calc(100vh-2rem)] sm:max-h-[calc(100vh-3rem)] my-auto"
+        className="w-full max-w-xl bg-white rounded-2xl shadow-2xl border border-white/20 overflow-hidden flex flex-col max-h-[calc(100vh-2rem)] sm:max-h-[calc(100vh-3rem)] my-auto relative z-10"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Modal Header */}
         <div className="p-5 sm:p-6 bg-[#4E220F] text-white relative border-b border-white/10 shrink-0">
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 sm:top-5 sm:right-5 p-1.5 rounded-lg text-[#F7F1DE]/80 hover:text-white hover:bg-white/10 transition-colors z-10"
+            className="absolute top-3.5 right-3.5 sm:top-5 sm:right-5 p-2 rounded-xl text-[#F7F1DE]/90 hover:text-white hover:bg-white/10 transition-colors z-20 touch-manipulation"
             aria-label="Close modal"
           >
-            <X className="w-5 h-5" />
+            <X className="w-5 h-5 sm:w-6 sm:h-6" />
           </button>
 
-          <div className="flex items-center gap-2 text-[#B0BA99] text-xs font-mono font-bold uppercase tracking-widest mb-1.5 pr-8">
+          <div className="flex items-center gap-2 text-[#B0BA99] text-xs font-mono font-bold uppercase tracking-widest mb-1.5 pr-10">
             <Sparkles className="w-3.5 h-3.5 text-[#B0BA99] shrink-0" />
             <span className="truncate">Admissions Enquiry Session {SCHOOL_CONFIG.admissionsSession}</span>
           </div>
-          <h3 className="font-serif text-xl sm:text-2xl font-bold text-white pr-8">
+          <h3 className="font-serif text-xl sm:text-2xl font-bold text-white pr-10 leading-tight">
             Begin Your Child's Journey at DAV
           </h3>
-          <p className="text-xs text-[#F7F1DE]/80 mt-1 font-normal pr-8">
+          <p className="text-xs text-[#F7F1DE]/80 mt-1 font-normal pr-10">
             Submit your details below. Our admissions counsel will contact you within 24 hours.
           </p>
         </div>
@@ -189,14 +189,14 @@ export function AdmissionModal({ isOpen, onClose, defaultGrade = "Nursery" }: Ad
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
                 <a
                   href={`tel:${SCHOOL_CONFIG.contact.officePhone}`}
-                  className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-[#9D6638] hover:bg-[#82522B] text-white font-bold text-xs tracking-wide uppercase transition-colors flex items-center justify-center gap-2"
+                  className="w-full sm:w-auto min-h-[44px] px-5 py-2.5 rounded-xl bg-[#9D6638] hover:bg-[#82522B] text-white font-bold text-xs tracking-wide uppercase transition-colors flex items-center justify-center gap-2 touch-manipulation"
                 >
                   <Phone className="w-3.5 h-3.5" />
                   <span>Call Admissions Office</span>
                 </a>
                 <button
                   onClick={handleReset}
-                  className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-[#4E220F] hover:bg-[#9D6638] text-white font-bold text-xs tracking-wide uppercase transition-colors"
+                  className="w-full sm:w-auto min-h-[44px] px-5 py-2.5 rounded-xl bg-[#4E220F] hover:bg-[#9D6638] text-white font-bold text-xs tracking-wide uppercase transition-colors touch-manipulation"
                 >
                   Done
                 </button>
@@ -216,7 +216,7 @@ export function AdmissionModal({ isOpen, onClose, defaultGrade = "Nursery" }: Ad
                     placeholder="e.g. Jaspreet Singh"
                     value={formData.parentName || ""}
                     onChange={(e) => handleChange("parentName", e.target.value)}
-                    className={`w-full px-3.5 py-2 rounded-xl text-sm border ${
+                    className={`w-full px-3.5 py-2.5 rounded-xl text-base sm:text-sm border ${
                       errors.parentName ? "border-rose-500 bg-rose-50/30" : "border-[#4E220F]/20 focus:border-[#9D6638]"
                     } focus:outline-none transition-colors text-[#4E220F]`}
                   />
@@ -233,7 +233,7 @@ export function AdmissionModal({ isOpen, onClose, defaultGrade = "Nursery" }: Ad
                     placeholder="e.g. Manjot Singh"
                     value={formData.studentName || ""}
                     onChange={(e) => handleChange("studentName", e.target.value)}
-                    className={`w-full px-3.5 py-2 rounded-xl text-sm border ${
+                    className={`w-full px-3.5 py-2.5 rounded-xl text-base sm:text-sm border ${
                       errors.studentName ? "border-rose-500 bg-rose-50/30" : "border-[#4E220F]/20 focus:border-[#9D6638]"
                     } focus:outline-none transition-colors text-[#4E220F]`}
                   />
@@ -250,7 +250,7 @@ export function AdmissionModal({ isOpen, onClose, defaultGrade = "Nursery" }: Ad
                   <select
                     value={formData.gradeApplying || "Nursery"}
                     onChange={(e) => handleChange("gradeApplying", e.target.value)}
-                    className="w-full px-3.5 py-2 rounded-xl text-sm border border-[#4E220F]/20 focus:border-[#9D6638] focus:outline-none transition-colors text-[#4E220F] bg-white"
+                    className="w-full px-3.5 py-2.5 rounded-xl text-base sm:text-sm border border-[#4E220F]/20 focus:border-[#9D6638] focus:outline-none transition-colors text-[#4E220F] bg-white min-h-[44px]"
                   >
                     {["Pre-Nursery", "Nursery", "LKG", "UKG", "Class 1", "Class 2", "Class 3", "Class 4", "Class 5", "Class 6", "Class 7", "Class 8", "Class 9", "Class 10"].map((cls) => (
                       <option key={cls} value={cls}>{cls}</option>
@@ -267,7 +267,7 @@ export function AdmissionModal({ isOpen, onClose, defaultGrade = "Nursery" }: Ad
                     placeholder="e.g. Qila Mandi, Batala"
                     value={formData.cityOrArea || ""}
                     onChange={(e) => handleChange("cityOrArea", e.target.value)}
-                    className="w-full px-3.5 py-2 rounded-xl text-sm border border-[#4E220F]/20 focus:border-[#9D6638] focus:outline-none transition-colors text-[#4E220F]"
+                    className="w-full px-3.5 py-2.5 rounded-xl text-base sm:text-sm border border-[#4E220F]/20 focus:border-[#9D6638] focus:outline-none transition-colors text-[#4E220F]"
                   />
                 </div>
               </div>
@@ -289,7 +289,7 @@ export function AdmissionModal({ isOpen, onClose, defaultGrade = "Nursery" }: Ad
                       maxLength={10}
                       value={formData.phone || ""}
                       onChange={(e) => handleChange("phone", e.target.value)}
-                      className={`w-full px-3.5 py-2 rounded-r-xl text-sm border ${
+                      className={`w-full px-3.5 py-2.5 rounded-r-xl text-base sm:text-sm border ${
                         errors.phone ? "border-rose-500 bg-rose-50/30" : "border-[#4E220F]/20 focus:border-[#9D6638]"
                       } focus:outline-none transition-colors text-[#4E220F] font-mono`}
                     />
@@ -307,7 +307,7 @@ export function AdmissionModal({ isOpen, onClose, defaultGrade = "Nursery" }: Ad
                     placeholder="parent@example.com"
                     value={formData.email || ""}
                     onChange={(e) => handleChange("email", e.target.value)}
-                    className={`w-full px-3.5 py-2 rounded-xl text-sm border ${
+                    className={`w-full px-3.5 py-2.5 rounded-xl text-base sm:text-sm border ${
                       errors.email ? "border-rose-500 bg-rose-50/30" : "border-[#4E220F]/20 focus:border-[#9D6638]"
                     } focus:outline-none transition-colors text-[#4E220F]`}
                   />
@@ -326,7 +326,7 @@ export function AdmissionModal({ isOpen, onClose, defaultGrade = "Nursery" }: Ad
                       type="button"
                       key={mode}
                       onClick={() => handleChange("preferredContact", mode)}
-                      className={`py-2 px-3 rounded-xl text-xs font-medium border transition-all text-center ${
+                      className={`py-2.5 px-3 rounded-xl text-xs font-medium border transition-all text-center min-h-[44px] touch-manipulation ${
                         formData.preferredContact === mode
                           ? "bg-[#4E220F] text-white border-[#4E220F] shadow-sm font-bold"
                           : "bg-[#F7F1DE]/60 text-[#4E220F] border-[#4E220F]/20 hover:bg-[#F7F1DE]"
@@ -348,7 +348,7 @@ export function AdmissionModal({ isOpen, onClose, defaultGrade = "Nursery" }: Ad
                   placeholder="e.g. Bus transport availability, fee schedule..."
                   value={formData.message || ""}
                   onChange={(e) => handleChange("message", e.target.value)}
-                  className="w-full px-3.5 py-2 rounded-xl text-sm border border-[#4E220F]/20 focus:border-[#9D6638] focus:outline-none transition-colors text-[#4E220F] resize-none"
+                  className="w-full px-3.5 py-2.5 rounded-xl text-base sm:text-sm border border-[#4E220F]/20 focus:border-[#9D6638] focus:outline-none transition-colors text-[#4E220F] resize-none"
                 />
               </div>
 
@@ -357,7 +357,7 @@ export function AdmissionModal({ isOpen, onClose, defaultGrade = "Nursery" }: Ad
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-3.5 rounded-xl bg-[#9D6638] hover:bg-[#4E220F] text-white font-bold text-xs uppercase tracking-wider transition-all duration-200 shadow-lg active:scale-[0.99] flex items-center justify-center gap-2 disabled:opacity-70 border border-white/10"
+                  className="w-full py-3.5 min-h-[44px] rounded-xl bg-[#9D6638] hover:bg-[#4E220F] text-white font-bold text-xs uppercase tracking-wider transition-all duration-200 shadow-lg active:scale-[0.99] flex items-center justify-center gap-2 disabled:opacity-70 border border-white/10 touch-manipulation cursor-pointer"
                 >
                   {isSubmitting ? (
                     <span>Registering Application...</span>
