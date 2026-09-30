@@ -8,8 +8,8 @@ import { logAdminAction, getAdminEmail } from "@/lib/security/auditLog";
 export const dynamic = "force-dynamic";
 
 const BUCKET_NAME = "website-photos";
-const MAX_INPUT_SIZE_MB = 20;  // Accept up to 20 MB input
-const MAX_OUTPUT_SIZE_MB = 5;  // Reject if still >5 MB after optimization
+const MAX_INPUT_SIZE_MB = 30;  // Accept up to 30 MB input
+const MAX_OUTPUT_SIZE_MB = 15;  // Accept up to 15 MB high quality output
 
 export async function POST(req: NextRequest) {
   try {
@@ -67,7 +67,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // 7. Optimize: convert to WebP, resize to max 1920px, strip EXIF
+    // 7. Optimize: convert to WebP, resize to max 2560px, quality 95 (Full HD Crystal Clear)
     let uploadBuffer: Buffer;
     let uploadMimeType: string;
     let uploadExtension: string;
@@ -78,9 +78,9 @@ export async function POST(req: NextRequest) {
 
     try {
       const result = await optimizeImage(inputBuffer, {
-        maxWidth: 1920,
-        maxHeight: 1920,
-        quality: 82,
+        maxWidth: 2560,
+        maxHeight: 2560,
+        quality: 95,
         format: "webp",
         stripMetadata: true,
       });

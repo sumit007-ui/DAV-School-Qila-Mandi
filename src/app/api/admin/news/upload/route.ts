@@ -21,10 +21,10 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Check size limit: 5MB
-    if (file.size > 5 * 1024 * 1024) {
+    // Check size limit: 25MB
+    if (file.size > 25 * 1024 * 1024) {
       return NextResponse.json(
-        { success: false, error: "Image file exceeds 5MB size limit." },
+        { success: false, error: "Image file exceeds 25MB size limit." },
         { status: 400 }
       );
     }
