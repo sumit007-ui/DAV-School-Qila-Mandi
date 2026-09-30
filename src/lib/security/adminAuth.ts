@@ -113,7 +113,12 @@ export async function validateAdminRequest(
     // If ADMIN_EMAIL is NOT set, warn but allow — add to .env.local for maximum security.
     const adminEmail = process.env.ADMIN_EMAIL
     if (adminEmail) {
-      const emailMatches = user.email && user.email.toLowerCase() === adminEmail.toLowerCase()
+      const allowedEmails = adminEmail
+        .split(',')
+        .map((e) => e.trim().toLowerCase())
+        .filter(Boolean)
+      const userEmail = user.email ? user.email.toLowerCase() : ''
+      const emailMatches = allowedEmails.includes(userEmail)
       const roleIsAdmin =
         user.app_metadata?.role === 'admin' || user.user_metadata?.role === 'admin'
 

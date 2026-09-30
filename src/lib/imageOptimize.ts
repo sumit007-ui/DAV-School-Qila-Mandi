@@ -60,9 +60,9 @@ export async function optimizeImage(
   options: OptimizeOptions = {}
 ): Promise<OptimizeResult> {
   const {
-    maxWidth = 1920,
-    maxHeight = 1920,
-    quality = 82,
+    maxWidth = 2560,
+    maxHeight = 2560,
+    quality = 90,
     format = 'webp',
     stripMetadata = true,
   } = options
@@ -100,7 +100,7 @@ export async function optimizeImage(
 
   if (format === 'webp') {
     outputBuffer = await pipeline
-      .webp({ quality, effort: 4, smartSubsample: true })
+      .webp({ quality, effort: 4, smartSubsample: false })
       .toBuffer()
     outputMimeType = 'image/webp'
     outputExtension = 'webp'
